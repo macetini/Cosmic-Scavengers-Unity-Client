@@ -1,104 +1,68 @@
 using UnityEngine;
-using System.Collections.Generic;
-using Assets.Scripts.CosmicScavengers.Game.Units;
-using Assets.Scripts.CosmicScavengers.Networking;
 
 namespace Assets.Scripts.CosmicScavengers.Game
 {
-    public class GameWorldManager : MonoBehaviour
+    /// <summary>
+    /// Placeholder for the main game world management logic. 
+    /// Implemented as a simple Singleton for easy global access.
+    /// </summary>
+    public class GameWorldManager
     {
-        // --- Singleton Setup ---
-        public static GameWorldManager Instance { get; private set; }
-
-        // --- Editor Fields ---
-        [SerializeField]
-        private GameObject unitPrefab;
-
-        // --- Game State ---
-        // Map to track all active unit components by their unique Server ID
-        private readonly Dictionary<int, NetworkUnitState> activeUnits = new();
-
-        void Awake()
+        private static GameWorldManager _instance;
+        
+        /// <summary>
+        /// Global access point for the GameWorldManager.
+        /// </summary>
+        public static GameWorldManager Instance 
         {
-            // Simple Singleton initialization for easy access
-            if (Instance == null)
+            get 
             {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
+                // In a real Unity application, you would typically find a GameObject 
+                // with a GameWorldManager MonoBehavior script attached. 
+                // For this stub, we just instantiate a static mock instance.
+                _instance ??= new GameWorldManager();
+                return _instance;
             }
         }
-
-        // --- 1. HANDLE POSITION UPDATES (U_POS) ---
-
-        /**
-         * Called by ClientConnector when a U_POS message is received.
-         * This routes the server data to the correct unit for visualization.
-         */
-        public void HandleUnitPositionUpdate(UnitStateData data)
+        
+        // Private constructor to prevent external instantiation
+        private GameWorldManager() 
         {
-            if (activeUnits.TryGetValue(data.UnitID, out NetworkUnitState unitState))
-            {
-                // Unit exists: Pass the parsed data to the unit's component for interpolation
-                unitState.ReceiveServerUpdate(data);
-            }
-            else
-            {
-                // Should only happen if U_POS arrives before U_CREATE, or if the unit is unknown
-                Debug.LogWarning($"Received position update for unknown Unit ID: {data.UnitID}.");
-            }
+            Debug.Log("[GameWorldManager] Initialized.");
         }
 
-        // --- 2. HANDLE UNIT CREATION (U_CREATE) ---
+        // --- Methods called by the ClientAuth and ClientConnector (or future GameState Manager) ---
 
-        /**
-         * Called by ClientConnector when a U_CREATE message is received.
-         * This instantiates the visual representation of the unit in the game world.
-         * @param id The server-assigned unique ID.
-         * @param pos The initial world position.
-         */
-        public void CreateUnit(int id, Vector3 pos)
+        /// <summary>
+        /// Called by ClientAuth upon successful login/registration.
+        /// This is where you would send the C_GET_WORLD_STATE command to the server.
+        /// </summary>
+        public void SendInitialGameRequest(long playerId)
         {
-            if (unitPrefab == null)
-            {
-                Debug.LogError("Unit Prefab is not assigned in the Inspector!");
-                return;
-            }
-
-            if (!activeUnits.ContainsKey(id))
-            {
-                // Instantiate the unit and get its component
-                GameObject newUnitObject = Instantiate(unitPrefab, pos, Quaternion.identity);
-
-                if (newUnitObject.TryGetComponent<NetworkUnitState>(out var unitState))
-                {
-                    // Initialize the unit's component with its unique ID
-                    Debug.Log($"Creating unit ID {id} at position {pos}.");
-                    unitState.Initialize(id, pos);
-                    activeUnits.Add(id, unitState);
-                }
-                else
-                {
-                    Debug.LogError($"Unit Prefab is missing the {nameof(NetworkUnitState)} component!");
-                    Destroy(newUnitObject);
-                }
-            }
+            Debug.Log($"[GameWorldManager] Player {playerId} authenticated. Requesting initial game world state (C_GET_WORLD_STATE should go here).");
+            
+            // Placeholder for future networking call:
+            // ClientAuth.Instance.SendAuthenticatedCommand($"C_GET_WORLD_STATE"); 
         }
 
-        // --- 3. HANDLE UNIT DELETION (U_DEL) ---
-
-        /**
-         * Future method: Called when a U_DEL message is received (e.g., unit destroyed).
-         */
-        public void DestroyUnit(int id)
+        /// <summary>
+        /// Handles the U_CREATE message from the server (e.g., creates a visual unit).
+        /// </summary>
+        public void CreateUnit(int id, Vector3 position)
         {
-            if (activeUnits.ContainsKey(id))
+            Debug.Log($"[GameWorldManager] Creating unit {id} at X:{position.x} Y:{position.y}. (Visual instantiation logic goes here).");
+        }
+
+        // --- Placeholder for other needed dependencies (UnitStateData) ---
+        
+        /// <summary>
+        /// Placeholder class for parsing unit state data (U_POS was removed, but defining it is safe).
+        /// </summary>
+        public class UnitStateData
+        {
+            public UnitStateData(string rawMessage)
             {
-                Destroy(activeUnits[id].gameObject);
-                activeUnits.Remove(id);
-                Debug.Log($"Destroyed unit ID {id}.");
+                Debug.Log("[UnitStateData] Received raw data for parsing (currently ignored).");
             }
         }
     }
