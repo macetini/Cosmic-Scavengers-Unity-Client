@@ -10,14 +10,14 @@ namespace Assets.Scripts.CosmicScavengers.Networking
     public class ClientAuth : MonoBehaviour
     {
         [SerializeField]        
-        private ClientConnector connector;
+        protected ClientConnector connector;
         
         // Fired upon successful login or registration. The GameFlowController subscribes to this.
         public event Action<long> OnAuthenticated;
         
         // --- State ---
-        private long playerId = -1; // -1 means not logged in
-        public bool IsAuthenticated => playerId != -1;
+        protected long playerId = -1; // -1 means not logged in
+        protected bool IsAuthenticated => playerId != -1;
         
         void Start()
         {
@@ -43,7 +43,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// <summary>
         /// Handles incoming messages from the server, focusing only on authentication and status codes.
         /// </summary>
-        private void HandleAuthMessage(string rawMessage)
+        protected void HandleAuthMessage(string rawMessage)
         {
             string[] parts = rawMessage.Split('|');
             if (parts.Length == 0) return;
@@ -53,8 +53,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             {
                 case "S_CONNECT_OK":
                     // Connection confirmed, but we wait for user input (UI buttons) to authenticate.
-                    Debug.Log("Connection confirmed by server. Waiting for user to log in or register.");
-                    Login("player_1", "secret");
+                    Debug.Log("Connection confirmed by server. Waiting for user to log in or register.");                    
                     break;
                     
                 case "S_REGISTER_OK":

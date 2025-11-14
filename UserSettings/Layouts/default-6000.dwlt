@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 501
+    x: 493
     y: 51
-    width: 1411
+    width: 1419
     height: 981
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Test Runner
   m_RootView: {fileID: 9}
   m_MinSize: {x: 875, y: 382}
   m_MaxSize: {x: 10000, y: 10000}
@@ -40,14 +40,14 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 458
-    width: 394
-    height: 467
+    y: 454
+    width: 396
+    height: 471
   m_MinSize: {x: 231, y: 276}
   m_MaxSize: {x: 10001, y: 10026}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 19}
+  - {fileID: 20}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &3
@@ -67,14 +67,14 @@ MonoBehaviour:
   - {fileID: 2}
   m_Position:
     serializedVersion: 2
-    x: 1017
+    x: 1023
     y: 0
-    width: 394
+    width: 396
     height: 925
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 78
+  controlID: 100
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -92,14 +92,14 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 591
-    width: 779
-    height: 334
+    y: 593
+    width: 749
+    height: 332
   m_MinSize: {x: 101, y: 126}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 17}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 17}
+  - {fileID: 18}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &5
@@ -121,7 +121,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 779
+    width: 749
     height: 925
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
@@ -143,15 +143,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 779
+    x: 749
     y: 0
-    width: 238
+    width: 274
     height: 925
   m_MinSize: {x: 277, y: 76}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 16}
   m_Panes:
-  - {fileID: 15}
+  - {fileID: 16}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &7
@@ -171,13 +171,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 394
-    height: 458
+    width: 396
+    height: 454
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 18}
+  - {fileID: 19}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &8
@@ -200,7 +200,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1411
+    width: 1419
     height: 925
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
@@ -227,7 +227,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1411
+    width: 1419
     height: 981
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -252,7 +252,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1411
+    width: 1419
     height: 36
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -274,7 +274,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 961
-    width: 1411
+    width: 1419
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -296,7 +296,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 36
-    width: 1411
+    width: 1419
     height: 925
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
@@ -313,24 +313,654 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 779
-    height: 591
-  m_MinSize: {x: 201, y: 226}
+    width: 749
+    height: 593
+  m_MinSize: {x: 51, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 14}
   m_Panes:
-  - {fileID: 16}
+  - {fileID: 17}
+  - {fileID: 15}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 2
+  m_LastSelected: 1
 --- !u!114 &14
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEditor.TestRunner.dll::UnityEditor.TestTools.TestRunner.TestRunnerWindow
+  m_MinSize: {x: 50, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Runner
+    m_Image: {fileID: 0}
+    m_Tooltip: Test framework for running Edit mode and Play mode tests in Unity.
+      Part of the com.unity.test-framework package.
+    m_TextWithWhitespace: "Test Runner\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 24
+    width: 748
+    height: 567
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_OverlaysVisible: 1
+  m_Spl:
+    ID: 4189
+    splitterInitialOffset: 297
+    currentActiveSplitter: -1
+    realSizes:
+    - 251
+    - 249
+    relativeSizes:
+    - 0.502
+    - 0.49800003
+    minSizes:
+    - 32
+    - 32
+    maxSizes:
+    - 0
+    - 0
+    lastTotalSize: 500
+    splitSize: 6
+    xOffset: 0
+    m_Version: 1
+    oldRealSizes: 
+    oldMinSizes: 
+    oldMaxSizes: 
+    oldSplitSize: 0
+  m_TestTypeToolbarIndex: 1
+  m_TestListGUIs:
+  - m_Window: {fileID: 14}
+    runProgress:
+      RunGuid: 00a77562-5e40-416e-b799-8b3497b09dd1
+      ExecutionSettings:
+        m_TargetPlatform: 0
+        m_HasTargetPlatform: 0
+        filter:
+          testMode: 0
+          testNames: []
+          groupNames: []
+          categoryNames: []
+          assemblyNames: []
+        filters:
+        - testMode: 2
+          testNames:
+          - Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T03_Login_SendsCorrectlyFormattedCommand
+          groupNames: []
+          categoryNames: []
+          assemblyNames: []
+        runSynchronously: 0
+        playerHeartbeatTimeout: 600
+        orderedTestNames: []
+        ignoreTests: []
+        featureFlags:
+          fileCleanUpCheck: 0
+          requiresSplashScreen: 0
+          strictDomainReload: 0
+          disableNestedEnumeratorBugfix: 0
+        randomOrderSeed: 0
+      HasFinished: 1
+      Progress: 0.9999999
+      CurrentStepName: Unlock Reload Assemblies
+      CurrentStageName: 
+    m_NewResultList:
+    - id: 1000
+      uniqueId: '[CosmicScavengers][suite]'
+      name: CosmicScavengers
+      fullName: CosmicScavengers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 61417a71ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_TrimLeadingAndTrailingWhitespace: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategories: []
+      availableCategories:
+      - Uncategorized
+    m_SelectedOption: 0
+  - m_Window: {fileID: 14}
+    runProgress:
+      RunGuid: 00a77562-5e40-416e-b799-8b3497b09dd1
+      ExecutionSettings:
+        m_TargetPlatform: 0
+        m_HasTargetPlatform: 0
+        filter:
+          testMode: 0
+          testNames: []
+          groupNames: []
+          categoryNames: []
+          assemblyNames: []
+        filters:
+        - testMode: 2
+          testNames:
+          - Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T03_Login_SendsCorrectlyFormattedCommand
+          groupNames: []
+          categoryNames: []
+          assemblyNames: []
+        runSynchronously: 0
+        playerHeartbeatTimeout: 600
+        orderedTestNames: []
+        ignoreTests: []
+        featureFlags:
+          fileCleanUpCheck: 0
+          requiresSplashScreen: 0
+          strictDomainReload: 0
+          disableNestedEnumeratorBugfix: 0
+        randomOrderSeed: 0
+      HasFinished: 1
+      Progress: 0.9999999
+      CurrentStepName: Unlock Reload Assemblies
+      CurrentStageName: 
+    m_NewResultList:
+    - id: 1021
+      uniqueId: '[CosmicScavengers][suite]'
+      name: CosmicScavengers
+      fullName: CosmicScavengers
+      resultStatus: 2
+      duration: 0.2628058
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1011
+      uniqueId: '[PlayMode.dll][suite]'
+      name: PlayMode.dll
+      fullName: C:/Development/workspace/unity3d/Cosmic-Scavengers-Unity-Client/Library/ScriptAssemblies/PlayMode.dll
+      resultStatus: 2
+      duration: 0.2219254
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1021
+      parentUniqueId: '[CosmicScavengers][suite]'
+    - id: 1012
+      uniqueId: 'PlayMode.dll/[Assets][suite]'
+      name: Assets
+      fullName: Assets
+      resultStatus: 2
+      duration: 0.2129857
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1011
+      parentUniqueId: '[PlayMode.dll][suite]'
+    - id: 1013
+      uniqueId: 'PlayMode.dll/Assets/[Tests][suite]'
+      name: Tests
+      fullName: Assets.Tests
+      resultStatus: 2
+      duration: 0.2058543
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: 'PlayMode.dll/[Assets][suite]'
+    - id: 1014
+      uniqueId: 'PlayMode.dll/Assets/Tests/[PlayMode][suite]'
+      name: PlayMode
+      fullName: Assets.Tests.PlayMode
+      resultStatus: 2
+      duration: 0.199887
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1013
+      parentUniqueId: 'PlayMode.dll/Assets/[Tests][suite]'
+    - id: 1015
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/[CosmicScavengers][suite]'
+      name: CosmicScavengers
+      fullName: Assets.Tests.PlayMode.CosmicScavengers
+      resultStatus: 2
+      duration: 0.1919789
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1014
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/[PlayMode][suite]'
+    - id: 1016
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking][suite]'
+      name: Networking
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking
+      resultStatus: 2
+      duration: 0.1836199
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1015
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/[CosmicScavengers][suite]'
+    - id: 1001
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+      name: ClientAuthTests
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests
+      resultStatus: 2
+      duration: 0.1737802
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1016
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking][suite]'
+    - id: 1002
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientAuthTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T01_LoginOK_UpdatesStateAndFiresEvent]'
+      name: T01_LoginOK_UpdatesStateAndFiresEvent
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T01_LoginOK_UpdatesStateAndFiresEvent
+      resultStatus: 1
+      duration: 0.1027122
+      messages: 
+      output: 'Attempting to connect to server...
+
+        Authentication SUCCESS.
+        Player ID: 1001.
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+    - id: 1003
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientAuthTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T02_RegisterFail_StaysUnauthenticated]'
+      name: T02_RegisterFail_StaysUnauthenticated
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T02_RegisterFail_StaysUnauthenticated
+      resultStatus: 1
+      duration: 0.094217
+      messages: 
+      output: 'Attempting to connect to server...
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+    - id: 1004
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientAuthTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T03_Login_SendsCorrectlyFormattedCommand]'
+      name: T03_Login_SendsCorrectlyFormattedCommand
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T03_Login_SendsCorrectlyFormattedCommand
+      resultStatus: 2
+      duration: 0.1272707
+      messages: "  Login command was not formatted correctly.\r\n  Expected string
+        length 23 but was 0. Strings differ at index 0.\r\n  Expected: \"C_LOGIN|player_1|secret\"\r\n 
+        But was:  <string.Empty>\r\n  -----------^\r\n"
+      output: 'Attempting to connect to server...
+
+        [Client] Sent: C_LOGIN|player_1|secret
+
+'
+      stacktrace: 'at Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests+<T03_Login_SendsCorrectlyFormattedCommand>d__8.MoveNext
+        () [0x00052] in C:\Development\workspace\unity3d\Cosmic-Scavengers-Unity-Client\Assets\Tests\PlayMode\CosmicScavengers\Networking\ClientAuthTests.cs:126
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in .\Library\PackageCache\com.unity.test-framework@d97b7cd61ded\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+    - id: 1005
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientAuthTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T04_Register_SendsCorrectlyFormattedCommand]'
+      name: T04_Register_SendsCorrectlyFormattedCommand
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T04_Register_SendsCorrectlyFormattedCommand
+      resultStatus: 2
+      duration: 0.0558894
+      messages: "  Register command was not formatted correctly.\r\n  Expected string
+        length 29 but was 0. Strings differ at index 0.\r\n  Expected: \"C_REGISTER|NewUser|NewPass456\"\r\n 
+        But was:  <string.Empty>\r\n  -----------^\r\n"
+      output: 'Attempting to connect to server...
+
+        [Client] Sent: C_REGISTER|NewUser|NewPass456
+
+'
+      stacktrace: 'at Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests+<T04_Register_SendsCorrectlyFormattedCommand>d__9.MoveNext
+        () [0x00052] in C:\Development\workspace\unity3d\Cosmic-Scavengers-Unity-Client\Assets\Tests\PlayMode\CosmicScavengers\Networking\ClientAuthTests.cs:142
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in .\Library\PackageCache\com.unity.test-framework@d97b7cd61ded\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+    - id: 1006
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientAuthTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T05_SendAuthenticatedCommand_WhenAuthenticated_SendsCommand]'
+      name: T05_SendAuthenticatedCommand_WhenAuthenticated_SendsCommand
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T05_SendAuthenticatedCommand_WhenAuthenticated_SendsCommand
+      resultStatus: 2
+      duration: 0.0545023
+      messages: "  Authenticated command should have been sent.\r\n  Expected string
+        length 12 but was 0. Strings differ at index 0.\r\n  Expected: \"C_MOVE|10|20\"\r\n 
+        But was:  <string.Empty>\r\n  -----------^\r\n"
+      output: 'Attempting to connect to server...
+
+        Command blocked: Cannot
+        send command because user is not authenticated.
+
+'
+      stacktrace: 'at Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests+<T05_SendAuthenticatedCommand_WhenAuthenticated_SendsCommand>d__10.MoveNext
+        () [0x00085] in C:\Development\workspace\unity3d\Cosmic-Scavengers-Unity-Client\Assets\Tests\PlayMode\CosmicScavengers\Networking\ClientAuthTests.cs:162
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in .\Library\PackageCache\com.unity.test-framework@d97b7cd61ded\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+    - id: 1007
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientAuthTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T06_SendAuthenticatedCommand_WhenUnauthenticated_CommandIsBlocked]'
+      name: T06_SendAuthenticatedCommand_WhenUnauthenticated_CommandIsBlocked
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T06_SendAuthenticatedCommand_WhenUnauthenticated_CommandIsBlocked
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests][suite]'
+    - id: 1008
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests][suite]'
+      name: ClientConnectorTests
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests
+      resultStatus: 1
+      duration: 0.0884118
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1016
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking][suite]'
+    - id: 1002
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientConnectorTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests.T01_SimulatedMessage_FiresActionOnMainThread]'
+      name: T01_SimulatedMessage_FiresActionOnMainThread
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests.T01_SimulatedMessage_FiresActionOnMainThread
+      resultStatus: 1
+      duration: 0.0462738
+      messages: 
+      output: 'Attempting to connect to server...
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests][suite]'
+    - id: 1003
+      uniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/ClientConnectorTests/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests.T02_EmptyQueue_DoesNotFireAction]'
+      name: T02_EmptyQueue_DoesNotFireAction
+      fullName: Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests.T02_EmptyQueue_DoesNotFireAction
+      resultStatus: 1
+      duration: 0.042138
+      messages: 
+      output: 'Attempting to connect to server...
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'PlayMode.dll/Assets/Tests/PlayMode/CosmicScavengers/Networking/[PlayMode][Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientConnectorTests][suite]'
+    m_ResultText: "T03_Login_SendsCorrectlyFormattedCommand (0.127s)\n---\n  Login
+      command was not formatted correctly.\r\n  Expected string length 23 but was
+      0. Strings differ at index 0.\r\n  Expected: \"C_LOGIN|player_1|secret\"\r\n 
+      But was:  <string.Empty>\r\n  -----------^\r\n\n---\nat Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests+<T03_Login_SendsCorrectlyFormattedCommand>d__8.MoveNext
+      () [0x00052] in <color=#40a0ff><a href=\"C:\\Development\\workspace\\unity3d\\Cosmic-Scavengers-Unity-Client\\Assets\\Tests\\PlayMode\\CosmicScavengers\\Networking\\ClientAuthTests.cs\"
+      line=\"126\r\">Assets\\Tests\\PlayMode\\CosmicScavengers\\Networking\\ClientAuthTests.cs:126\r</a></color>\nat
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in
+      <color=#40a0ff><a href=\".\\Library\\PackageCache\\com.unity.test-framework@d97b7cd61ded\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs\"
+      line=\"44\r\">Library\\PackageCache\\com.unity.test-framework@d97b7cd61ded\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r</a></color>\n\n---\nAttempting
+      to connect to server...\r\n[Client] Sent: C_LOGIN|player_1|secret"
+    m_ResultStacktrace: 'at Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests+<T03_Login_SendsCorrectlyFormattedCommand>d__8.MoveNext
+      () [0x00052] in C:\Development\workspace\unity3d\Cosmic-Scavengers-Unity-Client\Assets\Tests\PlayMode\CosmicScavengers\Networking\ClientAuthTests.cs:126
+
+      at
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in
+      .\Library\PackageCache\com.unity.test-framework@d97b7cd61ded\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+
+'
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 00f5100f
+      m_LastClickedID: 252769536
+      m_ExpandedIDs: ff60a5b39f5c62b645b5e9c84ea04ddc6b281cee5d92db24a1ce7e3d57f3e256bc62655861417a71ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_TrimLeadingAndTrailingWhitespace: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategories: []
+      availableCategories:
+      - Uncategorized
+    m_SelectedOption: 0
+  - m_Window: {fileID: 0}
+    runProgress:
+      RunGuid: 00a77562-5e40-416e-b799-8b3497b09dd1
+      ExecutionSettings:
+        m_TargetPlatform: 0
+        m_HasTargetPlatform: 0
+        filter:
+          testMode: 0
+          testNames: []
+          groupNames: []
+          categoryNames: []
+          assemblyNames: []
+        filters:
+        - testMode: 2
+          testNames:
+          - Assets.Tests.PlayMode.CosmicScavengers.Networking.ClientAuthTests.T03_Login_SendsCorrectlyFormattedCommand
+          groupNames: []
+          categoryNames: []
+          assemblyNames: []
+        runSynchronously: 0
+        playerHeartbeatTimeout: 600
+        orderedTestNames: []
+        ignoreTests: []
+        featureFlags:
+          fileCleanUpCheck: 0
+          requiresSplashScreen: 0
+          strictDomainReload: 0
+          disableNestedEnumeratorBugfix: 0
+        randomOrderSeed: 0
+      HasFinished: 1
+      Progress: 0.9999999
+      CurrentStepName: Unlock Reload Assemblies
+      CurrentStageName: 
+    m_NewResultList: []
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_TrimLeadingAndTrailingWhitespace: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategories: []
+      availableCategories: []
+    m_SelectedOption: 0
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -351,10 +981,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 24
-    width: 778
-    height: 565
+    x: 501
+    y: 87
+    width: 748
+    height: 570
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -372,7 +1002,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 778, y: 544}
+  m_TargetSize: {x: 748, y: 549}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -387,10 +1017,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -389
-    m_HBaseRangeMax: 389
-    m_VBaseRangeMin: -272
-    m_VBaseRangeMax: 272
+    m_HBaseRangeMin: -374
+    m_HBaseRangeMax: 374
+    m_VBaseRangeMin: -274.5
+    m_VBaseRangeMax: 274.5
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -408,30 +1038,30 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 778
-      height: 544
+      width: 748
+      height: 549
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 389, y: 272}
+    m_Translation: {x: 374, y: 274.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -389
-      y: -272
-      width: 778
-      height: 544
+      x: -374
+      y: -274.5
+      width: 748
+      height: 549
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 778, y: 565}
+  m_LastWindowPixelSize: {x: 748, y: 570}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
   m_showToolbar: 1
---- !u!114 &15
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -452,9 +1082,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 780
+    x: 750
     y: 24
-    width: 236
+    width: 272
     height: 899
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -480,7 +1110,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &16
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -501,10 +1131,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 504
+    x: 501
     y: 87
-    width: 713
-    height: 636
+    width: 748
+    height: 570
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1120,7 +1750,7 @@ MonoBehaviour:
   m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
-    m_SceneView: {fileID: 16}
+    m_SceneView: {fileID: 17}
     m_CameraOverscanSettings:
       m_Opacity: 50
       m_Scale: 1
@@ -1133,7 +1763,7 @@ MonoBehaviour:
     name: Contributors / Receivers
     section: Lighting
   m_ViewIsLockedToObject: 0
---- !u!114 &17
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1155,9 +1785,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 615
-    width: 778
-    height: 308
+    y: 617
+    width: 748
+    height: 306
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1169,7 +1799,7 @@ MonoBehaviour:
     m_SaveData: []
     m_ContainerData: []
     m_OverlaysVisible: 1
---- !u!114 &18
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1192,8 +1822,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1
     y: 24
-    width: 393
-    height: 432
+    width: 395
+    height: 428
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1210,7 +1840,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 10fbffff
+      m_ExpandedIDs: a60afffffc0fffff701affff3e1fffff0c24ffffda28ffffa82dffff8433ffffe639ffffcc3effffc643ffffd655ffffae59ffff3467ffff26d3ffff10fbffff7eab000074cf0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1227,7 +1857,7 @@ MonoBehaviour:
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
-        m_ClientGUIView: {fileID: 7}
+        m_ClientGUIView: {fileID: 13}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1235,7 +1865,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 4c969a2b90040154d917609493e03593
---- !u!114 &19
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1257,9 +1887,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1
-    y: 482
-    width: 393
-    height: 441
+    y: 478
+    width: 395
+    height: 445
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1281,8 +1911,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Scripts/CosmicScavengers/Test
+    m_Folders: []
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1293,14 +1922,14 @@ MonoBehaviour:
   m_StartGridSize: 16
   m_LastFolders: []
   m_LastFoldersGridSize: 16
-  m_LastProjectPath: C:\Development\workspace\unity3d\CosmicScavengers
+  m_LastProjectPath: C:\Development\workspace\unity3d\Cosmic-Scavengers-Unity-Client
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: e4bd0000
     m_LastClickedID: 48612
-    m_ExpandedIDs: 0000000036ac000038ac00003aac00003cac00003eac000040ac0000
+    m_ExpandedIDs: 0000000056ac000058ac00005aac00005cac00005eac000060ac000062ac000064ac000066ac000068ac00006aac0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1326,10 +1955,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 47}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000036ac000038ac00003aac00003cac00003eac000040ac0000
+    m_ExpandedIDs: 0000000056ac000058ac00005aac00005cac00005eac000060ac000062ac000064ac000066ac000068ac00006aac0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System;
-using Assets.Scripts.CosmicScavengers.Networking; 
+using Assets.Scripts.CosmicScavengers.Networking;
 
-// The class name is now explicit about its role as a Stub
-namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs 
+namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
 {
     /// <summary>
     /// A Stub component that mimics the message dispatch behavior of ClientConnector 
@@ -15,7 +14,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
         private readonly Queue<string> testIncomingMessages = new();
 
         // Public Action that replaces the protected 'OnMessageReceived' event
-        public Action<string> TestDispatchMessage; 
+        public Action<string> TestDispatchMessage;
 
         /// <summary>
         /// Simulates the network thread receiving a message and adding it to the queue.
@@ -24,7 +23,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
         {
             testIncomingMessages.Enqueue(message);
         }
-        
+
         /// <summary>
         /// Overrides the Update method to simulate the main thread polling the queue 
         /// and firing the dispatch action.
@@ -36,7 +35,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
             {
                 string message = testIncomingMessages.Dequeue();
                 // Invoke the Action, simulating the event firing on the main thread
-                TestDispatchMessage?.Invoke(message); 
+                TestDispatchMessage?.Invoke(message);
             }
         }
     }

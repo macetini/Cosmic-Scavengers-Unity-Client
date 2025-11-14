@@ -91,7 +91,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// <summary>
         /// Public method to send a raw protocol command to the server.
         /// </summary>
-        public void SendInput(string command)
+        public virtual void SendInput(string command)
         {
             if (IsConnected && writer != null)
             {
@@ -123,12 +123,12 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 while (incomingMessages.Count > 0)
                 {
                     string rawMessage = incomingMessages.Dequeue();
-                    
+
                     // Fire event for ALL listeners. Authentication, Game State, etc., will handle it.
                     OnMessageReceived?.Invoke(rawMessage);
-                    
+
                     // Log the raw message here so it's always visible in the console
-                    Debug.Log($"[RAW SERVER MESSAGE]: {rawMessage}"); 
+                    Debug.Log($"[RAW SERVER MESSAGE]: {rawMessage}");
                 }
             }
         }
