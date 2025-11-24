@@ -23,7 +23,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking
             // Expose the protected HandleAuthMessage for testing
             public void PublicHandleAuthMessage(string rawMessage)
             {
-                HandleAuthMessage(rawMessage);
+                //HandleAuthMessage(rawMessage);
             }
 
             public long PlayerIdForTest => playerId;

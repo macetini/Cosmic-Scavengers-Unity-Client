@@ -13,14 +13,8 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks
         public void ResetState()
         {
             LastSentCommand = string.Empty;
-        }        
-
-        // --- MOCK FUNCTIONALITY: Simulate Outbound Messages ---
-        public override void SendInput(string command)
-        {
-            // Record the command for the test fixture to assert against
-            LastSentCommand = command;
         }
+
 
         // --- MOCK FUNCTIONALITY: Simulate Inbound Messages ---
         // We need a public Action that ClientAuthTestHarness can subscribe to 

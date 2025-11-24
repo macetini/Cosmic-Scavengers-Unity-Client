@@ -9,13 +9,13 @@ namespace Assets.Scripts.CosmicScavengers.Networking
     /// </summary>
     public class ClientAuth : MonoBehaviour
     {
-        [SerializeField]        
+        [SerializeField]
         protected ClientConnector connector;
         // Fired upon successful login or registration. The GameFlowController subscribes to this.
-        public event Action<long> OnAuthenticated;        
+        public event Action<long> OnAuthenticated;
         protected long playerId = -1; // -1 means not logged in
         protected bool IsAuthenticated => playerId != -1;
-        
+
         void Start()
         {
             if (connector == null)
@@ -25,57 +25,72 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 return;
             }
             // Subscribe to the raw message event from the connector
-            connector.OnMessageReceived += HandleAuthMessage;
+            connector.OnTextMessageReceived += HandleAuthMessage;
         }
 
         void OnDestroy()
         {
             if (connector != null)
             {
-                connector.OnMessageReceived -= HandleAuthMessage;
+                connector.OnTextMessageReceived -= HandleAuthMessage;
             }
         }
 
         /// <summary>
         /// Handles incoming messages from the server, focusing only on authentication and status codes.
         /// </summary>
-        protected void HandleAuthMessage(string rawMessage)
+        private void HandleAuthMessage(string rawMessage)
         {
+            // Protocol Example: S_CONNECT_OK, S_LOGIN_FAIL|INVALID_CREDENTIALS, S_LOGIN_OK|12345
+
             string[] parts = rawMessage.Split('|');
-            if (parts.Length == 0) return;
-            string commandCode = parts[0];
-            
-            switch (commandCode)
+            string command = parts[0];
+
+            switch (command)
             {
                 case "S_CONNECT_OK":
-                    // Connection confirmed, but we wait for user input (UI buttons) to authenticate.
-                    Debug.Log("Connection confirmed by server. Waiting for user to log in or register.");                    
+                    Debug.Log("Server Handshake Complete. Ready for Login/Register.");
+                    // Optionally trigger a UI state change (e.g., enable the login form)
                     break;
+
                 case "S_REGISTER_OK":
-                case "S_LOGIN_OK":
-                    if (parts.Length < 2) break;
-                    playerId = long.Parse(parts[1]);
-                    Debug.Log($"Authentication SUCCESS. Player ID: {playerId}.");
-                    // Fire the event to notify the GameFlowController
-                    OnAuthenticated?.Invoke(playerId);
-                    break; 
+                    Debug.Log("Registration successful. Please log in.");
+                    // Notify UI to show a success message
+                    break;
+
                 case "S_REGISTER_FAIL":
-                    if (parts.Length < 2) break;
-                    Debug.LogWarning($"Registration FAILED: {parts[1]}. Please try a different username or login.");
+                    //Debug.LogError($"Registration failed: {parts.ElementAtOrDefault(1) ?? "Unknown error."}");
+                    // Notify UI to show the error message
                     break;
+
+                case "S_LOGIN_OK":
+                    if (parts.Length > 1 && long.TryParse(parts[1], out long id))
+                    {
+                        playerId = id;
+                        Debug.Log($"Login successful! Player ID: {playerId}. Starting game flow...");
+                        OnAuthenticated?.Invoke(playerId); // Signal the GameFlowController to proceed
+                    }
+                    else
+                    {
+                        Debug.LogError("Login OK message received but contained invalid Player ID.");
+                    }
+                    break;
+
                 case "S_LOGIN_FAIL":
-                    if (parts.Length < 2) break;
-                    Debug.LogError($"Login FAILED: {parts[1]}. Please check credentials.");
-                    playerId = -1;
+                    //Debug.LogError($"Login failed: {parts.ElementAtOrDefault(1) ?? "Invalid Credentials."}");
+                    // Notify UI to show the error message
                     break;
-                case "S_AUTH_REQUIRED":
-                    Debug.LogError("Server rejected game command: Authentication is required.");
+
+                default:
+                    // If the message is not an Auth message, it might be a general chat message or an unknown command.
+                    Debug.Log($"[ClientAuth] Unhandled server message: {rawMessage}");
                     break;
             }
         }
 
+
         // --- Public Methods to send Auth Commands (Triggered by UI) ---
-        
+
         public void Register(string username, string password)
         {
             if (connector != null && connector.IsConnected)
@@ -99,7 +114,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 Debug.LogError("Cannot log in: Client is not connected to the server.");
             }
         }
-        
+
         /// <summary>
         /// A convenient wrapper to send a game command, ensuring authentication status is checked first.
         /// </summary>
@@ -108,7 +123,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             if (IsAuthenticated)
             {
                 // This command is passed to the low-level connector
-                connector.SendInput(command);
+                //connector.SendInput(command);
             }
             else
             {
