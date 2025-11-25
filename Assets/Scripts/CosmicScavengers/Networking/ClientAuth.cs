@@ -49,8 +49,9 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             switch (command)
             {
                 case "S_CONNECT_OK":
-                    Debug.Log("Server Handshake Complete. Ready for Login/Register.");
+                    Debug.Log("Server Handshake Complete. Ready for Login/Register.");                    
                     // Optionally trigger a UI state change (e.g., enable the login form)
+                    Login("player_1", "secret"); // Auto-login for testing
                     break;
 
                 case "S_REGISTER_OK":
@@ -105,6 +106,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
 
         public void Login(string username, string password)
         {
+            Debug.Log($"Attempting login for user: {username}");
             if (connector != null && connector.IsConnected)
             {
                 connector.SendInput($"C_LOGIN|{username}|{password}");
@@ -120,10 +122,11 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// </summary>
         public void SendAuthenticatedCommand(string command)
         {
+            Debug.Log($"[ClientAuth] Sending command: {command}");
             if (IsAuthenticated)
             {
                 // This command is passed to the low-level connector
-                //connector.SendInput(command);
+                connector.SendInput(command);
             }
             else
             {

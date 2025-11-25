@@ -94,7 +94,11 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// </summary>
         private void ReadNextMessage()
         {
-            if (stream == null || !stream.CanRead) return;
+            if (stream == null || !stream.CanRead)
+            {
+                Debug.LogError("[Connector Error] Stream is not readable.");
+                return;
+            }
 
             const int LENGTH_FIELD_SIZE = 4;
             byte[] lengthBytes = new byte[LENGTH_FIELD_SIZE];
@@ -102,15 +106,20 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             try
             {
                 // 1. Read the 4-byte length prefix
-                if (ReadExactly(stream, lengthBytes, 0, LENGTH_FIELD_SIZE) == 0) return;
+                if (ReadExactly(stream, lengthBytes, 0, LENGTH_FIELD_SIZE) == 0)
+                {
+                    Debug.LogWarning("[Connector] Stream closed by server.");
+                    return;
+                }
 
                 // Convert Big-Endian (Netty) to local machine Endian
                 if (BitConverter.IsLittleEndian)
                 {
                     Array.Reverse(lengthBytes);
                 }
+                
+                Debug.Log($"[Connector] Received message length: {BitConverter.ToInt32(lengthBytes, 0)} bytes.");
                 int messageLength = BitConverter.ToInt32(lengthBytes, 0);
-
                 if (messageLength <= 0 || messageLength > 1024 * 1024)
                 {
                     Debug.LogError($"[Connector Error] Invalid message length received: {messageLength}.");
@@ -126,7 +135,10 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 MessageType messageType = (MessageType)fullPayloadBytes[0];
 
                 int payloadDataLength = messageLength - 1;
-                if (payloadDataLength < 0) return;
+                if (payloadDataLength < 0) {
+                    Debug.LogError("[Connector Error] Payload data length is negative. Discarding message.");
+                    return;
+                }
 
                 byte[] payloadData = new byte[payloadDataLength];
                 Array.Copy(fullPayloadBytes, 1, payloadData, 0, payloadDataLength);
@@ -179,7 +191,10 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// </summary>
         public virtual void SendInput(string command)
         {
-            if (string.IsNullOrEmpty(command)) return;
+            if (string.IsNullOrEmpty(command)) {
+                Debug.LogWarning("Cannot send empty command.");
+                return;
+            }
             SendTypedMessage(Encoding.UTF8.GetBytes(command), MessageType.TEXT);
         }
 
@@ -189,7 +204,10 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// </summary>
         public virtual void SendBinary(byte[] data)
         {
-            if (data == null || data.Length == 0) return;
+            if (data == null || data.Length == 0) {
+                Debug.LogWarning("Cannot send empty binary data.");
+                return;
+            }
             SendTypedMessage(data, MessageType.BINARY);
         }
 
@@ -204,6 +222,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 Debug.LogError($"[Connector] Cannot send {type} message: Not connected to server.");
                 return;
             }
+            Debug.Log($"[Connector] Sending {type} message of length {dataBytes.Length} bytes.");
 
             try
             {
