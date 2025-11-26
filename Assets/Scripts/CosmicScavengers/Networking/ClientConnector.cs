@@ -5,16 +5,10 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Text;
+using Assets.Scripts.CosmicScavengers.Networking.Meta;
 
 namespace Assets.Scripts.CosmicScavengers.Networking
 {
-    // --- Message Type Constants (Must match server definition) ---
-    public enum MessageType : byte
-    {
-        TEXT = 0x01, // Used for Auth, Chat, Lobby Commands
-        BINARY = 0x02 // Used for Game State, Unit Positions, Physics
-    }
-
     /// <summary>
     /// Handles the low-level TCP connection using a multiplexed protocol: 
     /// a 4-byte length prefix, followed by a 1-byte type header and the payload.
@@ -32,10 +26,13 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         // Thread-safe queues to hold messages received from the server
         private readonly Queue<string> incomingTextMessages = new();
         private readonly Queue<byte[]> incomingBinaryMessages = new();
-
+        
         // Events for consumers (Auth, GameState) to subscribe to
         public event Action<string> OnTextMessageReceived;
         public event Action<byte[]> OnBinaryMessageReceived;
+
+        public delegate void ConnectionEstablishedHandler();
+        public event ConnectionEstablishedHandler OnConnected;
 
         public bool IsConnected
         {
@@ -62,9 +59,16 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 client = new TcpClient(HOST, PORT);
                 stream = client.GetStream();
 
+                if (!client.Connected)
+                {
+                    Debug.LogError("[Connector Error] Unable to connect to server.");
+                    return;
+                }
                 Debug.Log("[Connector] Successfully connected to the multiplexed server!");
 
-                // Start listening loop
+                OnConnected?.Invoke();
+
+                // Start listening loop                
                 while (client.Connected)
                 {
                     ReadNextMessage();
@@ -117,7 +121,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 {
                     Array.Reverse(lengthBytes);
                 }
-                
+
                 Debug.Log($"[Connector] Received message length: {BitConverter.ToInt32(lengthBytes, 0)} bytes.");
                 int messageLength = BitConverter.ToInt32(lengthBytes, 0);
                 if (messageLength <= 0 || messageLength > 1024 * 1024)
@@ -130,12 +134,12 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 // 2. Read Payload (L bytes, including the 1-byte Type prefix)
                 byte[] fullPayloadBytes = new byte[messageLength];
                 ReadExactly(stream, fullPayloadBytes, 0, messageLength);
-
                 // 3. Extract Type and Payload Data ---
                 MessageType messageType = (MessageType)fullPayloadBytes[0];
 
                 int payloadDataLength = messageLength - 1;
-                if (payloadDataLength < 0) {
+                if (payloadDataLength < 0)
+                {
                     Debug.LogError("[Connector Error] Payload data length is negative. Discarding message.");
                     return;
                 }
@@ -183,15 +187,14 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             return totalBytesRead;
         }
 
-        // --- Public Sending Methods ---
-
         /// <summary>
         /// Sends a text command, automatically framing it with MessageType.TEXT.
         /// Used by ClientAuth/Lobby Managers.
         /// </summary>
         public virtual void SendInput(string command)
         {
-            if (string.IsNullOrEmpty(command)) {
+            if (string.IsNullOrEmpty(command))
+            {
                 Debug.LogWarning("Cannot send empty command.");
                 return;
             }
@@ -204,7 +207,8 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         /// </summary>
         public virtual void SendBinary(byte[] data)
         {
-            if (data == null || data.Length == 0) {
+            if (data == null || data.Length == 0)
+            {
                 Debug.LogWarning("Cannot send empty binary data.");
                 return;
             }
@@ -239,10 +243,8 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 using MemoryStream ms = new();
                 // 1. Write 4-byte Length Prefix (Big-Endian)
                 ms.Write(lengthBytes, 0, lengthBytes.Length);
-
                 // 2. Write 1-byte Message Type
                 ms.WriteByte((byte)type);
-
                 // 3. Write the Payload Data
                 ms.Write(dataBytes, 0, dataBytes.Length);
 
@@ -264,6 +266,12 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         void OnApplicationQuit()
         {
             Cleanup();
+        }
+
+        public void InitHandshake()
+        {
+            Debug.Log("[Connector] Initiating handshake with server...");
+            SendInput("C_CONNECT");
         }
 
         private void Cleanup()

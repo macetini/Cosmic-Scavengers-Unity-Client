@@ -26,6 +26,8 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             }
             // Subscribe to the raw message event from the connector
             connector.OnTextMessageReceived += HandleAuthMessage;
+            connector.OnConnected += StartHandshake;
+            //connector.InitHandshake(); // Start the handshake process
         }
 
         void OnDestroy()
@@ -33,7 +35,14 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             if (connector != null)
             {
                 connector.OnTextMessageReceived -= HandleAuthMessage;
+                connector.OnConnected -= StartHandshake;
             }
+        }
+
+        void StartHandshake()
+        {
+            Debug.Log("[ClientAuth] Connection established. Initiating handshake...");
+            connector.InitHandshake();
         }
 
         /// <summary>
