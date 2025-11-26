@@ -5,9 +5,9 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Text;
-using Assets.Scripts.CosmicScavengers.Networking.Meta;
+using CosmicScavengers.Networking.Meta;
 
-namespace Assets.Scripts.CosmicScavengers.Networking
+namespace CosmicScavengers.Networking
 {
     /// <summary>
     /// Handles the low-level TCP connection using a multiplexed protocol: 
@@ -26,7 +26,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
         // Thread-safe queues to hold messages received from the server
         private readonly Queue<string> incomingTextMessages = new();
         private readonly Queue<byte[]> incomingBinaryMessages = new();
-        
+
         // Events for consumers (Auth, GameState) to subscribe to
         public event Action<string> OnTextMessageReceived;
         public event Action<byte[]> OnBinaryMessageReceived;
@@ -109,20 +109,19 @@ namespace Assets.Scripts.CosmicScavengers.Networking
 
             try
             {
-                // 1. Read the 4-byte length prefix
+                // Read the 4-byte length prefix
                 if (ReadExactly(stream, lengthBytes, 0, LENGTH_FIELD_SIZE) == 0)
                 {
                     Debug.LogWarning("[Connector] Stream closed by server.");
                     return;
                 }
-
+                
                 // Convert Big-Endian (Netty) to local machine Endian
                 if (BitConverter.IsLittleEndian)
                 {
                     Array.Reverse(lengthBytes);
                 }
 
-                Debug.Log($"[Connector] Received message length: {BitConverter.ToInt32(lengthBytes, 0)} bytes.");
                 int messageLength = BitConverter.ToInt32(lengthBytes, 0);
                 if (messageLength <= 0 || messageLength > 1024 * 1024)
                 {
@@ -131,10 +130,10 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                     return;
                 }
 
-                // 2. Read Payload (L bytes, including the 1-byte Type prefix)
+                // Read Payload (L bytes, including the 1-byte Type prefix)
                 byte[] fullPayloadBytes = new byte[messageLength];
                 ReadExactly(stream, fullPayloadBytes, 0, messageLength);
-                // 3. Extract Type and Payload Data ---
+                // Extract Type and Payload Data
                 MessageType messageType = (MessageType)fullPayloadBytes[0];
 
                 int payloadDataLength = messageLength - 1;
@@ -146,8 +145,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
 
                 byte[] payloadData = new byte[payloadDataLength];
                 Array.Copy(fullPayloadBytes, 1, payloadData, 0, payloadDataLength);
-
-                // 4. Route and Enqueue based on Type ---
+                
                 if (messageType == MessageType.TEXT)
                 {
                     string message = Encoding.UTF8.GetString(payloadData).Trim();

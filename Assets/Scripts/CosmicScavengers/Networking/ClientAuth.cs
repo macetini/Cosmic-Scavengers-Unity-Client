@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace Assets.Scripts.CosmicScavengers.Networking
+namespace CosmicScavengers.Networking
 {
     /// <summary>
     /// Handles user authentication state and communication with the server.
@@ -25,17 +25,16 @@ namespace Assets.Scripts.CosmicScavengers.Networking
                 return;
             }
             // Subscribe to the raw message event from the connector
-            connector.OnTextMessageReceived += HandleAuthMessage;
             connector.OnConnected += StartHandshake;
-            //connector.InitHandshake(); // Start the handshake process
+            connector.OnTextMessageReceived += HandleAuthMessage;
         }
 
         void OnDestroy()
         {
             if (connector != null)
             {
-                connector.OnTextMessageReceived -= HandleAuthMessage;
                 connector.OnConnected -= StartHandshake;
+                connector.OnTextMessageReceived -= HandleAuthMessage;
             }
         }
 
@@ -58,7 +57,7 @@ namespace Assets.Scripts.CosmicScavengers.Networking
             switch (command)
             {
                 case "S_CONNECT_OK":
-                    Debug.Log("Server Handshake Complete. Ready for Login/Register.");                    
+                    Debug.Log("Server Handshake Complete. Ready for Login/Register.");
                     // Optionally trigger a UI state change (e.g., enable the login form)
                     Login("player_1", "secret"); // Auto-login for testing
                     break;

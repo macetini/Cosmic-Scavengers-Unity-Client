@@ -1,0 +1,9 @@
+# Root = true indicates that this is the highest-level file to look for.
+root = true
+
+# Target all C# and VB files
+[*.{cs,vb}]
+
+# IDE0130: Namespace does not match folder structure
+# Setting severity to 'none' or 'silent' will disable the warning.
+dotnet_diagnostic.IDE0130.severity = none

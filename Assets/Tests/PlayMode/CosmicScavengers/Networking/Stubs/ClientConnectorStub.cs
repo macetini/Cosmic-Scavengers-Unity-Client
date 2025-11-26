@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System;
-using Assets.Scripts.CosmicScavengers.Networking;
+using CosmicScavengers.Networking;
 
 namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
 {

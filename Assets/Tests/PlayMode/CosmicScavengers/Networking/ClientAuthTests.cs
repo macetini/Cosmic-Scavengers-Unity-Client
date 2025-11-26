@@ -2,7 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
-using Assets.Scripts.CosmicScavengers.Networking;
+using CosmicScavengers.Networking;
 using Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks;
 
 namespace Assets.Tests.PlayMode.CosmicScavengers.Networking

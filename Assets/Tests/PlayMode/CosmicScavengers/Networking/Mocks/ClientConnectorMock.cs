@@ -1,4 +1,4 @@
-using Assets.Scripts.CosmicScavengers.Networking;
+using CosmicScavengers.Networking;
 using System.Collections.Generic;
 using System;
 
