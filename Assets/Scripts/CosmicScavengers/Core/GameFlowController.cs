@@ -16,20 +16,16 @@ namespace CosmicScavengers.Core
 
         [Tooltip("The name of the scene to load after successful authentication.")]
         public string mainGameSceneName = "MainGameWorld";
-        private long localPlayerId = -1;
         private bool isGameFlowStarted = false;
 
         void Start()
         {
-            // 1. Dependency Check
             if (clientAuth == null)
             {
-                // This error means the ClientAuth component needs to be linked in the Unity Inspector.
                 Debug.LogError("[GameFlowController] ClientAuth reference is missing. Cannot subscribe to events.");
                 return;
             }
 
-            // 2. Subscription
             clientAuth.OnAuthenticated += StartGameSession;
             Debug.Log("[GameFlowController] Subscribed to ClientAuth.OnAuthenticated. Awaiting login confirmation...");
         }
@@ -59,11 +55,7 @@ namespace CosmicScavengers.Core
             }
 
             isGameFlowStarted = true;
-            localPlayerId = playerId;
-
             Debug.Log($"[GameFlow] Login confirmed with ID: {playerId}. Beginning asset loading and scene transition.");
-
-            // --- Game Initialization Steps ---
 
             // 1. Store the Player ID (e.g., in a static GameState or PlayerDataService)
             // GameState.LocalPlayerID = playerId; 
