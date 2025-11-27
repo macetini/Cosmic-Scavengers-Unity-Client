@@ -57,38 +57,6 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking
         }
 
         // ----------------------------------------------------------------------
-        // TEST 1: Successful Login Flow (Inbound)
-        // ----------------------------------------------------------------------
-        [UnityTest]
-        public IEnumerator T01_LoginOK_UpdatesStateAndFiresEvent()
-        {
-            // Arrange
-            const long expectedPlayerId = 1001;
-            string loginOKMessage = $"S_LOGIN_OK|{expectedPlayerId}";
-            bool eventFired = false;
-            long receivedId = -1;
-
-            clientAuthHarness.OnAuthenticated += (id) =>
-            {
-                eventFired = true;
-                receivedId = id;
-            };
-
-            clientConnectorMock.TestDispatchMessage += clientAuthHarness.PublicHandleAuthMessage;
-
-            // Act: Inject the successful login message            
-            Assert.IsFalse(clientAuthHarness.IsAuthenticated, "Pre-test state check failed.");
-            clientConnectorMock.SimulateMessageReceived(loginOKMessage);
-            yield return null;
-
-            // Assert
-            Assert.IsTrue(clientAuthHarness.IsAuthenticated, "ClientAuth state must be authenticated.");
-            Assert.AreEqual(expectedPlayerId, clientAuthHarness.PlayerIdForTest, "Player ID must match the received ID.");
-            Assert.IsTrue(eventFired, "OnAuthenticated event must have fired.");
-            Assert.AreEqual(expectedPlayerId, receivedId, "Event payload must contain the correct player ID.");
-        }
-
-        // ----------------------------------------------------------------------
         // TEST 2: Failed Registration Flow (Inbound)
         // ----------------------------------------------------------------------
         [UnityTest]
@@ -146,56 +114,5 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking
         }
 
         // ----------------------------------------------------------------------
-        // TEST 5: SendAuthenticatedCommand - Authenticated
-        // ----------------------------------------------------------------------
-        [UnityTest]
-        public IEnumerator T05_SendAuthenticatedCommand_WhenAuthenticated_SendsCommand()
-        {
-            // Ensure state is authenticated from the start
-            clientConnectorMock.TestDispatchMessage += clientAuthHarness.PublicHandleAuthMessage;
-            clientConnectorMock.SimulateMessageReceived("S_LOGIN_OK|12345");
-            yield return null;
-
-            const string gameCommand = "C_MOVE|10|20";
-
-            // Act
-            clientAuthHarness.SendAuthenticatedCommand(gameCommand);
-            yield return null;
-
-            // Assert
-            Assert.AreEqual(gameCommand, clientConnectorMock.LastSentCommand, "Authenticated command should have been sent.");
-            Assert.IsTrue(clientAuthHarness.IsAuthenticated, "Client should remain authenticated.");
-        }
-
-        // ----------------------------------------------------------------------
-        // TEST 6: SendAuthenticatedCommand - Unauthenticated (Negative Path)
-        // ----------------------------------------------------------------------
-        [UnityTest]
-        public IEnumerator T06_SendAuthenticatedCommand_WhenUnauthenticated_CommandIsBlocked()
-        {
-            // Arrange
-            // Ensure state is unauthenticated from the start
-            clientConnectorMock.ResetState();
-            Assert.IsFalse(clientAuthHarness.IsAuthenticated, "Pre-test state must be unauthenticated.");
-
-            const string gameCommand = "C_MOVE|10|20";
-            const string initialCommand = "C_LOGIN|dummy|pass";
-
-            // Act 1: Send a command that should succeed (e.g., login) to set a known initial state for LastSentCommand
-            // The client is NOT authenticated, so this call to Login only formats the command.
-            clientAuthHarness.Login("dummy", "pass");
-            yield return null;
-
-            // Assert 1: Check the state after the dummy command
-            Assert.AreEqual(initialCommand, clientConnectorMock.LastSentCommand, "Mock should have recorded the login command.");
-
-            // Act 2: Try to send an authenticated command while still unauthenticated
-            clientAuthHarness.SendAuthenticatedCommand(gameCommand);
-            yield return null;
-
-            // Assert 2: The LastSentCommand on the Mock MUST NOT have changed, proving the command was blocked.
-            Assert.AreEqual(initialCommand, clientConnectorMock.LastSentCommand, "Unauthenticated command must be blocked, keeping the previous command in the mock.");
-            Assert.IsFalse(clientAuthHarness.IsAuthenticated, "Client should still be unauthenticated.");
-        }
     }
 }

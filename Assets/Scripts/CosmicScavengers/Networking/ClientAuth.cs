@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using CosmicScavengers.Core.Events;
 
 namespace CosmicScavengers.Networking
 {
@@ -11,8 +12,9 @@ namespace CosmicScavengers.Networking
     {
         [SerializeField]
         protected ClientConnector connector;
-        // Fired upon successful login or registration. The GameFlowController subscribes to this.
-        public event Action<long> OnAuthenticated;
+
+        [Header("Event Channels")]
+        [SerializeField] private PlayerAuthenticatedEventChannel onAuthenticatedEvent;
         protected long playerId = -1; // -1 means not logged in
         protected bool IsAuthenticated => playerId != -1;
 
@@ -77,7 +79,10 @@ namespace CosmicScavengers.Networking
                     {
                         playerId = id;
                         Debug.Log($"Login successful! Player ID: {playerId}. Starting game flow...");
-                        OnAuthenticated?.Invoke(playerId); // Signal the GameFlowController to proceed
+                        if (onAuthenticatedEvent != null)
+                        {
+                            onAuthenticatedEvent.Raise(playerId);
+                        }
                     }
                     else
                     {
@@ -104,7 +109,7 @@ namespace CosmicScavengers.Networking
         {
             if (connector != null && connector.IsConnected)
             {
-                connector.SendInput($"C_REGISTER|{username}|{password}");
+                connector.SendText($"C_REGISTER|{username}|{password}");
             }
             else
             {
@@ -117,28 +122,11 @@ namespace CosmicScavengers.Networking
             Debug.Log($"Attempting login for user: {username}");
             if (connector != null && connector.IsConnected)
             {
-                connector.SendInput($"C_LOGIN|{username}|{password}");
+                connector.SendText($"C_LOGIN|{username}|{password}");
             }
             else
             {
                 Debug.LogError("Cannot log in: Client is not connected to the server.");
-            }
-        }
-
-        /// <summary>
-        /// A convenient wrapper to send a game command, ensuring authentication status is checked first.
-        /// </summary>
-        public void SendAuthenticatedCommand(string command)
-        {
-            Debug.Log($"[ClientAuth] Sending command: {command}");
-            if (IsAuthenticated)
-            {
-                // This command is passed to the low-level connector
-                connector.SendInput(command);
-            }
-            else
-            {
-                Debug.LogWarning("Command blocked: Cannot send command because user is not authenticated.");
             }
         }
     }

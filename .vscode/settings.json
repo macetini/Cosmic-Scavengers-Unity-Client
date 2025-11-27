@@ -68,6 +68,7 @@
     },
     "dotnet.defaultSolution": "Cosmic-Scavengers-Unity-Client.sln",
     "cSpell.words": [
-        "Lerp"
+        "Lerp",
+        "Scriptable"
     ]
 }

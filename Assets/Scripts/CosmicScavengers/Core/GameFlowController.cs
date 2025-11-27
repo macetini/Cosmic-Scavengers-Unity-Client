@@ -1,5 +1,6 @@
 using UnityEngine;
-using CosmicScavengers.Networking; // Import the namespace where ClientAuth lives
+using System;
+using CosmicScavengers.Networking;
 using UnityEngine.SceneManagement; // For loading the main game scene
 
 namespace CosmicScavengers.Core
@@ -10,44 +11,17 @@ namespace CosmicScavengers.Core
     /// </summary>
     public class GameFlowController : MonoBehaviour
     {
-        [Tooltip("The ClientAuth component responsible for handling authentication.")]
-        [SerializeField]
-        private ClientAuth clientAuth;
-
         [Tooltip("The name of the scene to load after successful authentication.")]
         public string mainGameSceneName = "MainGameWorld";
         private bool isGameFlowStarted = false;
-
-        void Start()
-        {
-            if (clientAuth == null)
-            {
-                Debug.LogError("[GameFlowController] ClientAuth reference is missing. Cannot subscribe to events.");
-                return;
-            }
-
-            clientAuth.OnAuthenticated += StartGameSession;
-            Debug.Log("[GameFlowController] Subscribed to ClientAuth.OnAuthenticated. Awaiting login confirmation...");
-        }
-
-        void OnDestroy()
-        {
-            // Ensure the subscription is cleaned up when the GameObject is destroyed
-            if (clientAuth != null)
-            {
-                clientAuth.OnAuthenticated -= StartGameSession;
-            }
-        }
 
         /// <summary>
         /// Triggered directly by the ClientAuth component after a successful S_LOGIN_OK.
         /// This is the entry point into the actual game.
         /// </summary>
         /// <param name="playerId">The ID of the successfully authenticated player.</param>
-        private void StartGameSession(long playerId)
+        public void StartGameSession(long playerId)
         {
-            clientAuth.OnAuthenticated -= StartGameSession;
-
             if (isGameFlowStarted)
             {
                 Debug.LogWarning("[GameFlowController] StartGameSession called multiple times. Ignoring subsequent calls.");
@@ -56,13 +30,12 @@ namespace CosmicScavengers.Core
 
             isGameFlowStarted = true;
             Debug.Log($"[GameFlow] Login confirmed with ID: {playerId}. Beginning asset loading and scene transition.");
-
-            // 1. Store the Player ID (e.g., in a static GameState or PlayerDataService)
-            // GameState.LocalPlayerID = playerId; 
-
+                        
             // 2. Request initial world data from the server
-            // Note: clientAuth is used here as a convenient wrapper for sending authenticated commands.
-            clientAuth.SendAuthenticatedCommand($"C_REQUEST_INITIAL_WORLD_STATE|{playerId}");
+            // Since we don't have a reference to ClientAuth anymore, we need another way
+            // to get the connector. A simple service locator or dependency injection
+            // for the connector would be a good next step. For now, we can find it.
+        
 
             // 3. Load the main game scene
             //LoadMainGameScene();
@@ -72,7 +45,10 @@ namespace CosmicScavengers.Core
 
             Debug.Log("[GameFlow] Initial requests sent and scene load initiated.");
         }
-
+        
+        /// <summary>
+        /// Loads the main game scene after successful authentication.
+        /// </summary>
         private void LoadMainGameScene()
         {
             if (!string.IsNullOrEmpty(mainGameSceneName))

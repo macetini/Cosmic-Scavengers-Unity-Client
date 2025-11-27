@@ -189,14 +189,14 @@ namespace CosmicScavengers.Networking
         /// Sends a text command, automatically framing it with MessageType.TEXT.
         /// Used by ClientAuth/Lobby Managers.
         /// </summary>
-        public virtual void SendInput(string command)
+        public virtual void SendText(string text)
         {
-            if (string.IsNullOrEmpty(command))
+            if (string.IsNullOrEmpty(text))
             {
                 Debug.LogWarning("Cannot send empty command.");
                 return;
             }
-            SendTypedMessage(Encoding.UTF8.GetBytes(command), MessageType.TEXT);
+            SendTypedMessage(Encoding.UTF8.GetBytes(text), MessageType.TEXT);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace CosmicScavengers.Networking
         public void InitHandshake()
         {
             Debug.Log("[Connector] Initiating handshake with server...");
-            SendInput("C_CONNECT");
+            SendText("C_CONNECT");
         }
 
         private void Cleanup()
