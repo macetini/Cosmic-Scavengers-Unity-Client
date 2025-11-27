@@ -30,12 +30,12 @@ namespace CosmicScavengers.Core
 
             isGameFlowStarted = true;
             Debug.Log($"[GameFlow] Login confirmed with ID: {playerId}. Beginning asset loading and scene transition.");
-                        
+
             // 2. Request initial world data from the server
             // Since we don't have a reference to ClientAuth anymore, we need another way
             // to get the connector. A simple service locator or dependency injection
             // for the connector would be a good next step. For now, we can find it.
-        
+            
 
             // 3. Load the main game scene
             //LoadMainGameScene();
