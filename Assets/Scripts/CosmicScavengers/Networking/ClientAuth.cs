@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
-using CosmicScavengers.Core.Events;
+using CosmicScavengers.Core;
+using CosmicScavengers.Networking.Event.Channels;
 
 namespace CosmicScavengers.Networking
 {
@@ -10,16 +11,22 @@ namespace CosmicScavengers.Networking
     /// </summary>
     public class ClientAuth : MonoBehaviour
     {
-        [SerializeField]
-        protected ClientConnector connector;
-
         [Header("Event Channels")]
-        [SerializeField] private PlayerAuthenticatedEventChannel onAuthenticatedEvent;
+
+        [SerializeField]
+        [Tooltip("Reference to the ClientConnector component for network communication.")]
+        private ClientConnector connector;
+
+        [SerializeField]
+        [Tooltip("Event channel to notify when the player is authenticated.")]
+        private PlayerAuthenticatedEventChannel onAuthenticatedEvent;
+
         protected long playerId = -1; // -1 means not logged in
         protected bool IsAuthenticated => playerId != -1;
 
         void Start()
         {
+
             if (connector == null)
             {
                 // Ensure dependency is assigned in the Inspector
@@ -52,7 +59,6 @@ namespace CosmicScavengers.Networking
         private void HandleAuthMessage(string rawMessage)
         {
             // Protocol Example: S_CONNECT_OK, S_LOGIN_FAIL|INVALID_CREDENTIALS, S_LOGIN_OK|12345
-
             string[] parts = rawMessage.Split('|');
             string command = parts[0];
 
@@ -73,7 +79,6 @@ namespace CosmicScavengers.Networking
                     //Debug.LogError($"Registration failed: {parts.ElementAtOrDefault(1) ?? "Unknown error."}");
                     // Notify UI to show the error message
                     break;
-
                 case "S_LOGIN_OK":
                     if (parts.Length > 1 && long.TryParse(parts[1], out long id))
                     {
@@ -103,13 +108,12 @@ namespace CosmicScavengers.Networking
         }
 
 
-        // --- Public Methods to send Auth Commands (Triggered by UI) ---
-
+        // --- Public Methods to send Auth Commands (Triggered by UI) ---        
         public void Register(string username, string password)
         {
             if (connector != null && connector.IsConnected)
             {
-                connector.SendText($"C_REGISTER|{username}|{password}");
+                connector.SendTextMessage($"C_REGISTER|{username}|{password}");
             }
             else
             {
@@ -122,7 +126,7 @@ namespace CosmicScavengers.Networking
             Debug.Log($"Attempting login for user: {username}");
             if (connector != null && connector.IsConnected)
             {
-                connector.SendText($"C_LOGIN|{username}|{password}");
+                connector.SendTextMessage($"C_LOGIN|{username}|{password}");
             }
             else
             {

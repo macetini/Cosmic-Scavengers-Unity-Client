@@ -148,6 +148,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 808927931}
   - {fileID: 1956342391}
   - {fileID: 820435661}
   m_Father: {fileID: 0}
@@ -416,6 +417,51 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &808927930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 808927931}
+  - component: {fileID: 808927932}
+  m_Layer: 0
+  m_Name: NetworkRequestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &808927931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808927930}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 195635507}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &808927932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808927930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d51572ee56b2c14da3c7b71049e2961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.NetworkRequestManager
+  clientConnector: {fileID: 1956342392}
 --- !u!1 &820435659
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,7 +601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4d2a47f0efd8c45af49c156e1c7717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.GameFlowController
-  mainGameSceneName: MainGameWorld
 --- !u!1 &1767694432
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,9 +649,10 @@ MonoBehaviour:
   onEventRaised:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1284201002}
-        m_TargetAssemblyTypeName: CosmicScavengers.Core.GameFlowController, CosmicScavenger
-        m_MethodName: StartGameSession
+      - m_Target: {fileID: 808927932}
+        m_TargetAssemblyTypeName: CosmicScavengers.Networking.NetworkRequestManager,
+          CosmicScavenger
+        m_MethodName: OnRequestWorldState
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -700,5 +746,5 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 195635507}
-  - {fileID: 1284201001}
   - {fileID: 1832630013}
+  - {fileID: 1284201001}

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using CosmicScavengers.Networking.Meta;
+using CosmicScavengers.Networking.Event.Channels;
 
 namespace CosmicScavengers.Networking
 {
@@ -19,6 +20,7 @@ namespace CosmicScavengers.Networking
         // --- Server Connection Details ---
         private const string HOST = "127.0.0.1";
         private const int PORT = 8080;
+
         private TcpClient client;
         private NetworkStream stream;
         private Thread clientThread;
@@ -47,6 +49,12 @@ namespace CosmicScavengers.Networking
                 IsBackground = true
             };
             clientThread.Start();
+        }
+
+        public void InitHandshake()
+        {
+            Debug.Log("[Connector] Initiating handshake with server...");
+            SendTextMessage("C_CONNECT");
         }
 
         /// <summary>
@@ -115,7 +123,7 @@ namespace CosmicScavengers.Networking
                     Debug.LogWarning("[Connector] Stream closed by server.");
                     return;
                 }
-                
+
                 // Convert Big-Endian (Netty) to local machine Endian
                 if (BitConverter.IsLittleEndian)
                 {
@@ -145,7 +153,7 @@ namespace CosmicScavengers.Networking
 
                 byte[] payloadData = new byte[payloadDataLength];
                 Array.Copy(fullPayloadBytes, 1, payloadData, 0, payloadDataLength);
-                
+
                 if (messageType == MessageType.TEXT)
                 {
                     string message = Encoding.UTF8.GetString(payloadData).Trim();
@@ -179,7 +187,11 @@ namespace CosmicScavengers.Networking
             while (totalBytesRead < count)
             {
                 int bytesRead = targetStream.Read(buffer, offset + totalBytesRead, count - totalBytesRead);
-                if (bytesRead == 0) return 0;
+                if (bytesRead == 0)
+                {
+                    Debug.LogWarning("[Connector] Stream closed by server.");
+                    return 0;
+                }
                 totalBytesRead += bytesRead;
             }
             return totalBytesRead;
@@ -189,7 +201,7 @@ namespace CosmicScavengers.Networking
         /// Sends a text command, automatically framing it with MessageType.TEXT.
         /// Used by ClientAuth/Lobby Managers.
         /// </summary>
-        public virtual void SendText(string text)
+        public virtual void SendTextMessage(string text)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -203,7 +215,7 @@ namespace CosmicScavengers.Networking
         /// Sends raw binary data, automatically framing it with MessageType.BINARY.
         /// Used by ClientGameState for high-frequency updates.
         /// </summary>
-        public virtual void SendBinary(byte[] data)
+        public virtual void SendBinaryMessage(byte[] data)
         {
             if (data == null || data.Length == 0)
             {
@@ -247,7 +259,6 @@ namespace CosmicScavengers.Networking
                 ms.Write(dataBytes, 0, dataBytes.Length);
 
                 byte[] finalBuffer = ms.ToArray();
-
                 lock (stream)
                 {
                     stream.Write(finalBuffer, 0, finalBuffer.Length);
@@ -264,12 +275,6 @@ namespace CosmicScavengers.Networking
         void OnApplicationQuit()
         {
             Cleanup();
-        }
-
-        public void InitHandshake()
-        {
-            Debug.Log("[Connector] Initiating handshake with server...");
-            SendText("C_CONNECT");
         }
 
         private void Cleanup()

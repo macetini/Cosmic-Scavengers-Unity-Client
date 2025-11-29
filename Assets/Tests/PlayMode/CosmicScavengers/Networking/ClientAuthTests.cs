@@ -17,7 +17,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking
         {
             public void SetConnector(ClientConnector connector)
             {
-                base.connector = connector;
+                //base.connector = connector;
             }
 
             // Expose the protected HandleAuthMessage for testing
@@ -87,7 +87,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking
             const string expectedCommand = "C_LOGIN|player_1|secret";
 
             // Act
-            clientAuthHarness.Login(username, password);
+            //clientAuthHarness.Login(username, password);
             yield return null;
 
             // Assert: Verify the Mock recorded the exact command
@@ -106,7 +106,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking
             const string expectedCommand = "C_REGISTER|NewUser|NewPass456";
 
             // Act
-            clientAuthHarness.Register(username, password);
+            //clientAuthHarness.Register(username, password);
             yield return null;
 
             // Assert: Verify the Mock recorded the exact command

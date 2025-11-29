@@ -1,7 +1,4 @@
 using UnityEngine;
-using System;
-using CosmicScavengers.Networking;
-using UnityEngine.SceneManagement; // For loading the main game scene
 
 namespace CosmicScavengers.Core
 {
@@ -11,8 +8,7 @@ namespace CosmicScavengers.Core
     /// </summary>
     public class GameFlowController : MonoBehaviour
     {
-        [Tooltip("The name of the scene to load after successful authentication.")]
-        public string mainGameSceneName = "MainGameWorld";
+    
         private bool isGameFlowStarted = false;
 
         /// <summary>
@@ -32,35 +28,13 @@ namespace CosmicScavengers.Core
             Debug.Log($"[GameFlow] Login confirmed with ID: {playerId}. Beginning asset loading and scene transition.");
 
             // 2. Request initial world data from the server
-            // Since we don't have a reference to ClientAuth anymore, we need another way
-            // to get the connector. A simple service locator or dependency injection
-            // for the connector would be a good next step. For now, we can find it.
             
-
-            // 3. Load the main game scene
+            // 3. Load the main game scene (uncomment when ready)
             //LoadMainGameScene();
 
             // 4. Update UI (e.g., hide the main menu/loading screen)
             // UIManager.Instance.HideConnectingUI(); 
-
             Debug.Log("[GameFlow] Initial requests sent and scene load initiated.");
-        }
-        
-        /// <summary>
-        /// Loads the main game scene after successful authentication.
-        /// </summary>
-        private void LoadMainGameScene()
-        {
-            if (!string.IsNullOrEmpty(mainGameSceneName))
-            {
-                Debug.Log($"[GameFlow] Loading scene: {mainGameSceneName}...");
-                // Use LoadSceneMode.Single to unload the current scene and load the game scene
-                SceneManager.LoadScene(mainGameSceneName, LoadSceneMode.Single);
-            }
-            else
-            {
-                Debug.LogWarning("[GameFlow] Main game scene name is not set. Assuming current scene is the game scene.");
-            }
         }
     }
 }

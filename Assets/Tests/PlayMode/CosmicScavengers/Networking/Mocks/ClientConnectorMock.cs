@@ -15,7 +15,6 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks
             LastSentCommand = string.Empty;
         }
 
-
         // --- MOCK FUNCTIONALITY: Simulate Inbound Messages ---
         // We need a public Action that ClientAuthTestHarness can subscribe to 
         // and redirect to ClientAuth.HandleAuthMessage.

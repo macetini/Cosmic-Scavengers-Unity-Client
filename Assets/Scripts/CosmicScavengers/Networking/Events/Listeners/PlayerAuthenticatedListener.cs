@@ -1,7 +1,8 @@
+using CosmicScavengers.Networking.Event.Channels;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CosmicScavengers.Core.Events
+namespace CosmicScavengers.Networking.Event.Listeners
 {
     /// <summary>
     /// A component that listens to a PlayerAuthenticatedEventChannel and invokes a UnityEvent in response.

@@ -1,6 +1,7 @@
+using CosmicScavengers.Core.Event;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Events
+namespace CosmicScavengers.Networking.Event.Channels
 {
     /// <summary>
     /// An event channel specifically for broadcasting when a player has been successfully authenticated.
