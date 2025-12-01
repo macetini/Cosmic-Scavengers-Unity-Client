@@ -6,7 +6,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using CosmicScavengers.Networking.Meta;
-using CosmicScavengers.Networking.Event.Channels;
 
 namespace CosmicScavengers.Networking
 {
@@ -181,7 +180,7 @@ namespace CosmicScavengers.Networking
             }
         }
 
-        private int ReadExactly(NetworkStream targetStream, byte[] buffer, int offset, int count)
+        private static int ReadExactly(NetworkStream targetStream, byte[] buffer, int offset, int count)
         {
             int totalBytesRead = 0;
             while (totalBytesRead < count)

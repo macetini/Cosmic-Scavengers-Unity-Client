@@ -83,7 +83,7 @@ namespace CosmicScavengers.Networking
                     if (parts.Length > 1 && long.TryParse(parts[1], out long id))
                     {
                         playerId = id;
-                        Debug.Log($"Login successful! Player ID: {playerId}. Starting game flow...");
+                        Debug.Log($"Login successful! Player ID: {playerId}.");
                         if (onAuthenticatedEvent != null)
                         {
                             onAuthenticatedEvent.Raise(playerId);
