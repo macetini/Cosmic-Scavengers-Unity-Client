@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using CosmicScavengers.Networking.Meta;
+using System.Net;
 
 namespace CosmicScavengers.Networking
 {
@@ -123,19 +124,18 @@ namespace CosmicScavengers.Networking
                     return;
                 }
 
-                // Convert Big-Endian (Netty) to local machine Endian
-                if (BitConverter.IsLittleEndian)
-                {
-                    Array.Reverse(lengthBytes);
-                }
+                // Convert Big-Endian (Network Order) bytes to local machine Endian (Host Order).
+                // This replaces the manual BitConverter.IsLittleEndian check and Array.Reverse.
+                int networkOrderValue = BitConverter.ToInt32(lengthBytes, 0);
+                int messageLength = IPAddress.NetworkToHostOrder(networkOrderValue);
 
-                int messageLength = BitConverter.ToInt32(lengthBytes, 0);
                 if (messageLength <= 0 || messageLength > 1024 * 1024)
                 {
                     Debug.LogError($"[Connector Error] Invalid message length received: {messageLength}.");
                     client.Close();
                     return;
                 }
+
 
                 // Read Payload (L bytes, including the 1-byte Type prefix)
                 byte[] fullPayloadBytes = new byte[messageLength];
@@ -306,9 +306,32 @@ namespace CosmicScavengers.Networking
             {
                 while (incomingBinaryMessages.Count > 0)
                 {
-                    OnBinaryMessageReceived?.Invoke(incomingBinaryMessages.Dequeue());
+                    byte[] data = incomingBinaryMessages.Dequeue();
+
+                    // --- DEBUG LOGGING ---
+                    Debug.Log($"[Connector Debug] Received Binary Message ({data.Length} bytes): {BytesToHexString(data)}");
+                    // ---------------------
+
+                    OnBinaryMessageReceived?.Invoke(data);
                 }
             }
+        }
+
+        private static string BytesToHexString(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length == 0) return "[]";
+
+            StringBuilder sb = new StringBuilder("[");
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("X2")); // "X2" formats byte as two-digit hexadecimal
+                if (i < bytes.Length - 1)
+                {
+                    sb.Append(" ");
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

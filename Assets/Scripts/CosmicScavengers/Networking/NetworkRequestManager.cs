@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using CosmicScavengers.Core.Models;
 using System.Text;
+using CosmicScavengers.Networking.Ext;
 
 namespace CosmicScavengers.Networking
 {
@@ -42,11 +43,11 @@ namespace CosmicScavengers.Networking
             }
             using var memoryStream = new MemoryStream(data);
             using var reader = new BinaryReader(memoryStream);
-            short command = reader.ReadInt16();
+            short command = reader.ReadInt16BE();
             switch (command)
             {
                 case NetworkCommands.REQUEST_WORLD_STATE:
-                    int payloadLength = reader.ReadInt32();
+                    int payloadLength = reader.ReadInt32BE();
                     byte[] worldStateData = reader.ReadBytes(payloadLength);
                     WorldState worldState = ParseWorldState(worldStateData);
                     Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldState);
@@ -71,8 +72,9 @@ namespace CosmicScavengers.Networking
             Debug.Log($"[NetworkRequestManager] Sending world state request for Player ID: {playerId}");
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
-            writer.Write(NetworkCommands.REQUEST_WORLD_STATE);
-            writer.Write(playerId);
+            writer.WriteInt16BE(NetworkCommands.REQUEST_WORLD_STATE);
+            writer.WriteInt64BE(playerId);
+            
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
 
@@ -85,10 +87,10 @@ namespace CosmicScavengers.Networking
             using (BinaryReader payloadReader = new(payloadStream))
             {
                 // 1. Read World ID (8 bytes, Little Endian)
-                state.WorldId = payloadReader.ReadInt64();
-                
+                state.WorldId = payloadReader.ReadInt64BE();
+
                 // 2. Read World Name Length (4 bytes, Little Endian)
-                int nameLength = payloadReader.ReadInt32();
+                int nameLength = payloadReader.ReadInt32BE();
 
                 // 3. Read World Name (variable length, using UTF-8)
                 // Read the specified number of bytes
@@ -97,10 +99,10 @@ namespace CosmicScavengers.Networking
                 state.WorldName = Encoding.UTF8.GetString(nameBytes);
 
                 // 4. Read Map Seed (4 bytes, Little Endian)
-                state.MapSeed = payloadReader.ReadInt64();
-                
+                state.MapSeed = payloadReader.ReadInt64BE();
+
                 // 5. Read Sector Size Units (4 bytes, Little Endian)
-                state.SectorSizeUnits = payloadReader.ReadInt32();
+                state.SectorSizeUnits = payloadReader.ReadInt32BE();
             }
 
             return state;

@@ -49,7 +49,7 @@ namespace CosmicScavengers.Networking
 
         void StartHandshake()
         {
-            Debug.Log("[ClientAuth] Connection established. Initiating handshake...");
+            Debug.Log("[ClientAuth] Connection established. Initiating handshake.");
             connector.InitHandshake();
         }
 
