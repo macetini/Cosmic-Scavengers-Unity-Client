@@ -41,7 +41,7 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
             // Example check: get elevation at origin
             float elevation = GetElevation(0, 0);
             Debug.Log($"[MapGenerator] Elevation at (0, 0) is: {elevation:F3}");
-            DrawDebugMap(100); // Draw a debug map slice
+            //DrawDebugMap(100); // Draw a debug map slice
         }
 
         /// <summary>

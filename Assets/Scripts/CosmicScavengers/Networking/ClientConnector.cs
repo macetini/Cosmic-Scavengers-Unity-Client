@@ -107,8 +107,7 @@ namespace CosmicScavengers.Networking
         {
             if (stream == null || !stream.CanRead)
             {
-                Debug.LogError("[Connector Error] Stream is not readable.");
-                return;
+                throw new IOException("Network stream is not readable.");                
             }
 
             const int LENGTH_FIELD_SIZE = 4;
