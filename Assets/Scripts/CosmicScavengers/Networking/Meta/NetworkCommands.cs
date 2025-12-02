@@ -6,6 +6,6 @@ namespace CosmicScavengers.Networking
     public static class NetworkCommands
     {
         // Client to Server Commands
-        public const short REQUEST_WORLD_STATE = 1;
+        public const short REQUEST_WORLD_DATA = 1;
     }
 }

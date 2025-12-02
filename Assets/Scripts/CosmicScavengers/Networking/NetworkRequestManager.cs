@@ -3,7 +3,8 @@ using System;
 using System.IO;
 using CosmicScavengers.Core.Models;
 using System.Text;
-using CosmicScavengers.Networking.Ext;
+using CosmicScavengers.Networking.Extensions;
+using CosmicScavengers.Networking.Event.Channels;
 
 namespace CosmicScavengers.Networking
 {
@@ -15,7 +16,12 @@ namespace CosmicScavengers.Networking
     {
         [Header("Dependencies")]
         [SerializeField]
+        [Tooltip("The ClientConnector responsible for low-level network communication.")]
         private ClientConnector clientConnector;
+
+        [SerializeField]
+        [Tooltip("Event channel to notify when the player is authenticated.")]
+        private GetWorldDataEventChannel getWorldDataEventChannel;
 
         void Start()
         {
@@ -46,11 +52,12 @@ namespace CosmicScavengers.Networking
             short command = reader.ReadInt16BE();
             switch (command)
             {
-                case NetworkCommands.REQUEST_WORLD_STATE:
+                case NetworkCommands.REQUEST_WORLD_DATA:
                     int payloadLength = reader.ReadInt32BE();
                     byte[] worldStateData = reader.ReadBytes(payloadLength);
-                    WorldState worldState = ParseWorldState(worldStateData);
-                    Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldState);
+                    WorldData worldData = ParseWorldState(worldStateData);
+                    Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldData);
+                    getWorldDataEventChannel.Raise(worldData.MapSeed);
                     break;
                 // Handle different command types here
                 default:
@@ -72,23 +79,22 @@ namespace CosmicScavengers.Networking
             Debug.Log($"[NetworkRequestManager] Sending world state request for Player ID: {playerId}");
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
-            writer.WriteInt16BE(NetworkCommands.REQUEST_WORLD_STATE);
+            writer.WriteInt16BE(NetworkCommands.REQUEST_WORLD_DATA);
             writer.WriteInt64BE(playerId);
-            
+
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
 
-        private WorldState ParseWorldState(byte[] worldStateData)
+        private WorldData ParseWorldState(byte[] worldStateData)
         {
-            WorldState state = new();
+            WorldData worldData = new();
 
             // Create a new MemoryStream and BinaryReader specifically for the payload
             using (MemoryStream payloadStream = new(worldStateData))
             using (BinaryReader payloadReader = new(payloadStream))
             {
                 // 1. Read World ID (8 bytes, Little Endian)
-                state.WorldId = payloadReader.ReadInt64BE();
-
+                worldData.WorldId = payloadReader.ReadInt64BE();
                 // 2. Read World Name Length (4 bytes, Little Endian)
                 int nameLength = payloadReader.ReadInt32BE();
 
@@ -96,16 +102,15 @@ namespace CosmicScavengers.Networking
                 // Read the specified number of bytes
                 byte[] nameBytes = payloadReader.ReadBytes(nameLength);
                 // Convert bytes to string using the agreed-upon encoding (usually UTF-8)
-                state.WorldName = Encoding.UTF8.GetString(nameBytes);
+                worldData.WorldName = Encoding.UTF8.GetString(nameBytes);
 
                 // 4. Read Map Seed (4 bytes, Little Endian)
-                state.MapSeed = payloadReader.ReadInt64BE();
-
+                worldData.MapSeed = payloadReader.ReadInt64BE();
                 // 5. Read Sector Size Units (4 bytes, Little Endian)
-                state.SectorSizeUnits = payloadReader.ReadInt32BE();
+                worldData.SectorSizeUnits = payloadReader.ReadInt32BE();
             }
 
-            return state;
+            return worldData;
         }
     }
 }

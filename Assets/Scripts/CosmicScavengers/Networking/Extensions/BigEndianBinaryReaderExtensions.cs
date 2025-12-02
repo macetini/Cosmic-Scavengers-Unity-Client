@@ -2,7 +2,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices; // Required for Extension methods
 
-namespace CosmicScavengers.Networking.Ext
+namespace CosmicScavengers.Networking.Extensions
 {
     /// <summary>
     /// Provides extension methods for System.IO.BinaryReader to support reading

@@ -66,10 +66,9 @@ namespace CosmicScavengers.Networking
             {
                 client = new TcpClient(HOST, PORT);
                 stream = client.GetStream();
-
                 if (!client.Connected)
                 {
-                    Debug.LogError("[Connector Error] Unable to connect to server.");
+                    Debug.LogError("[Connector Error] Failed to connect to server.");
                     return;
                 }
                 Debug.Log("[Connector] Successfully connected to the multiplexed server!");
@@ -120,12 +119,10 @@ namespace CosmicScavengers.Networking
                 // Read the 4-byte length prefix
                 if (ReadExactly(stream, lengthBytes, 0, LENGTH_FIELD_SIZE) == 0)
                 {
-                    Debug.LogWarning("[Connector] Stream closed by server.");
-                    return;
+                    throw new IOException("[Connector Error] Stream closed by server.");
                 }
 
-                // Convert Big-Endian (Network Order) bytes to local machine Endian (Host Order).
-                // This replaces the manual BitConverter.IsLittleEndian check and Array.Reverse.
+                // Convert Big-Endian (Network Order) bytes to local machine Endian (Host Order).                
                 int networkOrderValue = BitConverter.ToInt32(lengthBytes, 0);
                 int messageLength = IPAddress.NetworkToHostOrder(networkOrderValue);
 
@@ -136,10 +133,10 @@ namespace CosmicScavengers.Networking
                     return;
                 }
 
-
                 // Read Payload (L bytes, including the 1-byte Type prefix)
                 byte[] fullPayloadBytes = new byte[messageLength];
                 ReadExactly(stream, fullPayloadBytes, 0, messageLength);
+
                 // Extract Type and Payload Data
                 MessageType messageType = (MessageType)fullPayloadBytes[0];
 
@@ -188,8 +185,7 @@ namespace CosmicScavengers.Networking
                 int bytesRead = targetStream.Read(buffer, offset + totalBytesRead, count - totalBytesRead);
                 if (bytesRead == 0)
                 {
-                    Debug.LogWarning("[Connector] Stream closed by server.");
-                    return 0;
+                    throw new IOException("Stream closed by server.");
                 }
                 totalBytesRead += bytesRead;
             }
@@ -309,7 +305,7 @@ namespace CosmicScavengers.Networking
                     byte[] data = incomingBinaryMessages.Dequeue();
 
                     // --- DEBUG LOGGING ---
-                    Debug.Log($"[Connector Debug] Received Binary Message ({data.Length} bytes): {BytesToHexString(data)}");
+                    // Debug.Log($"[Connector Debug] Received Binary Message ({data.Length} bytes): {BytesToHexString(data)}");
                     // ---------------------
 
                     OnBinaryMessageReceived?.Invoke(data);
@@ -321,7 +317,7 @@ namespace CosmicScavengers.Networking
         {
             if (bytes == null || bytes.Length == 0) return "[]";
 
-            StringBuilder sb = new StringBuilder("[");
+            StringBuilder sb = new("[");
             for (int i = 0; i < bytes.Length; i++)
             {
                 sb.Append(bytes[i].ToString("X2")); // "X2" formats byte as two-digit hexadecimal

@@ -8,7 +8,6 @@ namespace CosmicScavengers.Core
     /// </summary>
     public class GameFlowController : MonoBehaviour
     {
-    
         private bool isGameFlowStarted = false;
 
         /// <summary>

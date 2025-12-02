@@ -2,7 +2,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 
-namespace CosmicScavengers.Networking.Ext
+namespace CosmicScavengers.Networking.Extensions
 {
     /// <summary>
     /// Provides extension methods for System.IO.BinaryWriter to support writing

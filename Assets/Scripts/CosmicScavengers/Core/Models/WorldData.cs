@@ -1,6 +1,6 @@
 namespace CosmicScavengers.Core.Models
 {
-    public class WorldState
+    public class WorldData
     {
         public long WorldId { get; set; }
         public string WorldName { get; set; }
