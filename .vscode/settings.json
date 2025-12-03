@@ -71,6 +71,7 @@
         "Lerp",
         "Mathf",
         "Perlin",
-        "Scriptable"
+        "Scriptable",
+        "WASD"
     ]
 }
