@@ -5,7 +5,7 @@ namespace CosmicScavengers.Networking
     /// </summary>
     public static class NetworkCommands
     {
-        // Client to Server Commands
         public const short REQUEST_WORLD_DATA = 1;
+        public const short REQUEST_PLAYER_ENTITIES = 2;
     }
 }

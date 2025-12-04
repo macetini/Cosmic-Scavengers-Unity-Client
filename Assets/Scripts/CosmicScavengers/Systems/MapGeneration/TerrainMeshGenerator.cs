@@ -10,11 +10,13 @@ namespace CosmicScavengers.Systems.MapGeneration
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class TerrainMeshGenerator : MonoBehaviour
     {
+        [SerializeField]
         [Tooltip("The side length of the square map chunk (e.g., 64x64 grid).")]
-        public int mapSize = 64;
+        private int mapSize = 64;
 
+        [SerializeField]
         [Tooltip("The size of each grid square in world units.")]
-        public float meshScale = 1.0f; 
+        private float meshScale = 1.0f; 
 
         [Header("References")]
         [SerializeField]
@@ -58,15 +60,15 @@ namespace CosmicScavengers.Systems.MapGeneration
                 for (int x = 0; x < mapSize; x++)
                 {
                     // Calculate the world coordinates
-                    float worldX = (x * meshScale);
-                    float worldZ = (z * meshScale);
+                    float worldX = x * meshScale;
+                    float worldZ = z * meshScale;
 
                     // Query the elevation from the seeded MapGenerator (this is the Y component)
                     float elevation = mapGenerator.GetElevation(worldX, worldZ);
                     
                     // Center the terrain grid visually
-                    float offsetX = (mapSize * meshScale) / 2f;
-                    float offsetZ = (mapSize * meshScale) / 2f;
+                    float offsetX = mapSize * meshScale / 2f;
+                    float offsetZ = mapSize * meshScale / 2f;
 
                     vertices[vertIndex] = new Vector3(worldX - offsetX, elevation, worldZ - offsetZ);
 
@@ -97,7 +99,6 @@ namespace CosmicScavengers.Systems.MapGeneration
 
                         triIndex += 6;
                     }
-
                     vertIndex++;
                 }
             }

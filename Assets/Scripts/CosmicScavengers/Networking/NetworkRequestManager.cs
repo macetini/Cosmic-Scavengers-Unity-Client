@@ -59,7 +59,9 @@ namespace CosmicScavengers.Networking
                     Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldData);
                     getWorldDataEventChannel.Raise(worldData.MapSeed);
                     break;
-                // Handle different command types here
+                case NetworkCommands.REQUEST_PLAYER_ENTITIES:                    
+                    Debug.Log("[NetworkRequestManager] Received player entities response from server.");
+                    break;
                 default:
                     Debug.LogWarning("[NetworkRequestManager] Unhandled command received: " + command);
                     break;
@@ -111,6 +113,17 @@ namespace CosmicScavengers.Networking
             }
 
             return worldData;
+        }
+
+        public void OnRequestPlayerEntities(long playerId)
+        {
+            Debug.Log($"[NetworkRequestManager] Sending player entities request for Player ID: {playerId}");
+            using var memoryStream = new MemoryStream();
+            using var writer = new BinaryWriter(memoryStream);
+            writer.WriteInt16BE(NetworkCommands.REQUEST_PLAYER_ENTITIES);
+            writer.WriteInt64BE(playerId);
+
+            clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
     }
 }
