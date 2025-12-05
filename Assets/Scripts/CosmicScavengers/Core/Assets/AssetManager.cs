@@ -26,8 +26,8 @@ namespace CosmicScavengers.Core.Assets
         private void SpawnEntity(long id, Vector3 pos, Quaternion rot)
         {
             if (entities.ContainsKey(id))
-            {
-                Debug.LogWarning($"[AssetManager] Attempted to spawn entity with duplicate ID: {id}");
+            {                
+                UpdateEntity(id, pos, rot);
                 return;
             }
 

@@ -15,7 +15,7 @@ namespace CosmicScavengers.Core.Event
     {
         [Tooltip("The action to perform when this event is raised.")]
         private UnityAction<T> onEventRaised;
-        
+
         // A dictionary to keep track of the wrapped listeners for correct removal.
         private readonly Dictionary<UnityAction<object>, UnityAction<T>> _wrappedListeners = new();
 
@@ -25,9 +25,6 @@ namespace CosmicScavengers.Core.Event
         }
 
         public void AddListener(UnityAction<T> listener) => onEventRaised += listener;
-
-        public void RemoveListener(UnityAction<T> listener) => onEventRaised -= listener;
-
         public override void AddListener(UnityAction<object> listener)
         {
             if (!_wrappedListeners.ContainsKey(listener))
@@ -38,6 +35,7 @@ namespace CosmicScavengers.Core.Event
             }
         }
 
+        public void RemoveListener(UnityAction<T> listener) => onEventRaised -= listener;
         public override void RemoveListener(UnityAction<object> listener)
         {
             if (_wrappedListeners.TryGetValue(listener, out UnityAction<T> wrappedListener))

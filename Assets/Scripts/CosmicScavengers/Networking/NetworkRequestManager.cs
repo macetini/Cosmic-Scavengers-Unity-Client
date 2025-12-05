@@ -63,7 +63,7 @@ namespace CosmicScavengers.Networking
                     byte[] worldStateData = reader.ReadBytes(payloadLength);
                     WorldData worldData = ParseWorldState(worldStateData);
                     Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldData);
-                    getWorldDataEventChannel.Raise(worldData.MapSeed);
+                    getWorldDataEventChannel.Raise(worldData);
                     break;
                 case NetworkCommands.REQUEST_PLAYER_ENTITIES:
                     payloadLength = reader.ReadInt32BE();

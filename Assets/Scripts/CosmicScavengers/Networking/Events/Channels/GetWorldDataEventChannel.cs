@@ -1,4 +1,5 @@
 using CosmicScavengers.Core.Event;
+using CosmicScavengers.Core.Models;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Event.Channels
@@ -7,5 +8,5 @@ namespace CosmicScavengers.Networking.Event.Channels
     /// Event channel for broadcasting when world data is received.
     /// </summary>
     [CreateAssetMenu(menuName = "Events/GetWorldDataEventChannel")]
-    public class GetWorldDataEventChannel : EventChannel<long> { }
+    public class GetWorldDataEventChannel : EventChannel<WorldData> { }
 }

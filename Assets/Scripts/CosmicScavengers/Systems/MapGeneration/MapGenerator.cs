@@ -1,9 +1,9 @@
 using System.Text;
-using CosmicScavengers.Core.Models;
 using UnityEngine;
 
 namespace CosmicScavengers.Systems.MapGeneration.Noise
 {
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class MapGenerator : MonoBehaviour
     {
         // Configuration for the noise function
@@ -22,21 +22,16 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
 
         [Header("Height Map Parameters")]
         [Tooltip("Maximum vertical scale of the terrain (e.g., how high mountains can be).")]
-        public float maxElevation = 100f;
-
-        // World Data reference (should be set by a manager after connection)
-        //private WorldData _currentWorldData;
+        public float maxElevation = 100f;        
         private bool _isSeeded = false;
 
         public void GenerateMap(long mapSeed)
         {
-            //_currentWorldData = data;
-
-            // 1. Initialize the static noise generator with the map seed
+            // Initialize the static noise generator with the map seed
             NoiseGenerator.SetSeed(mapSeed);
             _isSeeded = true;
 
-            //Debug.Log($"[MapGenerator] 2D Height Map system ready for World '{data.WorldName}' (Seed: {data.MapSeed}).");
+            Debug.Log($"[MapGenerator] Map generated with seed: {mapSeed}");
 
             // Example check: get elevation at origin
             float elevation = GetElevation(0, 0);
