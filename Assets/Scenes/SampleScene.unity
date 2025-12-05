@@ -345,13 +345,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030843573, y: -0.7064338, z: 0.030843573, w: 0.7064338}
-  m_LocalPosition: {x: 45, y: 5, z: 0}
+  m_LocalRotation: {x: 0.15304591, y: -0.6903456, z: 0.15304591, w: 0.6903456}
+  m_LocalPosition: {x: 12, y: 6, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 5, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 25, y: -90, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +538,51 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &807366149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807366150}
+  - component: {fileID: 807366151}
+  m_Layer: 0
+  m_Name: AssetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &807366150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807366149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &807366151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807366149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b0b647910b61244a7d382f4ddc1ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Assets.AssetManager
+  spaceStationPrefab: {fileID: 6727067349632393677, guid: 10189d3855dc03a4a94a2a36ee45cd68, type: 3}
 --- !u!1 &808927930
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.NetworkRequestManager
   clientConnector: {fileID: 1956342392}
   getWorldDataEventChannel: {fileID: 11400000, guid: 2614e2c5a8330a248be0e0176fab9b0c, type: 2}
+  entitiesUpdateEventChannel: {fileID: 11400000, guid: a3f53e25393625349862a0f820a5a3fe, type: 2}
 --- !u!1 &820435659
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +832,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4d2a47f0efd8c45af49c156e1c7717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.GameFlowController
+--- !u!1 &1356809321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1356809322}
+  - component: {fileID: 1356809323}
+  m_Layer: 0
+  m_Name: EntitiesUpdateEventListener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1356809322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356809321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1832630013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1356809323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356809321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d07a10137e74b4780c037c36aa31cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Event.Listeners.EntitiesUpdateEventListener
+  eventChannel: {fileID: 11400000, guid: a3f53e25393625349862a0f820a5a3fe, type: 2}
+  onEventRaised:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 807366151}
+        m_TargetAssemblyTypeName: CosmicScavengers.Core.Assets.AssetManager, CosmicScavenger
+        m_MethodName: HandleEntitiesUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1767694432
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +997,7 @@ Transform:
   m_Children:
   - {fileID: 1767694433}
   - {fileID: 1030324743}
+  - {fileID: 1356809322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1932860779
@@ -995,3 +1102,4 @@ SceneRoots:
   - {fileID: 195635507}
   - {fileID: 1832630013}
   - {fileID: 1284201001}
+  - {fileID: 807366150}

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class PlayerEntity
+public class EntityData
 {
     public long Id { get; set; }
     public long PlayerId { get; set; }    
     public long WorldId { get; set; }
-    public string EntityType { get; set; }
+    public string Type { get; set; }
     public int ChunkX { get; set; }
     public int ChunkY { get; set; }
     public float PosX { get; set; }

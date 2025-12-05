@@ -24,6 +24,8 @@ namespace CosmicScavengers.Networking
         [Tooltip("Event channel to notify when the player is authenticated.")]
         private GetWorldDataEventChannel getWorldDataEventChannel;
 
+        public EntitiesUpdateEventChannel entitiesUpdateEventChannel;
+
         void Start()
         {
             if (clientConnector == null)
@@ -66,15 +68,16 @@ namespace CosmicScavengers.Networking
                 case NetworkCommands.REQUEST_PLAYER_ENTITIES:
                     payloadLength = reader.ReadInt32BE();
                     byte[] playerEntitiesData = reader.ReadBytes(payloadLength);
-                    List<PlayerEntity> playerEntities = ParsePlayerEntities(playerEntitiesData);
+                    List<EntityData> playerEntities = ParsePlayerEntities(playerEntitiesData);
                     Debug.Log("[NetworkRequestManager] Received player entities response from server. Count: " + playerEntities.Count);
+
+                    entitiesUpdateEventChannel.Raise(playerEntities);
                     break;
                 default:
                     Debug.LogWarning("[NetworkRequestManager] Unhandled command received: " + command);
                     break;
             }
         }
-
 
         /// <summary>
         /// Sends a request to the server to retrieve the initial world state for the authenticated player.
@@ -132,9 +135,9 @@ namespace CosmicScavengers.Networking
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
 
-        private static List<PlayerEntity> ParsePlayerEntities(byte[] playerEntitiesData)
+        private static List<EntityData> ParsePlayerEntities(byte[] playerEntitiesData)
         {
-            List<PlayerEntity> playerEntities;
+            List<EntityData> playerEntities;
 
             // Create a new MemoryStream and BinaryReader specifically for the payload
             using (MemoryStream payloadStream = new(playerEntitiesData))
@@ -142,11 +145,11 @@ namespace CosmicScavengers.Networking
             {
                 // Read the number of player entities (4 bytes, Little Endian)
                 int entityCount = payloadReader.ReadInt32BE();
-                playerEntities = new List<PlayerEntity>(entityCount);
+                playerEntities = new List<EntityData>(entityCount);
 
                 for (int i = 0; i < entityCount; i++)
                 {
-                    PlayerEntity entity = new()
+                    EntityData entity = new()
                     {
                         Id = payloadReader.ReadInt64BE(),
                         PlayerId = payloadReader.ReadInt64BE(),
@@ -154,7 +157,7 @@ namespace CosmicScavengers.Networking
 
                         //int entityTypeLength = payloadReader.ReadInt32BE();
                         //byte[] entityTypeBytes = payloadReader.ReadBytes(entityTypeLength);
-                        //entity.EntityType = Encoding.UTF8.GetString(entityTypeBytes);
+                        //entity.Type = Encoding.UTF8.GetString(entityTypeBytes);
 
                         ChunkX = payloadReader.ReadInt32BE(),
                         ChunkY = payloadReader.ReadInt32BE(),
@@ -165,7 +168,7 @@ namespace CosmicScavengers.Networking
                         Health = payloadReader.ReadInt32BE()
                     };
 
-                    Debug.Log($"[NetworkRequestManager] Parsed PlayerEntity: ID={entity.Id}, PlayerID={entity.PlayerId}, WorldID={entity.WorldId}, Chunk=({entity.ChunkX},{entity.ChunkY}), Position=({entity.PosX},{entity.PosY}), Health={entity.Health}");
+                    //Debug.Log($"[NetworkRequestManager] Parsed EntityData: ID={entity.Id}, PlayerID={entity.PlayerId}, WorldID={entity.WorldId}, Chunk=({entity.ChunkX},{entity.ChunkY}), Position=({entity.PosX},{entity.PosY}), Health={entity.Health}");
 
                     playerEntities.Add(entity);
                 }
