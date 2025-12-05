@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices; // Required for Extension methods
@@ -25,6 +26,16 @@ namespace CosmicScavengers.Networking.Extensions
             short networkValue = reader.ReadInt16();
             // Convert from Network (BE) to Host (LE).
             return IPAddress.NetworkToHostOrder(networkValue);
+        }
+
+        /// <summary>
+        /// Reads a 16-bit signed integer (short) and converts it from
+        /// Big Endian (Network Order) to Host (Little Endian) order.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short ReadShort(this BinaryReader reader)
+        {
+            return reader.ReadInt16BE();
         }
 
         /// <summary>
@@ -57,6 +68,16 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
+        /// Reads a 32-bit signed integer (int) and converts it from
+        /// Big Endian (Network Order) to Host (Little Endian) order.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int ReadInt(this BinaryReader reader)
+        {
+            return reader.ReadInt32BE();
+        }
+
+        /// <summary>
         /// Reads a 32-bit unsigned integer (uint) and converts it from 
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
@@ -86,6 +107,16 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
+        /// Reads a 64-bit signed integer (long) and converts it from
+        /// Big Endian (Network Order) to Host (Little Endian) order.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long ReadLong(this BinaryReader reader)
+        {
+            return reader.ReadInt64BE();
+        }
+
+        /// <summary>
         /// Reads a 64-bit unsigned integer (ulong) and converts it from 
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
@@ -96,6 +127,32 @@ namespace CosmicScavengers.Networking.Extensions
             long signedNetworkValue = reader.ReadInt64();
             long signedHostValue = IPAddress.NetworkToHostOrder(signedNetworkValue);
             return unchecked((ulong)signedHostValue);
+        }
+
+        /// <summary>
+        /// Reads a 32-bit floating point number (float) in Big Endian (Network Order).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float ReadFloat32BE(this BinaryReader reader)
+        {
+            byte[] bytes = reader.ReadBytes(4);
+            if (bytes.Length < 4)
+            {
+                throw new EndOfStreamException("Unable to read 4 bytes for a float value.");
+            }
+
+            // Reverse the byte array to convert from BE to LE.
+            Array.Reverse(bytes);
+            return BitConverter.ToSingle(bytes, 0);
+        }
+
+        /// <summary>
+        /// Reads a 32-bit floating point number (float) in Big Endian (Network Order).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double ReadFloat(this BinaryReader reader)
+        {
+            return reader.ReadFloat32BE();
         }
     }
 }

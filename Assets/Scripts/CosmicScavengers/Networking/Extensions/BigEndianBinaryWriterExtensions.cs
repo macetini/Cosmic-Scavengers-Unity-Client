@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -25,7 +26,7 @@ namespace CosmicScavengers.Networking.Extensions
             // Write the converted value (Netty/Java will read this as BE)
             writer.Write(networkValue);
         }
-        
+
         /// <summary>
         /// Writes a 16-bit unsigned integer (ushort).
         /// </summary>
@@ -87,6 +88,20 @@ namespace CosmicScavengers.Networking.Extensions
         {
             long signedNetworkValue = IPAddress.HostToNetworkOrder(unchecked((long)hostValue));
             writer.Write(signedNetworkValue);
+        }
+
+        /// <summary>
+        /// Writes a 32-bit floating point number (float) in Big Endian (Network Order).    
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteFloat32BE(this BinaryWriter writer, float value)
+        {
+            byte[] floatBytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(floatBytes);
+            }
+            writer.Write(floatBytes);
         }
     }
 }
