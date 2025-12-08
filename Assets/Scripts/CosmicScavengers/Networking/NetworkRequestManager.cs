@@ -144,28 +144,27 @@ namespace CosmicScavengers.Networking
             using (BinaryReader payloadReader = new(payloadStream))
             {
                 // Read the number of player entities (4 bytes, Little Endian)
-                int entityCount = payloadReader.ReadInt32BE();
+                int entityCount = payloadReader.ReadInt();
                 playerEntities = new List<EntityData>(entityCount);
-
                 for (int i = 0; i < entityCount; i++)
                 {
                     EntityData entity = new()
                     {
-                        Id = payloadReader.ReadInt64BE(),
-                        PlayerId = payloadReader.ReadInt64BE(),
-                        WorldId = payloadReader.ReadInt64BE(),
+                        Id = payloadReader.ReadLong(),
+                        //PlayerId = payloadReader.ReadInt64BE(),
+                        //WorldId = payloadReader.ReadInt64BE(),
 
                         //int entityTypeLength = payloadReader.ReadInt32BE();
                         //byte[] entityTypeBytes = payloadReader.ReadBytes(entityTypeLength);
                         //entity.Type = Encoding.UTF8.GetString(entityTypeBytes);
 
-                        ChunkX = payloadReader.ReadInt32BE(),
-                        ChunkY = payloadReader.ReadInt32BE(),
+                        ChunkX = payloadReader.ReadInt(),
+                        ChunkY = payloadReader.ReadInt(),
 
-                        PosX = payloadReader.ReadFloat32BE(),
-                        PosY = payloadReader.ReadFloat32BE(),
+                        PosX = payloadReader.ReadFloat(),
+                        PosY = payloadReader.ReadFloat(),
 
-                        Health = payloadReader.ReadInt32BE()
+                        Health = payloadReader.ReadInt()
                     };
 
                     //Debug.Log($"[NetworkRequestManager] Parsed EntityData: ID={entity.Id}, PlayerID={entity.PlayerId}, WorldID={entity.WorldId}, Chunk=({entity.ChunkX},{entity.ChunkY}), Position=({entity.PosX},{entity.PosY}), Health={entity.Health}");

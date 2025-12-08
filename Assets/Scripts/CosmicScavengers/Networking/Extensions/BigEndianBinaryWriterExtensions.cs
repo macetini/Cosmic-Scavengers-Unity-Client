@@ -28,6 +28,15 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
+        /// Writes a 16-bit signed integer (short).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteShort(this BinaryWriter writer, short hostValue)
+        {
+            writer.WriteInt16BE(hostValue);
+        }
+
+        /// <summary>
         /// Writes a 16-bit unsigned integer (ushort).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -52,6 +61,15 @@ namespace CosmicScavengers.Networking.Extensions
             int networkValue = IPAddress.HostToNetworkOrder(hostValue);
             // Write the converted value
             writer.Write(networkValue);
+        }
+
+        /// <summary>
+        /// Writes a 32-bit signed integer (int).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteInt(this BinaryWriter writer, int hostValue)
+        {
+            writer.WriteInt32BE(hostValue);
         }
 
         /// <summary>
@@ -81,6 +99,15 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
+        /// Writes a 64-bit signed integer (long).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteLong(this BinaryWriter writer, long hostValue)
+        {
+            writer.WriteInt64BE(hostValue);
+        }
+
+        /// <summary>
         /// Writes a 64-bit unsigned integer (ulong).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -102,6 +129,15 @@ namespace CosmicScavengers.Networking.Extensions
                 Array.Reverse(floatBytes);
             }
             writer.Write(floatBytes);
+        }
+
+        /// <summary>
+        /// Writes a 32-bit floating point number (float).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteFloat(this BinaryWriter writer, float value)
+        {
+            writer.WriteFloat32BE(value);
         }
     }
 }

@@ -150,7 +150,7 @@ namespace CosmicScavengers.Networking.Extensions
         /// Reads a 32-bit floating point number (float) in Big Endian (Network Order).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double ReadFloat(this BinaryReader reader)
+        public static float ReadFloat(this BinaryReader reader)
         {
             return reader.ReadFloat32BE();
         }
