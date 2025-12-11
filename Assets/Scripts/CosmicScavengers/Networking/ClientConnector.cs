@@ -43,7 +43,6 @@ namespace CosmicScavengers.Networking
 
         void Start()
         {
-            Debug.Log("[Connector] Attempting to connect to server...");
             clientThread = new Thread(ConnectToServer)
             {
                 IsBackground = true
@@ -53,7 +52,7 @@ namespace CosmicScavengers.Networking
 
         public void InitHandshake()
         {
-            Debug.Log("[Connector] Initiating handshake with server...");
+            Debug.Log("[Connector] Initiating handshake with server.");
             SendTextMessage("C_CONNECT");
         }
 
@@ -75,7 +74,7 @@ namespace CosmicScavengers.Networking
 
                 OnConnected?.Invoke();
 
-                // Start listening loop                
+                // Start listening loop
                 while (client.Connected)
                 {
                     ReadNextMessage();
@@ -107,7 +106,7 @@ namespace CosmicScavengers.Networking
         {
             if (stream == null || !stream.CanRead)
             {
-                throw new IOException("Network stream is not readable.");                
+                throw new IOException("Network stream is not readable.");
             }
 
             const int LENGTH_FIELD_SIZE = 4;

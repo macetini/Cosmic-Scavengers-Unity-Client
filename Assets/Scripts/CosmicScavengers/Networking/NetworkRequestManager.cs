@@ -58,19 +58,18 @@ namespace CosmicScavengers.Networking
             short command = reader.ReadInt16BE();
             switch (command)
             {
-                case NetworkCommands.REQUEST_WORLD_DATA:
-                    payloadLength = reader.ReadInt32BE();
+                case NetworkCommands.REQUEST_WORLD_DATA_S:
+                    payloadLength = reader.ReadInt();
                     byte[] worldStateData = reader.ReadBytes(payloadLength);
                     WorldData worldData = ParseWorldState(worldStateData);
                     Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldData);
                     getWorldDataEventChannel.Raise(worldData);
                     break;
-                case NetworkCommands.REQUEST_PLAYER_ENTITIES:
-                    payloadLength = reader.ReadInt32BE();
+                case NetworkCommands.REQUEST_PLAYER_ENTITIES_S:
+                    payloadLength = reader.ReadInt();
                     byte[] playerEntitiesData = reader.ReadBytes(payloadLength);
                     List<EntityData> playerEntities = ParsePlayerEntities(playerEntitiesData);
                     Debug.Log("[NetworkRequestManager] Received player entities response from server. Count: " + playerEntities.Count);
-
                     entitiesUpdateEventChannel.Raise(playerEntities);
                     break;
                 default:
@@ -90,8 +89,8 @@ namespace CosmicScavengers.Networking
             Debug.Log($"[NetworkRequestManager] Sending world state request for Player ID: {playerId}");
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
-            writer.WriteInt16BE(NetworkCommands.REQUEST_WORLD_DATA);
-            writer.WriteInt64BE(playerId);
+            writer.WriteShort(NetworkCommands.REQUEST_WORLD_DATA_C);
+            writer.WriteLong(playerId);
 
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
@@ -105,9 +104,9 @@ namespace CosmicScavengers.Networking
             using (BinaryReader payloadReader = new(payloadStream))
             {
                 // 1. Read World ID (8 bytes, Little Endian)
-                worldData.WorldId = payloadReader.ReadInt64BE();
+                worldData.WorldId = payloadReader.ReadLong();
                 // 2. Read World Name Length (4 bytes, Little Endian)
-                int nameLength = payloadReader.ReadInt32BE();
+                int nameLength = payloadReader.ReadInt();
 
                 // 3. Read World Name (variable length, using UTF-8)
                 // Read the specified number of bytes
@@ -116,9 +115,9 @@ namespace CosmicScavengers.Networking
                 worldData.WorldName = Encoding.UTF8.GetString(nameBytes);
 
                 // 4. Read Map Seed (4 bytes, Little Endian)
-                worldData.MapSeed = payloadReader.ReadInt64BE();
+                worldData.MapSeed = payloadReader.ReadLong();
                 // 5. Read Sector Size Units (4 bytes, Little Endian)
-                worldData.SectorSizeUnits = payloadReader.ReadInt32BE();
+                worldData.SectorSizeUnits = payloadReader.ReadInt();
             }
 
             return worldData;
@@ -129,10 +128,10 @@ namespace CosmicScavengers.Networking
             Debug.Log($"[NetworkRequestManager] Sending player entities request for Player ID: {playerId}");
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
-            writer.WriteInt16BE(NetworkCommands.REQUEST_PLAYER_ENTITIES);
-            writer.WriteInt64BE(playerId);
+            writer.WriteShort(NetworkCommands.REQUEST_PLAYER_ENTITIES_C);
+            writer.WriteLong(playerId);
 
-            clientConnector.SendBinaryMessage(memoryStream.ToArray());
+            //clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
 
         private static List<EntityData> ParsePlayerEntities(byte[] playerEntitiesData)
@@ -166,9 +165,7 @@ namespace CosmicScavengers.Networking
 
                         Health = payloadReader.ReadInt()
                     };
-
                     //Debug.Log($"[NetworkRequestManager] Parsed EntityData: ID={entity.Id}, PlayerID={entity.PlayerId}, WorldID={entity.WorldId}, Chunk=({entity.ChunkX},{entity.ChunkY}), Position=({entity.PosX},{entity.PosY}), Health={entity.Health}");
-
                     playerEntities.Add(entity);
                 }
             }
