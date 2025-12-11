@@ -170,16 +170,16 @@ MonoBehaviour:
   terrainTypes:
   - name: Ground
     height: 0
-    color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
+    color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
   - name: Terrain_2
     height: 3
-    color: {r: 0, g: 0.16986752, b: 1, a: 0}
+    color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0}
   - name: Terrain_3
     height: 5
-    color: {r: 1, g: 0.94832873, b: 0, a: 0}
+    color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0}
   - name: Terrain_4
     height: 100
-    color: {r: 1, g: 0.33167544, b: 0.25, a: 0}
+    color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0}
   mapGenerator: {fileID: 1932860781}
 --- !u!23 &84648543
 MeshRenderer:

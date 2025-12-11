@@ -131,7 +131,7 @@ namespace CosmicScavengers.Networking
             writer.WriteShort(NetworkCommands.REQUEST_PLAYER_ENTITIES_C);
             writer.WriteLong(playerId);
 
-            //clientConnector.SendBinaryMessage(memoryStream.ToArray());
+            clientConnector.SendBinaryMessage(memoryStream.ToArray());
         }
 
         private static List<EntityData> ParsePlayerEntities(byte[] playerEntitiesData)
