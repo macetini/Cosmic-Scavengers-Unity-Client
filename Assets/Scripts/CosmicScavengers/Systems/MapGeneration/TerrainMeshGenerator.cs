@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Models;
+using Cosmic.Scavengers.Generated;
 using CosmicScavengers.Systems.MapGeneration.Meta;
 using CosmicScavengers.Systems.MapGeneration.Noise;
 using UnityEngine;

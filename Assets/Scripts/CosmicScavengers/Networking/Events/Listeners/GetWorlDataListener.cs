@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Models;
+using Cosmic.Scavengers.Generated;
 using CosmicScavengers.Networking.Event.Channels;
 using UnityEngine;
 using UnityEngine.Events;

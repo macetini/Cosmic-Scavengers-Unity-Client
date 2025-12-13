@@ -170,7 +170,7 @@ MonoBehaviour:
   terrainTypes:
   - name: Ground
     height: 0
-    color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
+    color: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 0}
   - name: Terrain_2
     height: 3
     color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0}

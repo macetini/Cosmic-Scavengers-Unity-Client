@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using System.IO;
-using CosmicScavengers.Core.Models;
 using System.Text;
 using CosmicScavengers.Networking.Extensions;
 using CosmicScavengers.Networking.Event.Channels;
@@ -55,15 +54,15 @@ namespace CosmicScavengers.Networking
 
             using var memoryStream = new MemoryStream(data);
             using var reader = new BinaryReader(memoryStream);
-            short command = reader.ReadInt16BE();
+            short command = reader.ReadShort();
             switch (command)
             {
                 case NetworkCommands.REQUEST_WORLD_DATA_S:
                     payloadLength = reader.ReadInt();
-                    byte[] worldStateData = reader.ReadBytes(payloadLength);
-                    WorldData worldData = ParseWorldState(worldStateData);
-                    Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldData);
-                    getWorldDataEventChannel.Raise(worldData);
+                    byte[] worldDataBytes = reader.ReadBytes(payloadLength);
+                    WorldClientDataHandler.Handle(worldDataBytes);
+                    //Debug.Log("[NetworkRequestManager] Received world state response from server: " + worldData);
+                    //getWorldDataEventChannel.Raise(worldData);
                     break;
                 case NetworkCommands.REQUEST_PLAYER_ENTITIES_S:
                     payloadLength = reader.ReadInt();
@@ -93,34 +92,6 @@ namespace CosmicScavengers.Networking
             writer.WriteLong(playerId);
 
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
-        }
-
-        private static WorldData ParseWorldState(byte[] worldStateData)
-        {
-            WorldData worldData = new();
-
-            // Create a new MemoryStream and BinaryReader specifically for the payload
-            using (MemoryStream payloadStream = new(worldStateData))
-            using (BinaryReader payloadReader = new(payloadStream))
-            {
-                // 1. Read World ID (8 bytes, Little Endian)
-                worldData.WorldId = payloadReader.ReadLong();
-                // 2. Read World Name Length (4 bytes, Little Endian)
-                int nameLength = payloadReader.ReadInt();
-
-                // 3. Read World Name (variable length, using UTF-8)
-                // Read the specified number of bytes
-                byte[] nameBytes = payloadReader.ReadBytes(nameLength);
-                // Convert bytes to string using the agreed-upon encoding (usually UTF-8)
-                worldData.WorldName = Encoding.UTF8.GetString(nameBytes);
-
-                // 4. Read Map Seed (4 bytes, Little Endian)
-                worldData.MapSeed = payloadReader.ReadLong();
-                // 5. Read Sector Size Units (4 bytes, Little Endian)
-                worldData.SectorSizeUnits = payloadReader.ReadInt();
-            }
-
-            return worldData;
         }
 
         public void OnRequestPlayerEntities(long playerId)
