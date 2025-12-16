@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Cosmic.Scavengers.Generated {
+namespace CosmicScavengers.Networking.Protobuf.WorldData {
 
   /// <summary>Holder for reflection information generated from world_data.proto</summary>
   public static partial class WorldDataReflection {
@@ -24,14 +24,15 @@ namespace Cosmic.Scavengers.Generated {
     static WorldDataReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChB3b3JsZF9kYXRhLnByb3RvEhtjb3NtaWMuc2NhdmVuZ2Vycy5nZW5lcmF0",
-            "ZWQieAoJV29ybGREYXRhEgoKAmlkGAEgASgDEhIKCndvcmxkX25hbWUYAiAB",
-            "KAkSEAoIbWFwX3NlZWQYAyABKAMSGQoRc2VjdG9yX3NpemVfdW5pdHMYBCAB",
-            "KAUSHgoWZ2VuZXJhdGlvbl9jb25maWdfanNvbhgFIAEoCWIGcHJvdG8z"));
+            "ChB3b3JsZF9kYXRhLnByb3RvEi5Db3NtaWNTY2F2ZW5nZXJzLk5ldHdvcmtp",
+            "bmcuUHJvdG9idWYuV29ybGREYXRhIngKCVdvcmxkRGF0YRIKCgJpZBgBIAEo",
+            "AxISCgp3b3JsZF9uYW1lGAIgASgJEhAKCG1hcF9zZWVkGAMgASgDEhkKEXNl",
+            "Y3Rvcl9zaXplX3VuaXRzGAQgASgFEh4KFmdlbmVyYXRpb25fY29uZmlnX2pz",
+            "b24YBSABKAliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cosmic.Scavengers.Generated.WorldData), global::Cosmic.Scavengers.Generated.WorldData.Parser, new[]{ "Id", "WorldName", "MapSeed", "SectorSizeUnits", "GenerationConfigJson" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.WorldData.WorldData), global::CosmicScavengers.Networking.Protobuf.WorldData.WorldData.Parser, new[]{ "Id", "WorldName", "MapSeed", "SectorSizeUnits", "GenerationConfigJson" }, null, null, null, null)
           }));
     }
     #endregion
@@ -56,7 +57,7 @@ namespace Cosmic.Scavengers.Generated {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cosmic.Scavengers.Generated.WorldDataReflection.Descriptor.MessageTypes[0]; }
+      get { return global::CosmicScavengers.Networking.Protobuf.WorldData.WorldDataReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

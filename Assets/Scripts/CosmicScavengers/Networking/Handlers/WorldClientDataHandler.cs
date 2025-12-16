@@ -1,19 +1,22 @@
 using System;
-using Cosmic.Scavengers.Generated;
+using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 
-public class WorldClientDataHandler
+namespace CosmicScavengers.Networking.Handlers
 {
-    public static void Handle(byte[] incomingBytes)
+    public class WorldClientDataHandler
     {
-        try
+        public static void Handle(byte[] incomingBytes)
         {
-            WorldData currentWorld = WorldData.Parser.ParseFrom(incomingBytes, sizeof(short), incomingBytes.Length - sizeof(short));
-            Debug.Log($"Loaded world: {currentWorld.WorldName}");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Deserialization failed: {e.Message}");
+            try
+            {
+                WorldData currentWorld = WorldData.Parser.ParseFrom(incomingBytes);
+                Debug.Log($"Loaded world: {currentWorld.WorldName}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Deserialization failed: {e.Message}");
+            }
         }
     }
 }

@@ -13,14 +13,16 @@ namespace CosmicScavengers.Core.Assets
 
         private readonly Dictionary<long, GameObject> entities = new();
 
-        public void HandleEntitiesUpdate(List<EntityData> updatedEntities)
+        public void HandleEntitiesUpdate(List<object> updatedEntities)
         {
+            /*
             foreach (var entityData in updatedEntities)
             {
                 Vector3 entityDataPosition = new(entityData.PosX, 0, entityData.PosY);
                 Quaternion entityDataRotation = Quaternion.identity;
                 SpawnEntity(entityData.Id, entityDataPosition, entityDataRotation);
             }
+            */
         }
 
         private void SpawnEntity(long id, Vector3 pos, Quaternion rot)

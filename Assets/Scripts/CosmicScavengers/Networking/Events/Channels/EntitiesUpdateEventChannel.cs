@@ -8,5 +8,5 @@ namespace CosmicScavengers.Networking.Event.Channels
     /// Event channel for broadcasting updates to entity data.
     /// </summary>
     [CreateAssetMenu(menuName = "Events/EntitiesUpdateEventChannel")]
-    public class EntitiesUpdateEventChannel : EventChannel<List<EntityData>> { }
+    public class EntitiesUpdateEventChannel : EventChannel<List<object>> { }
 }

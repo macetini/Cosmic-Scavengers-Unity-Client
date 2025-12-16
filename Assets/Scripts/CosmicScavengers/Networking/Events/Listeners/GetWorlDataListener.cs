@@ -1,5 +1,5 @@
-using Cosmic.Scavengers.Generated;
 using CosmicScavengers.Networking.Event.Channels;
+using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 using UnityEngine.Events;
 
