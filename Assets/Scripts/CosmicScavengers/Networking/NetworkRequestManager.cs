@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Extensions;
@@ -53,24 +52,46 @@ namespace CosmicScavengers.Networking
                 return;
             }
 
-            int payloadLength;
-
             using var memoryStream = new MemoryStream(data);
             using var reader = new BinaryReader(memoryStream);
+
             short command = reader.ReadShort();
+            int frameLength = reader.ReadInt();
+
+            const int HEADER_SIZE_READ = sizeof(short) + sizeof(int); // 2 (Command) + 4 (FrameLength) = 6 bytes
+            const int MIN_PAYLOAD_SIZE = sizeof(int); // Minimum payload size to at least read the Protobuf length (Lp)
+
+            // Must not be negative or less than the minimum structure size (Lp).
+            // Must not require reading past the end of the total received buffer.
+            if (frameLength < MIN_PAYLOAD_SIZE || frameLength > data.Length - HEADER_SIZE_READ)
+            {
+                Debug.LogError(
+                    $"[NetworkRequestManager] Invalid frame length ({frameLength} bytes). Expected size: >={MIN_PAYLOAD_SIZE} and <={data.Length - HEADER_SIZE_READ}"
+                );
+                return;
+            }
+
+            int protobufLength = reader.ReadInt();
+            // Secondary validation: Check if Lp is also consistent with Frame Length
+            // Since FrameLength (Lt) = Lp + Protobuf Data (P), Lp cannot be bigger than Lt.
+            if (protobufLength > frameLength - sizeof(int))
+            {
+                Debug.LogError(
+                    $"[NetworkRequestManager] Corrupt data: Protobuf length ({protobufLength}) exceeds remaining frame payload size."
+                );
+                return;
+            }
+
             switch (command)
             {
                 case NetworkCommands.REQUEST_WORLD_DATA_S:
-                    payloadLength = reader.ReadInt();
-                    byte[] worldDataBytes = reader.ReadBytes(payloadLength);
+                    byte[] worldDataBytes = reader.ReadBytes(protobufLength);
                     WorldClientDataHandler.Handle(worldDataBytes);
                     //getWorldDataEventChannel.Raise(worldData);
                     break;
                 case NetworkCommands.REQUEST_PLAYER_ENTITIES_S:
-                    payloadLength = reader.ReadInt();
-                    int count = reader.ReadInt();
-                    byte[] playerEntitiesBytes = reader.ReadBytes(payloadLength - sizeof(int));
-                    PlayerEntitiesDataHandler.Handle(playerEntitiesBytes, count);
+                    byte[] playerEntitiesBytes = reader.ReadBytes(protobufLength);
+                    PlayerEntitiesDataHandler.Handle(playerEntitiesBytes);
                     //entitiesUpdateEventChannel.Raise(playerEntities);
                     break;
                 default:

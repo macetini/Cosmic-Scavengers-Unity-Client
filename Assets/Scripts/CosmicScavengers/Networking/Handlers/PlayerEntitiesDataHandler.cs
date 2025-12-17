@@ -6,33 +6,29 @@ namespace CosmicScavengers.Networking.Handlers
 {
     public class PlayerEntitiesDataHandler
     {
-        public static void Handle(byte[] incomingBytes, int count)
+        public static void Handle(byte[] incomingBytes)
         {
             try
             {
-                Debug.Log($"Deserializing {count} player entities from byte array.");
-                int messageLength = incomingBytes.Length / count;
-                Debug.Log($"Message Length: {messageLength}, Count: {count}");
-                int offset = 0;
-                for (int i = 0; i < count; i++)
+                var playerEntitiesData = PlayerEntityListData.Parser.ParseFrom(incomingBytes);
+                Debug.Log($"Received {playerEntitiesData.Entities.Count} player entities.");
+
+                foreach (PlayerEntityData entity in playerEntitiesData.Entities)
                 {
-                    PlayerEntityData playerEntityData = PlayerEntityData.Parser.ParseFrom(
-                        incomingBytes,
-                        offset,
-                        messageLength
-                    );
-
-                    offset += messageLength;
-
-                    Debug.Log(
-                        $"Loaded player entity ID: {playerEntityData.Id}, Type: {playerEntityData.EntityType}"
-                    );
+                    ProcessEntity(entity);
                 }
             }
             catch (Exception e)
             {
                 Debug.LogError($"Deserialization failed: {e.Message}");
             }
+        }
+
+        private static void ProcessEntity(PlayerEntityData entity)
+        {
+            Debug.Log(
+                $"Entity ID: {entity.Id}, Type: {entity.EntityType}, Pos: ({entity.PosX}, {entity.PosY})"
+            );
         }
     }
 }
