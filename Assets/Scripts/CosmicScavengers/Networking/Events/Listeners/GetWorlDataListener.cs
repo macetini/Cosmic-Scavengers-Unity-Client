@@ -14,8 +14,9 @@ namespace CosmicScavengers.Networking.Event.Listeners
         [Tooltip("The response to invoke when the event is raised.")]
         [SerializeField]
         private UnityEvent<WorldData> onEventRaised;
-        
+
         private void OnEnable() => eventChannel.AddListener(onEventRaised.Invoke);
+
         private void OnDisable() => eventChannel.RemoveListener(onEventRaised.Invoke);
     }
 }

@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections.Generic;
 
 namespace CosmicScavengers.Core.Event
 {
@@ -9,7 +9,7 @@ namespace CosmicScavengers.Core.Event
     /// This allows for highly decoupled communication between different parts of the game.
     /// T is the type of the payload to be sent with the event.
     /// </summary>
-    /// 
+    ///
     /// <typeparam name="T">The type of the data to be passed with the event.</typeparam>
     public abstract class EventChannel<T> : EventChannelBase
     {
@@ -17,7 +17,7 @@ namespace CosmicScavengers.Core.Event
         private UnityAction<T> onEventRaised;
 
         // A dictionary to keep track of the wrapped listeners for correct removal.
-        private readonly Dictionary<UnityAction<object>, UnityAction<T>> _wrappedListeners = new();
+        private readonly Dictionary<UnityAction<object>, UnityAction<T>> wrappedListeners = new();
 
         public void Raise(T value)
         {
@@ -25,23 +25,25 @@ namespace CosmicScavengers.Core.Event
         }
 
         public void AddListener(UnityAction<T> listener) => onEventRaised += listener;
+
         public override void AddListener(UnityAction<object> listener)
         {
-            if (!_wrappedListeners.ContainsKey(listener))
+            if (!wrappedListeners.ContainsKey(listener))
             {
                 void wrappedListener(T value) => listener.Invoke(value);
-                _wrappedListeners[listener] = wrappedListener;
+                wrappedListeners[listener] = wrappedListener;
                 onEventRaised += wrappedListener;
             }
         }
 
         public void RemoveListener(UnityAction<T> listener) => onEventRaised -= listener;
+
         public override void RemoveListener(UnityAction<object> listener)
         {
-            if (_wrappedListeners.TryGetValue(listener, out UnityAction<T> wrappedListener))
+            if (wrappedListeners.TryGetValue(listener, out UnityAction<T> wrappedListener))
             {
                 onEventRaised -= wrappedListener;
-                _wrappedListeners.Remove(listener);
+                wrappedListeners.Remove(listener);
             }
         }
     }

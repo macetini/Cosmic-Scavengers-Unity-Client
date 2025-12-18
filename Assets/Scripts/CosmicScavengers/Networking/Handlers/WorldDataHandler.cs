@@ -1,6 +1,5 @@
 using System;
 using CosmicScavengers.Core.Event;
-using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 
@@ -10,10 +9,11 @@ namespace CosmicScavengers.Networking.Handlers
     {
         [Tooltip("Set to false to disable this handler.")]
         public bool Active = true;
+
         [Tooltip("Event channel triggered when world data is received.")]
         public EventChannel<WorldData> Channel;
 
-        public short CommandCode => NetworkCommands.REQUEST_WORLD_DATA_S;
+        public NetworkCommand CommandCode => NetworkCommand.REQUEST_WORLD_STATE_S;
 
         public void Handle(byte[] protobufData)
         {

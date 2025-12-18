@@ -1,17 +1,17 @@
-using UnityEngine;
 using System;
-using System.Net.Sockets;
-using System.IO;
-using System.Threading;
 using System.Collections.Generic;
-using System.Text;
-using CosmicScavengers.Networking.Meta;
+using System.IO;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using CosmicScavengers.Networking.Meta;
+using UnityEngine;
 
 namespace CosmicScavengers.Networking
 {
     /// <summary>
-    /// Handles the low-level TCP connection using a multiplexed protocol: 
+    /// Handles the low-level TCP connection using a multiplexed protocol:
     /// a 4-byte length prefix, followed by a 1-byte type header and the payload.
     /// This component ONLY routes data and has NO application logic (e.g., login, game rules).
     /// </summary>
@@ -24,6 +24,9 @@ namespace CosmicScavengers.Networking
         private TcpClient client;
         private NetworkStream stream;
         private Thread clientThread;
+
+        // Lock object for thread-safe stream operations
+        private readonly object streamLock = new();
 
         // Thread-safe queues to hold messages received from the server
         private readonly Queue<string> incomingTextMessages = new();
@@ -43,10 +46,7 @@ namespace CosmicScavengers.Networking
 
         void Start()
         {
-            clientThread = new Thread(ConnectToServer)
-            {
-                IsBackground = true
-            };
+            clientThread = new Thread(ConnectToServer) { IsBackground = true };
             clientThread.Start();
         }
 
@@ -82,7 +82,9 @@ namespace CosmicScavengers.Networking
             }
             catch (SocketException e)
             {
-                Debug.LogError($"[Connector Error] Connection failed (Socket Exception): {e.Message}. Is the server running on {HOST}:{PORT}?");
+                Debug.LogError(
+                    $"[Connector Error] Connection failed (Socket Exception): {e.Message}. Is the server running on {HOST}:{PORT}?"
+                );
             }
             catch (ThreadAbortException)
             {
@@ -120,13 +122,15 @@ namespace CosmicScavengers.Networking
                     throw new IOException("[Connector Error] Stream closed by server.");
                 }
 
-                // Convert Big-Endian (Network Order) bytes to local machine Endian (Host Order).                
+                // Convert Big-Endian (Network Order) bytes to local machine Endian (Host Order).
                 int networkOrderValue = BitConverter.ToInt32(lengthBytes, 0);
                 int messageLength = IPAddress.NetworkToHostOrder(networkOrderValue);
 
                 if (messageLength <= 0 || messageLength > 1024 * 1024)
                 {
-                    Debug.LogError($"[Connector Error] Invalid message length received: {messageLength}.");
+                    Debug.LogError(
+                        $"[Connector Error] Invalid message length received: {messageLength}."
+                    );
                     client.Close();
                     return;
                 }
@@ -141,7 +145,9 @@ namespace CosmicScavengers.Networking
                 int payloadDataLength = messageLength - 1;
                 if (payloadDataLength < 0)
                 {
-                    Debug.LogError("[Connector Error] Payload data length is negative. Discarding message.");
+                    Debug.LogError(
+                        "[Connector Error] Payload data length is negative. Discarding message."
+                    );
                     return;
                 }
 
@@ -165,7 +171,9 @@ namespace CosmicScavengers.Networking
                 }
                 else
                 {
-                    Debug.LogWarning($"[Connector] Received unknown message type: {messageType}. Discarding payload.");
+                    Debug.LogWarning(
+                        $"[Connector] Received unknown message type: {messageType}. Discarding payload."
+                    );
                 }
             }
             catch (Exception ex)
@@ -175,12 +183,21 @@ namespace CosmicScavengers.Networking
             }
         }
 
-        private static int ReadExactly(NetworkStream targetStream, byte[] buffer, int offset, int count)
+        private static int ReadExactly(
+            NetworkStream targetStream,
+            byte[] buffer,
+            int offset,
+            int count
+        )
         {
             int totalBytesRead = 0;
             while (totalBytesRead < count)
             {
-                int bytesRead = targetStream.Read(buffer, offset + totalBytesRead, count - totalBytesRead);
+                int bytesRead = targetStream.Read(
+                    buffer,
+                    offset + totalBytesRead,
+                    count - totalBytesRead
+                );
                 if (bytesRead == 0)
                 {
                     throw new IOException("Stream closed by server.");
@@ -252,7 +269,7 @@ namespace CosmicScavengers.Networking
                 ms.Write(dataBytes, 0, dataBytes.Length);
 
                 byte[] finalBuffer = ms.ToArray();
-                lock (stream)
+                lock (streamLock)
                 {
                     stream.Write(finalBuffer, 0, finalBuffer.Length);
                     stream.Flush();
@@ -263,7 +280,6 @@ namespace CosmicScavengers.Networking
                 Debug.LogError($"[Connector Error] Sending failed: {ex.Message}");
             }
         }
-
 
         void OnApplicationQuit()
         {
@@ -313,7 +329,8 @@ namespace CosmicScavengers.Networking
 
         private static string BytesToHexString(byte[] bytes)
         {
-            if (bytes == null || bytes.Length == 0) return "[]";
+            if (bytes == null || bytes.Length == 0)
+                return "[]";
 
             StringBuilder sb = new("[");
             for (int i = 0; i < bytes.Length; i++)

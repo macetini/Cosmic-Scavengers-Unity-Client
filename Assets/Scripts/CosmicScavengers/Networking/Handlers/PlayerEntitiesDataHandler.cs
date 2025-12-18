@@ -9,8 +9,7 @@ namespace CosmicScavengers.Networking.Handlers
     {
         public bool Active = true;
         public EventChannel<PlayerEntityData> Channel;
-
-        public short CommandCode => NetworkCommands.REQUEST_PLAYER_ENTITIES_S;
+        public NetworkCommand CommandCode => NetworkCommand.REQUEST_PLAYER_ENTITIES_S;
 
         public void Handle(byte[] protobufData)
         {

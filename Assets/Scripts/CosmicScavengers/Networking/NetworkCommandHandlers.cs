@@ -55,10 +55,11 @@ namespace CosmicScavengers.Networking
 
             foreach (var handler in foundHandlers)
             {
-                if (!handlers.ContainsKey(handler.CommandCode))
+                short commandCode = (short)handler.CommandCode;
+                if (!handlers.ContainsKey(commandCode))
                 {
-                    handlers.Add(handler.CommandCode, handler);
-                    activeHandlerCodes.Add($"Code {handler.CommandCode}: {handler.GetType().Name}");
+                    handlers.Add(commandCode, handler);
+                    activeHandlerCodes.Add($"Code {commandCode}: {handler.GetType().Name}");
                 }
                 else
                 {
@@ -79,16 +80,16 @@ namespace CosmicScavengers.Networking
         /// <summary>
         /// Routes incoming protobuf data to the correct handler.
         /// </summary>
-        public void HandleCommand(short commandCode, byte[] data)
+        public void HandleCommand(short command, byte[] data)
         {
-            if (handlers.TryGetValue(commandCode, out var handler))
+            if (handlers.TryGetValue(command, out var handler))
             {
                 handler.Handle(data);
             }
             else
             {
                 Debug.LogWarning(
-                    $"[NetworkCommandHandlers] No handler registered for command code: {commandCode}"
+                    $"[NetworkCommandHandlers] No handler registered for command code: {command}"
                 );
             }
         }

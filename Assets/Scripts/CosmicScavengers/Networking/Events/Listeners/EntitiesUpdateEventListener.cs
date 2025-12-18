@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;

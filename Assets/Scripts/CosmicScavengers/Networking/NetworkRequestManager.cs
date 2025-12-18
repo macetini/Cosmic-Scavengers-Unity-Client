@@ -54,7 +54,7 @@ namespace CosmicScavengers.Networking
             using var memoryStream = new MemoryStream(data);
             using var reader = new BinaryReader(memoryStream);
 
-            short command = reader.ReadShort();
+            short commandCode = reader.ReadShort();
             int frameLength = reader.ReadInt();
 
             const int HEADER_SIZE_READ = sizeof(short) + sizeof(int); // 2 (Command) + 4 (FrameLength) = 6 bytes
@@ -82,7 +82,7 @@ namespace CosmicScavengers.Networking
             }
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
-            networkCommandHandlers.HandleCommand(command, protobufData);
+            networkCommandHandlers.HandleCommand(commandCode, protobufData);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace CosmicScavengers.Networking
             );
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
-            writer.WriteShort(NetworkCommands.REQUEST_WORLD_DATA_C);
+            writer.WriteShort((short)NetworkCommand.REQUEST_WORLD_STATE_C);
             writer.WriteLong(playerId);
 
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
@@ -111,7 +111,7 @@ namespace CosmicScavengers.Networking
             );
             using var memoryStream = new MemoryStream();
             using var writer = new BinaryWriter(memoryStream);
-            writer.WriteShort(NetworkCommands.REQUEST_PLAYER_ENTITIES_C);
+            writer.WriteShort((short)NetworkCommand.REQUEST_PLAYER_ENTITIES_C);
             writer.WriteLong(playerId);
 
             clientConnector.SendBinaryMessage(memoryStream.ToArray());
