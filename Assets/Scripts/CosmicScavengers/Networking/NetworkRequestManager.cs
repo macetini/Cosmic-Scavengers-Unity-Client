@@ -1,8 +1,5 @@
-using System;
 using System.IO;
-using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Extensions;
-using CosmicScavengers.Networking.Handlers;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking
@@ -19,21 +16,23 @@ namespace CosmicScavengers.Networking
         private ClientConnector clientConnector;
 
         [SerializeField]
-        [Tooltip("Event channel to notify when the player is authenticated.")]
-        private GetWorldDataEventChannel getWorldDataEventChannel;
-
-        public EntitiesUpdateEventChannel entitiesUpdateEventChannel;
+        private NetworkCommandHandlers networkCommandHandlers;
 
         void Start()
         {
             if (clientConnector == null)
             {
-                throw new Exception(
-                    "[NetworkRequestManager] ClientConnector dependency is not assigned."
+                Debug.LogError("[NetworkRequestManager] ClientConnector reference is missing!");
+                return;
+            }
+            clientConnector.OnBinaryMessageReceived += HandleBinaryMessage;
+
+            if (networkCommandHandlers == null)
+            {
+                Debug.LogError(
+                    "[NetworkRequestManager] NetworkCommandHandlers reference is missing!"
                 );
             }
-
-            clientConnector.OnBinaryMessageReceived += HandleBinaryMessage;
         }
 
         void OnDestroy()
@@ -82,24 +81,8 @@ namespace CosmicScavengers.Networking
                 return;
             }
 
-            switch (command)
-            {
-                case NetworkCommands.REQUEST_WORLD_DATA_S:
-                    byte[] worldDataBytes = reader.ReadBytes(protobufLength);
-                    WorldClientDataHandler.Handle(worldDataBytes);
-                    //getWorldDataEventChannel.Raise(worldData);
-                    break;
-                case NetworkCommands.REQUEST_PLAYER_ENTITIES_S:
-                    byte[] playerEntitiesBytes = reader.ReadBytes(protobufLength);
-                    PlayerEntitiesDataHandler.Handle(playerEntitiesBytes);
-                    //entitiesUpdateEventChannel.Raise(playerEntities);
-                    break;
-                default:
-                    Debug.LogWarning(
-                        "[NetworkRequestManager] Unhandled command received: " + command
-                    );
-                    break;
-            }
+            byte[] protobufData = reader.ReadBytes(protobufLength);
+            networkCommandHandlers.HandleCommand(command, protobufData);
         }
 
         /// <summary>

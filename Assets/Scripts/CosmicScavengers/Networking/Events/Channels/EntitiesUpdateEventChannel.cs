@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using CosmicScavengers.Core.Event;
+using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Event.Channels
@@ -8,5 +8,5 @@ namespace CosmicScavengers.Networking.Event.Channels
     /// Event channel for broadcasting updates to entity data.
     /// </summary>
     [CreateAssetMenu(menuName = "Events/EntitiesUpdateEventChannel")]
-    public class EntitiesUpdateEventChannel : EventChannel<List<object>> { }
+    public class EntitiesUpdateEventChannel : EventChannel<PlayerEntityData> { }
 }

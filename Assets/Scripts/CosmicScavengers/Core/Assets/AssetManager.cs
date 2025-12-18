@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Assets
@@ -13,8 +14,13 @@ namespace CosmicScavengers.Core.Assets
 
         private readonly Dictionary<long, GameObject> entities = new();
 
-        public void HandleEntitiesUpdate(List<object> updatedEntities)
+        public void HandleEntitiesUpdate(PlayerEntityData entityData)
         {
+            SpawnEntity(
+                entityData.Id,
+                new Vector3(entityData.PosX, 0, entityData.PosY),
+                Quaternion.identity
+            );
             /*
             foreach (var entityData in updatedEntities)
             {
@@ -28,7 +34,7 @@ namespace CosmicScavengers.Core.Assets
         private void SpawnEntity(long id, Vector3 pos, Quaternion rot)
         {
             if (entities.ContainsKey(id))
-            {                
+            {
                 UpdateEntity(id, pos, rot);
                 return;
             }
@@ -43,7 +49,9 @@ namespace CosmicScavengers.Core.Assets
         {
             if (!entities.TryGetValue(id, out GameObject obj))
             {
-                Debug.LogWarning($"[AssetManager] Attempted to update non-existent entity with ID: {id}");
+                Debug.LogWarning(
+                    $"[AssetManager] Attempted to update non-existent entity with ID: {id}"
+                );
                 return;
             }
 
@@ -54,7 +62,9 @@ namespace CosmicScavengers.Core.Assets
         {
             if (!entities.TryGetValue(id, out GameObject obj))
             {
-                Debug.LogWarning($"[AssetManager] Attempted to remove non-existent entity with ID: {id}");
+                Debug.LogWarning(
+                    $"[AssetManager] Attempted to remove non-existent entity with ID: {id}"
+                );
                 return;
             }
 

@@ -1,16 +1,28 @@
 using System;
+using CosmicScavengers.Core.Event;
 using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Handlers
 {
-    public class PlayerEntitiesDataHandler
+    public class PlayerEntitiesDataHandler : MonoBehaviour, INetworkCommandHandler
     {
-        public static void Handle(byte[] incomingBytes)
+        public bool Active = true;
+        public EventChannel<PlayerEntityData> Channel;
+
+        public short CommandCode => NetworkCommands.REQUEST_PLAYER_ENTITIES_S;
+
+        public void Handle(byte[] protobufData)
         {
+            if (!Active)
+            {
+                Debug.LogWarning("[PlayerEntitiesDataHandler] Handler is inactive. Ignoring data.");
+                return;
+            }
+
             try
             {
-                var playerEntitiesData = PlayerEntityListData.Parser.ParseFrom(incomingBytes);
+                var playerEntitiesData = PlayerEntityListData.Parser.ParseFrom(protobufData);
                 Debug.Log($"Received {playerEntitiesData.Entities.Count} player entities.");
 
                 foreach (PlayerEntityData entity in playerEntitiesData.Entities)
@@ -24,11 +36,13 @@ namespace CosmicScavengers.Networking.Handlers
             }
         }
 
-        private static void ProcessEntity(PlayerEntityData entity)
+        private void ProcessEntity(PlayerEntityData entity)
         {
             Debug.Log(
                 $"Entity ID: {entity.Id}, Type: {entity.EntityType}, Pos: ({entity.PosX}, {entity.PosY})"
             );
+
+            Channel.Raise(entity);
         }
     }
 }

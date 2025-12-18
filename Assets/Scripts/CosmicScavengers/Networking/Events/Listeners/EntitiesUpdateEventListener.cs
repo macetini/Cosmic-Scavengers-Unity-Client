@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CosmicScavengers.Networking.Event.Channels;
+using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +17,7 @@ namespace CosmicScavengers.Networking.Event.Listeners
 
         [Tooltip("The response to invoke when the event is raised.")]
         [SerializeField]
-        private UnityEvent<List<object>> onEventRaised;
+        private UnityEvent<PlayerEntityData> onEventRaised;
 
         private void OnEnable() => eventChannel.AddListener(onEventRaised.Invoke);
 
