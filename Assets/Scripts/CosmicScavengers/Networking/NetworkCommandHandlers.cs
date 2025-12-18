@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using CosmicScavengers.Networking.Handlers;
 using UnityEngine;
@@ -13,13 +14,12 @@ namespace CosmicScavengers.Networking
     {
         [Header("Debug View")]
         [Tooltip("Visual list of registered handlers (Read Only)")]
-        [SerializeField]
+        [SerializeField, ReadOnly(true)]
         private List<string> activeHandlerCodes = new();
 
         // The actual runtime registry.
         // Note: Dictionaries are not serialized by Unity, so we populate this on Awake.
         private readonly Dictionary<short, INetworkCommandHandler> handlers = new();
-
         private static NetworkCommandHandlers instance;
 
         void Awake()

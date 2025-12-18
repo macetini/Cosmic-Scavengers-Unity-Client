@@ -16,7 +16,7 @@ namespace CosmicScavengers.Networking.Extensions
         // --- 16-bit Short / Ushort ---
 
         /// <summary>
-        /// Reads a 16-bit signed integer (short) and converts it from 
+        /// Reads a 16-bit signed integer (short) and converts it from
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,7 +39,7 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
-        /// Reads a 16-bit unsigned integer (ushort) and converts it from 
+        /// Reads a 16-bit unsigned integer (ushort) and converts it from
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -51,11 +51,10 @@ namespace CosmicScavengers.Networking.Extensions
             return unchecked((ushort)signedHostValue);
         }
 
-
         // --- 32-bit Integer / Uint ---
 
         /// <summary>
-        /// Reads a 32-bit signed integer (int) and converts it from 
+        /// Reads a 32-bit signed integer (int) and converts it from
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -78,7 +77,7 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
-        /// Reads a 32-bit unsigned integer (uint) and converts it from 
+        /// Reads a 32-bit unsigned integer (uint) and converts it from
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -90,11 +89,10 @@ namespace CosmicScavengers.Networking.Extensions
             return unchecked((uint)signedHostValue);
         }
 
-
         // --- 64-bit Long / Ulong ---
 
         /// <summary>
-        /// Reads a 64-bit signed integer (long) and converts it from 
+        /// Reads a 64-bit signed integer (long) and converts it from
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -117,7 +115,7 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
-        /// Reads a 64-bit unsigned integer (ulong) and converts it from 
+        /// Reads a 64-bit unsigned integer (ulong) and converts it from
         /// Big Endian (Network Order) to Host (Little Endian) order.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
