@@ -140,7 +140,7 @@ namespace CosmicScavengers.Networking
                 ReadExactly(stream, fullPayloadBytes, 0, messageLength);
 
                 // Extract Type and Payload Data
-                MessageType messageType = (MessageType)fullPayloadBytes[0];
+                CommandType messageType = (CommandType)fullPayloadBytes[0];
 
                 int payloadDataLength = messageLength - 1;
                 if (payloadDataLength < 0)
@@ -154,7 +154,7 @@ namespace CosmicScavengers.Networking
                 byte[] payloadData = new byte[payloadDataLength];
                 Array.Copy(fullPayloadBytes, 1, payloadData, 0, payloadDataLength);
 
-                if (messageType == MessageType.TEXT)
+                if (messageType == CommandType.TEXT)
                 {
                     string message = Encoding.UTF8.GetString(payloadData).Trim();
                     lock (incomingTextMessages)
@@ -162,7 +162,7 @@ namespace CosmicScavengers.Networking
                         incomingTextMessages.Enqueue(message);
                     }
                 }
-                else if (messageType == MessageType.BINARY)
+                else if (messageType == CommandType.BINARY)
                 {
                     lock (incomingBinaryMessages)
                     {
@@ -218,7 +218,7 @@ namespace CosmicScavengers.Networking
                 Debug.LogWarning("Cannot send empty command.");
                 return;
             }
-            SendTypedMessage(Encoding.UTF8.GetBytes(text), MessageType.TEXT);
+            SendTypedMessage(Encoding.UTF8.GetBytes(text), CommandType.TEXT);
         }
 
         /// <summary>
@@ -232,14 +232,14 @@ namespace CosmicScavengers.Networking
                 Debug.LogWarning("Cannot send empty binary data.");
                 return;
             }
-            SendTypedMessage(data, MessageType.BINARY);
+            SendTypedMessage(data, CommandType.BINARY);
         }
 
         /// <summary>
         /// Core method for sending messages, constructing the full frame:
         /// [4-byte Length] + [1-byte Type] + [Payload]
         /// </summary>
-        private void SendTypedMessage(byte[] dataBytes, MessageType type)
+        private void SendTypedMessage(byte[] dataBytes, CommandType type)
         {
             if (!IsConnected || stream == null)
             {

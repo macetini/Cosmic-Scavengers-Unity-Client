@@ -1,4 +1,5 @@
 using System.IO;
+using CosmicScavengers.Networking.Communication;
 using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace CosmicScavengers.Networking
     /// Listens for high-level game events and translates them into network requests.
     /// This acts as a bridge between the game logic and the low-level ClientConnector.
     /// </summary>
-    public class NetworkRequestManager : MonoBehaviour
+    public class NetworkManager : MonoBehaviour
     {
         [Header("Dependencies")]
         [SerializeField]
@@ -16,7 +17,7 @@ namespace CosmicScavengers.Networking
         private ClientConnector clientConnector;
 
         [SerializeField]
-        private NetworkCommandHandlers networkCommandHandlers;
+        private NetworkCommandResponseHandlers networkCommandHandlers;
 
         void Start()
         {
@@ -43,7 +44,7 @@ namespace CosmicScavengers.Networking
             }
         }
 
-        private void HandleBinaryMessage(byte[] data)
+        private void HandleBinaryMessage(byte[] data) // TODO - Refactor, it does 2 things - creating packages and handling them
         {
             if (data == null || data.Length == 0)
             {
@@ -82,39 +83,7 @@ namespace CosmicScavengers.Networking
             }
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
-            networkCommandHandlers.HandleCommand(commandCode, protobufData);
-        }
-
-        /// <summary>
-        /// Sends a request to the server to retrieve the initial world state for the authenticated player.
-        ///
-        /// <param name="playerId">The ID of the authenticated player.</param>
-        ///
-        /// </summary>
-        public void OnRequestWorldState(long playerId)
-        {
-            Debug.Log(
-                $"[NetworkRequestManager] Sending world state request for Player ID: {playerId}"
-            );
-            using var memoryStream = new MemoryStream();
-            using var writer = new BinaryWriter(memoryStream);
-            writer.WriteShort((short)NetworkCommand.REQUEST_WORLD_STATE_C);
-            writer.WriteLong(playerId);
-
-            clientConnector.SendBinaryMessage(memoryStream.ToArray());
-        }
-
-        public void OnRequestPlayerEntities(long playerId)
-        {
-            Debug.Log(
-                $"[NetworkRequestManager] Sending player entities request for Player ID: {playerId}"
-            );
-            using var memoryStream = new MemoryStream();
-            using var writer = new BinaryWriter(memoryStream);
-            writer.WriteShort((short)NetworkCommand.REQUEST_PLAYER_ENTITIES_C);
-            writer.WriteLong(playerId);
-
-            clientConnector.SendBinaryMessage(memoryStream.ToArray());
+            networkCommandHandlers.Handle(commandCode, protobufData);
         }
     }
 }

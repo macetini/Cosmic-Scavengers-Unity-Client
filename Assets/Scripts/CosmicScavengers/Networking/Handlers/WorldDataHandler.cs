@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CosmicScavengers.Networking.Handlers
 {
-    public class WorldClientDataHandler : MonoBehaviour, INetworkCommandHandler
+    public class WorldClientDataHandler : MonoBehaviour, INetworkRequestHandler
     {
         [Tooltip("Set to false to disable this handler.")]
         public bool Active = true;

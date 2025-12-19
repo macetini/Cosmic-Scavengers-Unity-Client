@@ -8,5 +8,5 @@ namespace CosmicScavengers.Networking.Event.Channels
     /// The payload is the player's ID.
     /// </summary>
     [CreateAssetMenu(menuName = "Events/PlayerAuthenticatedEventChannel")]
-    public class PlayerAuthenticatedEventChannel : EventChannel<long> { }
+    public class PlayerAuthenticatedEventChannel : EventChannel<object[]> { }
 }

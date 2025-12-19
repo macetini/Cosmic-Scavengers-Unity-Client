@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CosmicScavengers.Networking.Handlers
 {
-    public class PlayerEntitiesDataHandler : MonoBehaviour, INetworkCommandHandler
+    public class PlayerEntitiesDataHandler : MonoBehaviour, INetworkRequestHandler
     {
         public bool Active = true;
         public EventChannel<PlayerEntityData> Channel;

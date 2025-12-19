@@ -1,6 +1,6 @@
 namespace CosmicScavengers.Networking.Handlers
 {
-    public interface INetworkCommandHandler
+    public interface INetworkRequestHandler
     {
         NetworkCommand CommandCode { get; }
         void Handle(byte[] protobufData);

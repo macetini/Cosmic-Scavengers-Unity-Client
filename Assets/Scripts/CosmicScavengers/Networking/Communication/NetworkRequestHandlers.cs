@@ -4,23 +4,23 @@ using System.Linq;
 using CosmicScavengers.Networking.Handlers;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking
+namespace CosmicScavengers.Networking.Communication
 {
     /// <summary>
     /// Central registry for all network command handlers in the scene.
     /// Use the Context Menu "Assign Handlers" to verify registrations in the Inspector.
     /// </summary>
-    public class NetworkCommandHandlers : MonoBehaviour
+    public class NetworkCommandResponseHandlers : MonoBehaviour
     {
         [Header("Debug View")]
         [Tooltip("Visual list of registered handlers (Read Only)")]
         [SerializeField, ReadOnly(true)]
-        private List<string> activeHandlerCodes = new();
+        private List<string> registeredHandlersCode = new();
 
         // The actual runtime registry.
         // Note: Dictionaries are not serialized by Unity, so we populate this on Awake.
-        private readonly Dictionary<short, INetworkCommandHandler> handlers = new();
-        private static NetworkCommandHandlers instance;
+        private readonly Dictionary<short, INetworkRequestHandler> handlersByCode = new();
+        private static NetworkCommandResponseHandlers instance;
 
         void Awake()
         {
@@ -47,19 +47,19 @@ namespace CosmicScavengers.Networking
 
         private void PopulateHandlerDictionary(bool isPreview = false)
         {
-            handlers.Clear();
-            activeHandlerCodes.Clear();
+            handlersByCode.Clear();
+            registeredHandlersCode.Clear();
 
             var foundHandlers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-                .OfType<INetworkCommandHandler>();
+                .OfType<INetworkRequestHandler>();
 
             foreach (var handler in foundHandlers)
             {
                 short commandCode = (short)handler.CommandCode;
-                if (!handlers.ContainsKey(commandCode))
+                if (!handlersByCode.ContainsKey(commandCode))
                 {
-                    handlers.Add(commandCode, handler);
-                    activeHandlerCodes.Add($"Code {commandCode}: {handler.GetType().Name}");
+                    handlersByCode.Add(commandCode, handler);
+                    registeredHandlersCode.Add($"Code {commandCode}: {handler.GetType().Name}");
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace CosmicScavengers.Networking
             if (isPreview)
             {
                 Debug.Log(
-                    $"[NetworkCommandHandlers] Preview: Found {handlers.Count} handlers in scene."
+                    $"[NetworkCommandHandlers] Preview: Found {handlersByCode.Count} handlers in scene."
                 );
             }
         }
@@ -80,9 +80,9 @@ namespace CosmicScavengers.Networking
         /// <summary>
         /// Routes incoming protobuf data to the correct handler.
         /// </summary>
-        public void HandleCommand(short command, byte[] data)
+        public void Handle(short command, byte[] data)
         {
-            if (handlers.TryGetValue(command, out var handler))
+            if (handlersByCode.TryGetValue(command, out var handler))
             {
                 handler.Handle(data);
             }

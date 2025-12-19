@@ -1,7 +1,5 @@
-using UnityEngine;
-using System;
-using CosmicScavengers.Core;
 using CosmicScavengers.Networking.Event.Channels;
+using UnityEngine;
 
 namespace CosmicScavengers.Networking
 {
@@ -12,7 +10,6 @@ namespace CosmicScavengers.Networking
     public class ClientAuth : MonoBehaviour
     {
         [Header("Event Channels")]
-
         [SerializeField]
         [Tooltip("Reference to the ClientConnector component for network communication.")]
         private ClientConnector connector;
@@ -26,11 +23,12 @@ namespace CosmicScavengers.Networking
 
         void Start()
         {
-
             if (connector == null)
             {
                 // Ensure dependency is assigned in the Inspector
-                Debug.LogError("ClientAuth requires the ClientConnector reference to be assigned in the Inspector.");
+                Debug.LogError(
+                    "ClientAuth requires the ClientConnector reference to be assigned in the Inspector."
+                );
                 return;
             }
             // Subscribe to the raw message event from the connector
@@ -82,16 +80,31 @@ namespace CosmicScavengers.Networking
                 case "S_LOGIN_OK":
                     if (parts.Length > 1 && long.TryParse(parts[1], out long id))
                     {
+                        //TODO: Refactor to use a proper Player object
                         playerId = id;
                         Debug.Log($"Login successful! Player ID: {playerId}.");
                         if (onAuthenticatedEvent != null)
                         {
-                            onAuthenticatedEvent.Raise(playerId);
+                            object[] playerData = new object[]
+                            {
+                                NetworkCommand.REQUEST_WORLD_STATE_C,
+                                id,
+                            };
+                            onAuthenticatedEvent.Raise(playerData);
+
+                            playerData = new object[]
+                            {
+                                NetworkCommand.REQUEST_PLAYER_ENTITIES_C,
+                                id,
+                            };
+                            onAuthenticatedEvent.Raise(playerData);
                         }
                     }
                     else
                     {
-                        Debug.LogError("Login OK message received but contained invalid Player ID.");
+                        Debug.LogError(
+                            "Login OK message received but contained invalid Player ID."
+                        );
                     }
                     break;
 
@@ -107,8 +120,7 @@ namespace CosmicScavengers.Networking
             }
         }
 
-
-        // --- Public Methods to send Auth Commands (Triggered by UI) ---        
+        // --- Public Methods to send Auth Commands (Triggered by UI) ---
         public void Register(string username, string password)
         {
             if (connector != null && connector.IsConnected)
