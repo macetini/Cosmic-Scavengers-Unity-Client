@@ -5,7 +5,7 @@ using CosmicScavengers.Networking.Communication;
 using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking
+namespace CosmicScavengers.Networking.Router
 {
     /// <summary>
     /// Listens for high-level game events and translates them into network requests.

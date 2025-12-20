@@ -32,12 +32,9 @@ namespace CosmicScavengers.Networking
         private readonly Queue<string> incomingTextMessages = new();
         private readonly Queue<byte[]> incomingBinaryMessages = new();
 
-        // Events for consumers (Auth, GameState) to subscribe to
+        // Events for incoming messages
         public event Action<string> OnTextMessageReceived;
         public event Action<byte[]> OnBinaryMessageReceived;
-
-        public delegate void ConnectionEstablishedHandler();
-        public event ConnectionEstablishedHandler OnConnected;
 
         public bool IsConnected
         {
@@ -72,9 +69,8 @@ namespace CosmicScavengers.Networking
                 }
                 Debug.Log("[Connector] Successfully connected to the multiplexed server!");
 
-                OnConnected?.Invoke();
+                InitHandshake();
 
-                // Start listening loop
                 while (client.Connected)
                 {
                     ReadNextMessage();

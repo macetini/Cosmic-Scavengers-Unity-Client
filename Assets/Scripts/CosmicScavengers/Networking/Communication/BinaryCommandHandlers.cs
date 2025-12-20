@@ -49,7 +49,7 @@ namespace CosmicScavengers.Networking.Communication
                 if (!handlersByCode.ContainsKey(commandCode))
                 {
                     handlersByCode.Add(commandCode, handler);
-                    registeredHandlersCode.Add($"Code {commandCode}: {handler.GetType().Name}");
+                    registeredHandlersCode.Add($"[{commandCode}] - [{handler.GetType().Name}]");
                 }
                 else
                 {

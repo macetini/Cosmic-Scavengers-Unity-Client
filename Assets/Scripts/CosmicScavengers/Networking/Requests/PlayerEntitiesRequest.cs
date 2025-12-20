@@ -2,10 +2,9 @@ using System;
 using System.IO;
 using CosmicScavengers.Networking;
 using CosmicScavengers.Networking.Extensions;
-using CosmicScavengers.Networking.Requests;
 using UnityEngine;
 
-public class PlayerEntitiesRequest : MonoBehaviour, INetworkRequest
+public class PlayerEntitiesRequest : MonoBehaviour
 {
     public NetworkBinaryCommand CommandCode => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
 
