@@ -20,6 +20,8 @@ namespace CosmicScavengers.Networking
         // --- Server Connection Details ---
         private const string HOST = "127.0.0.1";
         private const int PORT = 8080;
+        private const int LENGTH_FIELD_SIZE = 4; // 4 bytes for length prefix
+        private const int MAX_MESSAGE_SIZE = 1024 * 1024; // 1 MB
 
         private TcpClient client;
         private NetworkStream stream;
@@ -32,7 +34,7 @@ namespace CosmicScavengers.Networking
         private readonly Queue<string> incomingTextMessages = new();
         private readonly Queue<byte[]> incomingBinaryMessages = new();
 
-        // Events for incoming messages
+        /// Events for incoming messages
         public event Action<string> OnTextMessageReceived;
         public event Action<byte[]> OnBinaryMessageReceived;
 
@@ -107,7 +109,6 @@ namespace CosmicScavengers.Networking
                 throw new IOException("Network stream is not readable.");
             }
 
-            const int LENGTH_FIELD_SIZE = 4;
             byte[] lengthBytes = new byte[LENGTH_FIELD_SIZE];
 
             try
@@ -122,7 +123,7 @@ namespace CosmicScavengers.Networking
                 int networkOrderValue = BitConverter.ToInt32(lengthBytes, 0);
                 int messageLength = IPAddress.NetworkToHostOrder(networkOrderValue);
 
-                if (messageLength <= 0 || messageLength > 1024 * 1024)
+                if (messageLength <= 0 || messageLength > MAX_MESSAGE_SIZE)
                 {
                     Debug.LogError(
                         $"[Connector Error] Invalid message length received: {messageLength}."
