@@ -24,22 +24,6 @@ namespace CosmicScavengers.Networking.Communication
 
         private readonly Dictionary<short, INetworkRequest> requestsByCode = new();
 
-        private static NetworkRequestDispatcher instance;
-
-        private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-                PopulateRequestDictionary();
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
         [ContextMenu("Assign Requests (Preview)")]
         private void AssignRequestsPreview()
         {

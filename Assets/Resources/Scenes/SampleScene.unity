@@ -517,6 +517,55 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &554324271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554324272}
+  - component: {fileID: 554324273}
+  m_Layer: 0
+  m_Name: TextCommandHandlers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &554324272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554324271}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1326126186}
+  - {fileID: 1160470508}
+  m_Father: {fileID: 808927931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &554324273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554324271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548aa991d63168747932d8cdd831a4ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Communication.TextCommandHandlers
+  registeredHandlersCode:
+  - '[S_LOGIN_PASS] - [LoginPassHandler]'
+  - '[S_CONNECT_PASS] - [ConnectPassHandler]'
 --- !u!1 &807366149
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,7 +622,7 @@ GameObject:
   - component: {fileID: 808927931}
   - component: {fileID: 808927932}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: CommandRouter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,8 +642,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1956342391}
+  - {fileID: 554324272}
   - {fileID: 1037510324}
-  - {fileID: 967864378}
+  - {fileID: 1848436028}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &808927932
@@ -610,7 +660,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.NetworkRequestManager
   clientConnector: {fileID: 1956342392}
-  networkCommandHandlers: {fileID: 1037510325}
+  textCommandHandlers: {fileID: 554324273}
+  binaryCommandHandlers: {fileID: 1037510325}
 --- !u!1 &820435659
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,56 +757,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &967864377
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 967864378}
-  - component: {fileID: 967864379}
-  m_Layer: 0
-  m_Name: NetworkRequestDispatcher
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &967864378
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967864377}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1703155976}
-  - {fileID: 2116676457}
-  m_Father: {fileID: 808927931}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &967864379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967864377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d97184426af2747a55208d6a9e2104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Communication.NetworkRequestDispatcher
-  clientConnector: {fileID: 1956342392}
-  registeredRequestsCode:
-  - '1: WorldStateRequest'
-  - '3: PlayerEntitiesRequest'
 --- !u!1 &1030324742
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +829,7 @@ GameObject:
   - component: {fileID: 1037510324}
   - component: {fileID: 1037510325}
   m_Layer: 0
-  m_Name: NetworkRequestHandlers
+  m_Name: BinaryCommandHandlers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -863,7 +864,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b142fdf34a39744a2cb7b7b8ae676b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::NetworkCommandHandlers
-  registeredHandlersCode: []
+  registeredHandlersCode:
+  - 'Code 2: WorldClientDataHandler'
+  - 'Code 4: PlayerEntitiesDataHandler'
+--- !u!1 &1160470507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1160470508}
+  - component: {fileID: 1160470509}
+  m_Layer: 0
+  m_Name: LoginPassHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1160470508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160470507}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 554324272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1160470509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160470507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7342a830e12a24848bbfdb8dc52741b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::LoginPassHandler
+  Active: 1
+  Channel: {fileID: 11400000, guid: 00d99a108dd14c4448ca8d1e621cb420, type: 2}
 --- !u!1 &1284201000
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +959,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4d2a47f0efd8c45af49c156e1c7717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.GameFlowController
+--- !u!1 &1326126185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1326126186}
+  - component: {fileID: 1326126187}
+  m_Layer: 0
+  m_Name: ConnectPassHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1326126186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326126185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 554324272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1326126187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326126185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd86f46591143644089c4140fa9c093e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::ConnectPassHandler
+  Active: 1
+  Channel: {fileID: 11400000, guid: a6c103f1cf10f224cb5cf5fa01ff77e2, type: 2}
 --- !u!1 &1356809321
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,11 +1070,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7051263008090876004, guid: b8e41d7d8001482498c4d7832a51ddf2, type: 3}
   m_PrefabInstance: {fileID: 319579389991451875}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1703155976 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-  m_PrefabInstance: {fileID: 8883822642169278835}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1767694432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,7 +1118,7 @@ MonoBehaviour:
   onEventRaised:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967864379}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CosmicScavengers.Networking.Communication.NetworkRequestDispatcher,
           CosmicScavenger
         m_MethodName: Dispatch
@@ -1080,6 +1170,53 @@ Transform:
   - {fileID: 1356809322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1848436027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1848436028}
+  - component: {fileID: 1848436029}
+  m_Layer: 0
+  m_Name: MessageDispatcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1848436028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848436027}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 808927931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1848436029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848436027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3181b12f96572e94da7e1bda5c947838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.MessageDispatcher
+  clientConnector: {fileID: 1956342392}
+  textCommandChannel: {fileID: 11400000, guid: a6c103f1cf10f224cb5cf5fa01ff77e2, type: 2}
+  binaryCommandChannel: {fileID: 11400000, guid: 00d99a108dd14c4448ca8d1e621cb420, type: 2}
 --- !u!1 &1932860779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,11 +1368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5cccb3f91f36945a30b403486329d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2116676457 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-  m_PrefabInstance: {fileID: 5619241664132540727}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &319579389991451875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1293,63 +1425,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8e41d7d8001482498c4d7832a51ddf2, type: 3}
---- !u!1001 &5619241664132540727
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 967864378}
-    m_Modifications:
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1328310731604074681, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5963427119067374287, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
-      propertyPath: m_Name
-      value: PlayerEntitiesRequest
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6f6d872df7fbd484895f50f921d3d04e, type: 3}
 --- !u!1001 &7988746812318773938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1407,63 +1482,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 768e5a9048c2cb340a729fff66f1b72f, type: 3}
---- !u!1001 &8883822642169278835
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 967864378}
-    m_Modifications:
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399953740064477301, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4866206738795124455, guid: f81772258662d144dab4c18b80731fd8, type: 3}
-      propertyPath: m_Name
-      value: WorldStateRequest
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f81772258662d144dab4c18b80731fd8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

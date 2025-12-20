@@ -3,13 +3,14 @@ using CosmicScavengers.Core.Event;
 using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Handlers
+namespace CosmicScavengers.Networking.Handlers.Binary
 {
-    public class PlayerEntitiesDataHandler : MonoBehaviour, INetworkRequestHandler
+    public class PlayerEntitiesDataHandler : MonoBehaviour, IBinaryCommandHandler
     {
         public bool Active = true;
         public EventChannel<PlayerEntityData> Channel;
-        public NetworkCommand CommandCode => NetworkCommand.REQUEST_PLAYER_ENTITIES_S;
+
+        public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_S;
 
         public void Handle(byte[] protobufData)
         {

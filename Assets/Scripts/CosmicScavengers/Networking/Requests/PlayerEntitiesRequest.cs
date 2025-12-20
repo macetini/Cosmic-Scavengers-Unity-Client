@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerEntitiesRequest : MonoBehaviour, INetworkRequest
 {
-    public NetworkCommand CommandCode => NetworkCommand.REQUEST_PLAYER_ENTITIES_C;
+    public NetworkBinaryCommand CommandCode => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
 
     public void Dispatch(ClientConnector clientConnector, params object[] parameters)
     {
@@ -42,6 +42,6 @@ public class PlayerEntitiesRequest : MonoBehaviour, INetworkRequest
         writer.WriteShort((short)CommandCode);
         writer.WriteLong(playerId);
 
-        clientConnector.SendBinaryMessage(memoryStream.ToArray());
+        clientConnector.DispatchBinaryMessage(memoryStream.ToArray());
     }
 }

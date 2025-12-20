@@ -5,7 +5,7 @@ namespace CosmicScavengers.Networking
     /// <summary>
     /// Defines the command types for network messages.
     /// </summary>
-    public enum NetworkCommand : short
+    public enum NetworkBinaryCommand : short
     {
         [Description("Request the current state of the game world.")]
         REQUEST_WORLD_STATE_C = 0x0001,

@@ -3,9 +3,9 @@ using CosmicScavengers.Core.Event;
 using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Handlers
+namespace CosmicScavengers.Networking.Handlers.Binary
 {
-    public class WorldClientDataHandler : MonoBehaviour, INetworkRequestHandler
+    public class WorldClientDataHandler : MonoBehaviour, IBinaryCommandHandler
     {
         [Tooltip("Set to false to disable this handler.")]
         public bool Active = true;
@@ -13,7 +13,7 @@ namespace CosmicScavengers.Networking.Handlers
         [Tooltip("Event channel triggered when world data is received.")]
         public EventChannel<WorldData> Channel;
 
-        public NetworkCommand CommandCode => NetworkCommand.REQUEST_WORLD_STATE_S;
+        public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_WORLD_STATE_S;
 
         public void Handle(byte[] protobufData)
         {

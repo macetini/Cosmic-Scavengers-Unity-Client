@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Linq;
 using CosmicScavengers.Networking.Communication;
 using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
@@ -9,7 +11,7 @@ namespace CosmicScavengers.Networking
     /// Listens for high-level game events and translates them into network requests.
     /// This acts as a bridge between the game logic and the low-level ClientConnector.
     /// </summary>
-    public class NetworkManager : MonoBehaviour
+    public class CommandRouter : MonoBehaviour
     {
         [Header("Dependencies")]
         [SerializeField]
@@ -17,7 +19,10 @@ namespace CosmicScavengers.Networking
         private ClientConnector clientConnector;
 
         [SerializeField]
-        private NetworkCommandResponseHandlers networkCommandHandlers;
+        private TextCommandHandlers textCommandHandlers;
+
+        [SerializeField]
+        private BinaryCommandHandlers binaryCommandHandlers;
 
         void Start()
         {
@@ -27,8 +32,9 @@ namespace CosmicScavengers.Networking
                 return;
             }
             clientConnector.OnBinaryMessageReceived += HandleBinaryMessage;
+            clientConnector.OnTextMessageReceived += HandleTextMessage;
 
-            if (networkCommandHandlers == null)
+            if (binaryCommandHandlers == null)
             {
                 Debug.LogError(
                     "[NetworkRequestManager] NetworkCommandHandlers reference is missing!"
@@ -41,10 +47,11 @@ namespace CosmicScavengers.Networking
             if (clientConnector != null)
             {
                 clientConnector.OnBinaryMessageReceived -= HandleBinaryMessage;
+                clientConnector.OnTextMessageReceived -= HandleTextMessage;
             }
         }
 
-        private void HandleBinaryMessage(byte[] data) // TODO - Refactor, it does 2 things - creating packages and handling them
+        private void HandleBinaryMessage(byte[] data)
         {
             if (data == null || data.Length == 0)
             {
@@ -83,7 +90,21 @@ namespace CosmicScavengers.Networking
             }
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
-            networkCommandHandlers.Handle(commandCode, protobufData);
+            binaryCommandHandlers.Handle(commandCode, protobufData);
+        }
+
+        private void HandleTextMessage(string rawMessage)
+        {
+            string[] parts = rawMessage.Split('|');
+            if (parts.Length < 1)
+            {
+                Debug.LogWarning("[NetworkRequestManager] Received malformed text message.");
+                return;
+            }
+
+            string command = parts[0];
+            string[] data = parts.Skip(1).ToArray();
+            textCommandHandlers.Handle(command, data);
         }
     }
 }

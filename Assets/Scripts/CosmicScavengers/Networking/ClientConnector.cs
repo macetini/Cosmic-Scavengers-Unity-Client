@@ -53,7 +53,7 @@ namespace CosmicScavengers.Networking
         public void InitHandshake()
         {
             Debug.Log("[Connector] Initiating handshake with server.");
-            SendTextMessage("C_CONNECT");
+            DispatchTextMessage("C_CONNECT");
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace CosmicScavengers.Networking
         /// Sends a text command, automatically framing it with MessageType.TEXT.
         /// Used by ClientAuth/Lobby Managers.
         /// </summary>
-        public virtual void SendTextMessage(string text)
+        public void DispatchTextMessage(string text)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -225,7 +225,7 @@ namespace CosmicScavengers.Networking
         /// Sends raw binary data, automatically framing it with MessageType.BINARY.
         /// Used by ClientGameState for high-frequency updates.
         /// </summary>
-        public virtual void SendBinaryMessage(byte[] data)
+        public void DispatchBinaryMessage(byte[] data)
         {
             if (data == null || data.Length == 0)
             {

@@ -87,14 +87,14 @@ namespace CosmicScavengers.Networking
                         {
                             object[] playerData = new object[]
                             {
-                                NetworkCommand.REQUEST_WORLD_STATE_C,
+                                NetworkBinaryCommand.REQUEST_WORLD_STATE_C,
                                 id,
                             };
                             onAuthenticatedEvent.Raise(playerData);
 
                             playerData = new object[]
                             {
-                                NetworkCommand.REQUEST_PLAYER_ENTITIES_C,
+                                NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C,
                                 id,
                             };
                             onAuthenticatedEvent.Raise(playerData);
@@ -125,7 +125,7 @@ namespace CosmicScavengers.Networking
         {
             if (connector != null && connector.IsConnected)
             {
-                connector.SendTextMessage($"C_REGISTER|{username}|{password}");
+                connector.DispatchTextMessage($"C_REGISTER|{username}|{password}");
             }
             else
             {
@@ -138,7 +138,7 @@ namespace CosmicScavengers.Networking
             Debug.Log($"Attempting login for user: {username}");
             if (connector != null && connector.IsConnected)
             {
-                connector.SendTextMessage($"C_LOGIN|{username}|{password}");
+                connector.DispatchTextMessage($"C_LOGIN|{username}|{password}");
             }
             else
             {
