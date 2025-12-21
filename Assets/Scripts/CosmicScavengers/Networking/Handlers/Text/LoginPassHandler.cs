@@ -1,4 +1,3 @@
-using System.IO;
 using CosmicScavengers.Networking;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Handlers.Text;
@@ -32,7 +31,18 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
             return;
         }
 
-        byte[] requestData = WorldStateRequest.GetData(playerId);
-        Channel.Raise(requestData);
+        InitPlayerData(playerId);
+    }
+
+    private void InitPlayerData(long playerId)
+    {
+        // Placeholder for any additional initialization logic for player data
+        Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
+
+        WorldStateRequest worldStateRequest = new(Channel);
+        worldStateRequest.Request(playerId);
+
+        PlayerEntitiesRequest playerEntitiesRequest = new(Channel);
+        playerEntitiesRequest.Request(playerId);
     }
 }

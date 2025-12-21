@@ -1,46 +1,34 @@
-using System;
 using System.IO;
 using CosmicScavengers.Networking;
+using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
 
-public class PlayerEntitiesRequest : MonoBehaviour
+public class PlayerEntitiesRequest
 {
-    public NetworkBinaryCommand CommandCode => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
+    private readonly MemoryStream memoryStream;
+    private readonly BinaryWriter binaryWriter;
+    private readonly BinaryCommandChannel channel;
+    private short CommandCode => (short)NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
 
-    public void Dispatch(ClientConnector clientConnector, params object[] parameters)
+    public PlayerEntitiesRequest(BinaryCommandChannel channel)
     {
-        if (parameters != null && parameters.Length != 1)
-        {
-            Debug.LogError(
-                "[PlayerEntitiesRequest] Invalid number of parameters for RequestPlayerEntities."
-            );
-            return;
-        }
+        memoryStream = new();
+        binaryWriter = new(memoryStream);
 
-        long playerId;
-        try
-        {
-            playerId = (long)parameters[0];
-        }
-        catch (ArgumentNullException ex)
-        {
-            Debug.LogError(
-                "[PlayerEntitiesRequest] Failed to parse parameters for RequestPlayerEntities: "
-                    + ex.Message
-            );
-            return;
-        }
+        this.channel = channel;
+    }
+
+    public void Request(long playerId)
+    {
+        binaryWriter.WriteShort(CommandCode);
+        binaryWriter.WriteLong(playerId);
+
+        byte[] requestData = memoryStream.ToArray();
 
         Debug.Log(
-            $"[NetworkRequestManager] Sending player entities request for Player ID: {playerId}"
+            "[PlayerEntitiesRequest] Sending player entities request for Player ID: " + playerId
         );
-
-        using var memoryStream = new MemoryStream();
-        using var writer = new BinaryWriter(memoryStream);
-        writer.WriteShort((short)CommandCode);
-        writer.WriteLong(playerId);
-
-        clientConnector.DispatchBinaryMessage(memoryStream.ToArray());
+        channel.Raise(requestData);
     }
 }

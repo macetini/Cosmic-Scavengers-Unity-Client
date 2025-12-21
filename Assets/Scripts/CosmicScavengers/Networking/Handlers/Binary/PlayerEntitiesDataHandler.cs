@@ -8,7 +8,8 @@ namespace CosmicScavengers.Networking.Handlers.Binary
     public class PlayerEntitiesDataHandler : MonoBehaviour, IBinaryCommandHandler
     {
         public bool Active = true;
-        public EventChannel<PlayerEntityData> Channel;
+
+        //public EventChannel<PlayerEntityData> Channel;
 
         public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_S;
 
@@ -42,7 +43,7 @@ namespace CosmicScavengers.Networking.Handlers.Binary
                 $"Entity ID: {entity.Id}, Type: {entity.EntityType}, Pos: ({entity.PosX}, {entity.PosY})"
             );
 
-            Channel.Raise(entity);
+            //Channel.Raise(entity);
         }
     }
 }
