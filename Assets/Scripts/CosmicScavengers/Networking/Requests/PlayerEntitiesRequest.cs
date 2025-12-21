@@ -1,7 +1,7 @@
 using System.IO;
-using CosmicScavengers.Networking;
+using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Extensions;
 using CosmicScavengers.Networking.Event.Channels;
-using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
 
 public class PlayerEntitiesRequest

@@ -1,11 +1,11 @@
-using System.Collections.Generic;
 using System;
-using CosmicScavengers.Networking;
+using System.Collections.Generic;
+using CosmicScavengers.Core.Networking;
 
 namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
 {
     /// <summary>
-    /// A Stub component that mimics the message dispatch behavior of ClientConnector 
+    /// A Stub component that mimics the message dispatch behavior of ClientConnector
     /// by providing a mechanism to inject simulated network messages for testing.
     /// </summary>
     public class ClientConnectorStub : ClientConnector
@@ -25,7 +25,7 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Stubs
         }
 
         /// <summary>
-        /// Overrides the Update method to simulate the main thread polling the queue 
+        /// Overrides the Update method to simulate the main thread polling the queue
         /// and firing the dispatch action.
         /// </summary>
         void Update()

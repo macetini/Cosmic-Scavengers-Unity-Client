@@ -22,7 +22,7 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
 
         [Header("Height Map Parameters")]
         [Tooltip("Maximum vertical scale of the terrain (e.g., how high mountains can be).")]
-        public float maxElevation = 100f;        
+        public float maxElevation = 100f;
         private bool _isSeeded = false;
 
         public void GenerateMap(long mapSeed)
@@ -40,7 +40,7 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
         }
 
         /// <summary>
-        /// Calculates the actual elevation (height) in world units at a 
+        /// Calculates the actual elevation (height) in world units at a
         /// specific 2D world coordinate.
         /// </summary>
         /// <param name="worldX">World X coordinate.</param>
@@ -50,7 +50,9 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
         {
             if (!_isSeeded)
             {
-                Debug.LogError("[MapGenerator] Cannot generate map: World data not set or NoiseGenerator not seeded.");
+                Debug.LogError(
+                    "[MapGenerator] Cannot generate map: World data not set or NoiseGenerator not seeded."
+                );
                 return 0f;
             }
 
@@ -72,7 +74,8 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
         /// </summary>
         public void DrawDebugMap(int size)
         {
-            if (!_isSeeded) return;
+            if (!_isSeeded)
+                return;
 
             StringBuilder sb = new();
             sb.AppendLine($"--- Debug Height Map ({size}x{size}) ---");
@@ -85,10 +88,14 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
 
                     // Simple character mapping based on height relative to maxElevation
                     char tile;
-                    if (elevation < maxElevation * 0.1f) tile = '~'; // Water/Lowland
-                    else if (elevation < maxElevation * 0.3f) tile = '='; // Plains
-                    else if (elevation < maxElevation * 0.6f) tile = '^'; // Hills
-                    else tile = '#'; // Mountains
+                    if (elevation < maxElevation * 0.1f)
+                        tile = '~'; // Water/Lowland
+                    else if (elevation < maxElevation * 0.3f)
+                        tile = '='; // Plains
+                    else if (elevation < maxElevation * 0.6f)
+                        tile = '^'; // Hills
+                    else
+                        tile = '#'; // Mountains
 
                     sb.Append(tile);
                 }

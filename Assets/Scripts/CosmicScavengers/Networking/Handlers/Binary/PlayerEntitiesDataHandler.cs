@@ -1,5 +1,6 @@
 using System;
-using CosmicScavengers.Core.Event;
+using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Handlers.Binary;
 using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 

@@ -1,4 +1,6 @@
-namespace CosmicScavengers.Networking.Handlers.Binary
+using CosmicScavengers.Core.Networking.Commands;
+
+namespace CosmicScavengers.Core.Networking.Handlers.Binary
 {
     public interface IBinaryCommandHandler
     {

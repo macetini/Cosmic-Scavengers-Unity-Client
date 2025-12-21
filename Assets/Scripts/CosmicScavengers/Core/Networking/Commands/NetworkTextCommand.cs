@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace CosmicScavengers.Networking
+namespace CosmicScavengers.Core.Networking.Commands
 {
     /// <summary>
     /// Defines the command types for network messages.

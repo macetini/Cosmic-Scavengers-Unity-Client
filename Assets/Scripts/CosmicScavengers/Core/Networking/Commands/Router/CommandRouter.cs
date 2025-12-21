@@ -1,10 +1,11 @@
 using System.IO;
 using System.Linq;
+using CosmicScavengers.Core.Networking.Communication;
+using CosmicScavengers.Core.Networking.Extensions;
 using CosmicScavengers.Networking.Communication;
-using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Router
+namespace CosmicScavengers.Core.Networking.Commands.Router
 {
     /// <summary>
     /// Listens for high-level game events and translates them into network requests.

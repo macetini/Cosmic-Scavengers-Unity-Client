@@ -1,4 +1,4 @@
-namespace CosmicScavengers.Networking.Meta
+namespace CosmicScavengers.Core.Networking.Commands.Meta
 {
     /// <summary>
     /// Defines the types of messages exchanged between client and server.

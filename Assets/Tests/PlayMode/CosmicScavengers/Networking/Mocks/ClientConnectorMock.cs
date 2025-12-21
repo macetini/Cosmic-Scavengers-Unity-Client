@@ -1,8 +1,8 @@
-using CosmicScavengers.Networking;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using CosmicScavengers.Core.Networking;
 
-namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks 
+namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks
 {
     public class ClientConnectorMock : ClientConnector
     {
@@ -16,17 +16,17 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks
         }
 
         // --- MOCK FUNCTIONALITY: Simulate Inbound Messages ---
-        // We need a public Action that ClientAuthTestHarness can subscribe to 
+        // We need a public Action that ClientAuthTestHarness can subscribe to
         // and redirect to ClientAuth.HandleAuthMessage.
-        public Action<string> TestDispatchMessage; 
-        
+        public Action<string> TestDispatchMessage;
+
         private readonly Queue<string> testIncomingMessages = new();
 
         public void SimulateMessageReceived(string message)
         {
             testIncomingMessages.Enqueue(message);
         }
-        
+
         /// <summary>
         /// Runs in the Unity Update loop to dispatch simulated messages.
         /// </summary>
@@ -35,8 +35,8 @@ namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks
             while (testIncomingMessages.Count > 0)
             {
                 string message = testIncomingMessages.Dequeue();
-                                
-                TestDispatchMessage?.Invoke(message); 
+
+                TestDispatchMessage?.Invoke(message);
             }
         }
     }

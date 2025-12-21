@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using CosmicScavengers.Networking.Handlers.Binary;
+using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Handlers.Binary;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Communication

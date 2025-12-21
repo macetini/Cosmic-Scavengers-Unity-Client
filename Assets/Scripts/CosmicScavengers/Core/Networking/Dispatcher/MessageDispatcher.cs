@@ -1,7 +1,8 @@
+using CosmicScavengers.Core.Networking;
 using CosmicScavengers.Networking.Event.Channels;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Dispatcher
+namespace CosmicScavengers.Networking.Core.Dispatcher
 {
     public class MessageDispatcher : MonoBehaviour
     {

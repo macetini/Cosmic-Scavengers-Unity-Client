@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using CosmicScavengers.Networking.Handlers.Text;
+using CosmicScavengers.Core.Networking.Handlers.Text;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Communication
+namespace CosmicScavengers.Core.Networking.Communication
 {
     public class TextCommandHandlers : MonoBehaviour
     {

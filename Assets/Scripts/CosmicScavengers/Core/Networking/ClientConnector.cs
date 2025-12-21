@@ -5,15 +5,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using CosmicScavengers.Networking.Meta;
+using CosmicScavengers.Core.Networking.Commands.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking
+namespace CosmicScavengers.Core.Networking
 {
     /// <summary>
-    /// Handles the low-level TCP connection using a multiplexed protocol:
-    /// a 4-byte length prefix, followed by a 1-byte type header and the payload.
-    /// This component ONLY routes data and has NO application logic (e.g., login, game rules).
+    /// Manages low-level TCP connection to the multiplexed server.
+    /// Handles sending and receiving of both text and binary messages.
     /// </summary>
     public class ClientConnector : MonoBehaviour
     {
@@ -23,6 +22,9 @@ namespace CosmicScavengers.Networking
         private const int LENGTH_FIELD_SIZE = 4; // 4 bytes for length prefix
         private const int MAX_MESSAGE_SIZE = 1024 * 1024; // 1 MB
 
+        // -----------------------------------
+
+        // Networking components
         private TcpClient client;
         private NetworkStream stream;
         private Thread clientThread;
@@ -38,6 +40,9 @@ namespace CosmicScavengers.Networking
         public event Action<string> OnTextMessageReceived;
         public event Action<byte[]> OnBinaryMessageReceived;
 
+        /// <summary>
+        /// Indicates whether the client is currently connected to the server.
+        /// </summary>
         public bool IsConnected
         {
             get { return client != null && client.Connected; }
@@ -47,12 +52,6 @@ namespace CosmicScavengers.Networking
         {
             clientThread = new Thread(ConnectToServer) { IsBackground = true };
             clientThread.Start();
-        }
-
-        public void InitHandshake()
-        {
-            Debug.Log("[Connector] Initiating handshake with server.");
-            DispatchTextMessage("C_CONNECT");
         }
 
         /// <summary>
@@ -96,6 +95,15 @@ namespace CosmicScavengers.Networking
             {
                 Cleanup();
             }
+        }
+
+        /// <summary>
+        /// Initiates the handshake process with the server by sending a connect command.
+        /// </summary>
+        public void InitHandshake()
+        {
+            Debug.Log("[Connector] Initiating handshake with server.");
+            DispatchTextMessage("C_CONNECT");
         }
 
         /// <summary>
@@ -180,6 +188,10 @@ namespace CosmicScavengers.Networking
             }
         }
 
+        /// <summary>
+        /// Reads exactly 'count' bytes from the stream into the buffer, handling partial reads.
+        /// Throws IOException if the stream is closed before reading the requested bytes.
+        /// </summary>
         private static int ReadExactly(
             NetworkStream targetStream,
             byte[] buffer,
