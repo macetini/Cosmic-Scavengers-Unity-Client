@@ -1,10 +1,10 @@
 using System.Text;
+using CosmicScavengers.Core.Systems.Noise;
 using UnityEngine;
 
-namespace CosmicScavengers.Systems.MapGeneration.Noise
+namespace CosmicScavengers.Systems.Terrain
 {
-    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public class MapGenerator : MonoBehaviour
+    public class TerrainData : MonoBehaviour
     {
         // Configuration for the noise function
         [Header("Noise Configuration")]
@@ -23,19 +23,19 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
         [Header("Height Map Parameters")]
         [Tooltip("Maximum vertical scale of the terrain (e.g., how high mountains can be).")]
         public float maxElevation = 100f;
-        private bool _isSeeded = false;
+        private bool isSeeded = false;
 
-        public void GenerateMap(long mapSeed)
+        public void GenerateData(long mapSeed)
         {
             // Initialize the static noise generator with the map seed
             NoiseGenerator.SetSeed(mapSeed);
-            _isSeeded = true;
+            isSeeded = true;
 
-            Debug.Log($"[MapGenerator] Map generated with seed: {mapSeed}");
+            Debug.Log($"[TerrainData] Map generated with seed: {mapSeed}");
 
             // Example check: get elevation at origin
             float elevation = GetElevation(0, 0);
-            Debug.Log($"[MapGenerator] Elevation at (0, 0) is: {elevation:F3}");
+            Debug.Log($"[TerrainData] Elevation at (0, 0) is: {elevation:F3}");
             //DrawDebugMap(100); // Draw a debug map slice
         }
 
@@ -48,10 +48,10 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
         /// <returns>A float value representing the height in world units (e.g., 0.0 to 100.0).</returns>
         public float GetElevation(float worldX, float worldY)
         {
-            if (!_isSeeded)
+            if (!isSeeded)
             {
                 Debug.LogError(
-                    "[MapGenerator] Cannot generate map: World data not set or NoiseGenerator not seeded."
+                    "[TerrainData] Cannot generate map: World data not set or NoiseGenerator not seeded."
                 );
                 return 0f;
             }
@@ -74,7 +74,7 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
         /// </summary>
         public void DrawDebugMap(int size)
         {
-            if (!_isSeeded)
+            if (!isSeeded)
                 return;
 
             StringBuilder sb = new();
@@ -102,7 +102,7 @@ namespace CosmicScavengers.Systems.MapGeneration.Noise
                 sb.AppendLine();
             }
 
-            Debug.Log($"[MapGenerator] Debug Height Map:\n{sb.ToString()}");
+            Debug.Log($"[TerrainData] Debug Height Map:\n{sb.ToString()}");
         }
     }
 }

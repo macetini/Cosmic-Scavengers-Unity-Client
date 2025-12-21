@@ -1,33 +1,38 @@
 using System.Collections.Generic;
+using CosmicScavengers.Core.Systems.Terrain.Meta;
+using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.WorldData;
-using CosmicScavengers.Systems.MapGeneration.Meta;
-using CosmicScavengers.Systems.MapGeneration.Noise;
 using UnityEngine;
 
-namespace CosmicScavengers.Systems.MapGeneration
+namespace CosmicScavengers.Systems.Terrain
 {
     /// <summary>
     /// Component responsible for generating a Unity Mesh from the procedural
     /// height data provided by the MapGenerator.
     /// </summary>
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public class TerrainMeshGenerator : MonoBehaviour
+    public class TerrainComponent : MonoBehaviour
     {
         [SerializeField]
         [Tooltip("The side length of the square map chunk (e.g., 64x64 grid).")]
-        private int mapSize = 64;
+        private int size = 64;
 
         [SerializeField]
         [Tooltip("The size of each grid square in world units.")]
         private float meshScale = 1.0f;
 
         [Header("Color Map Settings")]
-        [Tooltip("Define color transitions from low to high elevation. MUST be sorted low to high.")]
+        [Tooltip(
+            "Define color transitions from low to high elevation. MUST be sorted low to high."
+        )]
         public List<TerrainType> terrainTypes = new();
 
         [Header("References")]
         [SerializeField]
-        private MapGenerator mapGenerator;
+        private TerrainData terrainData;
+
+        [SerializeField]
+        private WorldDataChannel worldDataChannel;
 
         private MeshFilter meshFilter;
         private Mesh mesh;
@@ -39,54 +44,76 @@ namespace CosmicScavengers.Systems.MapGeneration
             meshFilter.mesh = mesh;
         }
 
+        void OnEnable()
+        {
+            if (worldDataChannel != null)
+            {
+                worldDataChannel.AddListener(GenerateMesh);
+            }
+        }
+
+        void OnDisable()
+        {
+            if (worldDataChannel != null)
+            {
+                worldDataChannel.RemoveListener(GenerateMesh);
+            }
+        }
+
         /// <summary>
         /// Generates the mesh geometry based on the seeded MapGenerator data.
         /// </summary>
         public void GenerateMesh(WorldData mapData)
         {
-            if (mapGenerator == null)
+            if (terrainData == null)
             {
-                Debug.LogError("[TerrainMeshGenerator] MapGenerator reference is missing.");
+                Debug.LogError("[TerrainComponent] MapGenerator reference is missing.");
                 return;
             }
             if (terrainTypes == null || terrainTypes.Count == 0)
             {
-                Debug.LogWarning("[TerrainMeshGenerator] Terrain Types list is empty. Mesh will be uncolored.");
+                Debug.LogWarning(
+                    "[TerrainComponent] Terrain Types list is empty. Mesh will be uncolored."
+                );
             }
 
-            mapGenerator.GenerateMap(mapData.MapSeed);
+            terrainData.GenerateData(mapData.MapSeed);
 
-            Debug.Log($"[TerrainMeshGenerator] Generating {mapSize}x{mapSize} mesh...");
+            Debug.Log($"[TerrainComponent] Generating {size}x{size} mesh...");
 
-            Vector3[] vertices = new Vector3[mapSize * mapSize];
-            int[] triangles = new int[(mapSize - 1) * (mapSize - 1) * 6];
-            Vector2[] uvs = new Vector2[mapSize * mapSize];
-            Color[] colors = new Color[mapSize * mapSize];
+            Vector3[] vertices = new Vector3[size * size];
+            int[] triangles = new int[(size - 1) * (size - 1) * 6];
+            Vector2[] uvs = new Vector2[size * size];
+            Color[] colors = new Color[size * size];
 
             int vertIndex = 0;
             int triIndex = 0;
 
-            float offsetX = mapSize * meshScale * 0.5f;
-            float offsetZ = mapSize * meshScale * 0.5f;
+            float offsetX = size * meshScale * 0.5f;
+            float offsetZ = size * meshScale * 0.5f;
 
             // 1. Generate Vertices, UVs, and COLORS
-            for (int z = 0; z < mapSize; z++)
+            for (int z = 0; z < size; z++)
             {
-                for (int x = 0; x < mapSize; x++)
+                for (int x = 0; x < size; x++)
                 {
                     float worldX = x * meshScale;
                     float worldZ = z * meshScale;
 
                     // Query the elevation from the seeded MapGenerator (this is the Y component)
-                    float elevation = mapGenerator.GetElevation(worldX, worldZ);
+                    float elevation = terrainData.GetElevation(worldX, worldZ);
 
                     //Debug.Log("Elevation at (" + worldX + ", " + worldZ + ") is " + elevation);
 
                     // Set Vertex Position
-                    vertices[vertIndex] = new Vector3(worldX - offsetX, elevation, worldZ - offsetZ);
+                    vertices[vertIndex] = new Vector3(
+                        worldX - offsetX,
+                        elevation,
+                        worldZ - offsetZ
+                    );
 
                     // Set UVs for texture mapping (normalized 0 to 1)
-                    uvs[vertIndex] = new Vector2((float)x / mapSize, (float)z / mapSize);
+                    uvs[vertIndex] = new Vector2((float)x / size, (float)z / size);
 
                     // --- NEW: Color assignment logic ---
                     Color vertexColor = Color.black;
@@ -103,12 +130,12 @@ namespace CosmicScavengers.Systems.MapGeneration
                     // --- END NEW LOGIC ---
 
                     // 2. Generate Triangles (Skip the last row and column)
-                    if (x < mapSize - 1 && z < mapSize - 1)
+                    if (x < size - 1 && z < size - 1)
                     {
                         int a = vertIndex;
                         int b = vertIndex + 1;
-                        int c = vertIndex + mapSize + 1;
-                        int d = vertIndex + mapSize;
+                        int c = vertIndex + size + 1;
+                        int d = vertIndex + size;
 
                         // First triangle: (A, D, B)
                         triangles[triIndex + 0] = a;
@@ -131,13 +158,12 @@ namespace CosmicScavengers.Systems.MapGeneration
             mesh.vertices = vertices;
             mesh.triangles = triangles;
             mesh.uv = uvs;
-            mesh.colors = colors; // <-- APPLY THE NEW COLOR ARRAY!
+            mesh.colors = colors;
 
-            // 4. Recalculate properties (crucial for lighting and physics)
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
 
-            Debug.Log("[TerrainMeshGenerator] Mesh generation and coloring complete.");
+            Debug.Log("[TerrainComponent] Mesh generation and coloring complete.");
         }
     }
 }

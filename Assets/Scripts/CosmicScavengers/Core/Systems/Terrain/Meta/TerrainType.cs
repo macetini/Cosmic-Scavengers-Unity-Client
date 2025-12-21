@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CosmicScavengers.Systems.MapGeneration.Meta
+namespace CosmicScavengers.Core.Systems.Terrain.Meta
 {
     [System.Serializable]
     public struct TerrainType

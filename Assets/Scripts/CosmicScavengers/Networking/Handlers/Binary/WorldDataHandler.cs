@@ -1,6 +1,7 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Binary;
+using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 
@@ -11,8 +12,8 @@ namespace CosmicScavengers.Networking.Handlers.Binary
         [Tooltip("Set to false to disable this handler.")]
         public bool Active = true;
 
-        //[Tooltip("Event channel triggered when world data is received.")]
-        //public EventChannel<WorldData> Channel;
+        [Tooltip("Event channel triggered when world data is received.")]
+        public WorldDataChannel Channel;
 
         public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_WORLD_STATE_S;
 
@@ -23,14 +24,13 @@ namespace CosmicScavengers.Networking.Handlers.Binary
                 Debug.LogWarning("[WorldClientDataHandler] Handler is inactive. Ignoring data.");
                 return;
             }
-
             try
             {
                 WorldData currentWorld = WorldData.Parser.ParseFrom(protobufData);
-                //Channel.Raise(currentWorld);
                 Debug.Log(
                     $"[WorldClientDataHandler] Received data for World: {currentWorld.WorldName}"
                 );
+                Channel.Raise(currentWorld);
             }
             catch (Exception e)
             {
