@@ -24,12 +24,12 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     static PlayerEntityListDataReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Ch1wbGF5ZXJfZW50aXR5X2xpc3RfZGF0YS5wcm90bxIzQ29zbWljU2NhdmVu",
-            "Z2Vycy5OZXR3b3JraW5nLlByb3RvYnVmLlBsYXllckVudGl0aWVzGhhwbGF5",
-            "ZXJfZW50aXR5X2RhdGEucHJvdG8ibwoUUGxheWVyRW50aXR5TGlzdERhdGES",
-            "VwoIZW50aXRpZXMYASADKAsyRS5Db3NtaWNTY2F2ZW5nZXJzLk5ldHdvcmtp",
-            "bmcuUHJvdG9idWYuUGxheWVyRW50aXRpZXMuUGxheWVyRW50aXR5RGF0YWIG",
-            "cHJvdG8z"));
+            "Ch1wbGF5ZXJfZW50aXR5X2xpc3RfZGF0YS5wcm90bxoYcGxheWVyX2VudGl0",
+            "eV9kYXRhLnByb3RvIjsKFFBsYXllckVudGl0eUxpc3REYXRhEiMKCGVudGl0",
+            "aWVzGAEgAygLMhEuUGxheWVyRW50aXR5RGF0YUJvCjdjb20uY29zbWljc2Nh",
+            "dmVuZ2Vycy5uZXR3b3JraW5nLnByb3RvYnVmLnBsYXllcmVudGl0aWVzqgIz",
+            "Q29zbWljU2NhdmVuZ2Vycy5OZXR3b3JraW5nLlByb3RvYnVmLlBsYXllckVu",
+            "dGl0aWVzYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::CosmicScavengers.Networking.Protobuf.PlayerEntities.PlayerEntityDataReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

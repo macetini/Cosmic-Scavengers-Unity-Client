@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CosmicScavengers.Core.Systems.Entities;
 using CosmicScavengers.Core.Systems.Terrain.Meta;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.WorldData;
@@ -34,6 +35,10 @@ namespace CosmicScavengers.Systems.Terrain
         [SerializeField]
         private WorldDataChannel worldDataChannel;
 
+        [SerializeField]
+        [Tooltip("Reference to the EntityService for entity management.")]
+        private EntityService entityService;
+
         private MeshFilter meshFilter;
         private Mesh mesh;
 
@@ -42,6 +47,20 @@ namespace CosmicScavengers.Systems.Terrain
             meshFilter = GetComponent<MeshFilter>();
             mesh = new Mesh();
             meshFilter.mesh = mesh;
+        }
+
+        void Start()
+        {
+            if (entityService == null)
+            {
+                throw new System.Exception(
+                    "[TerrainComponent] EntityService reference is missing."
+                );
+            }
+            if (terrainData == null)
+            {
+                throw new System.Exception("[TerrainComponent] TerrainData reference is missing.");
+            }
         }
 
         void OnEnable()

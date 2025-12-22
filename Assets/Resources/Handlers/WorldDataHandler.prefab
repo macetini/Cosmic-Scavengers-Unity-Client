@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Handlers.WorldClientDataHandler
   Active: 1
-  Channel: {fileID: 11400000, guid: 2614e2c5a8330a248be0e0176fab9b0c, type: 2}
+  Channel: {fileID: 11400000, guid: fc31cd6309d4a53468d0abd36528ca2e, type: 2}

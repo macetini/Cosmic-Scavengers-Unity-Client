@@ -1,6 +1,7 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Binary;
+using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 
@@ -8,9 +9,15 @@ namespace CosmicScavengers.Networking.Handlers.Binary
 {
     public class PlayerEntitiesDataHandler : MonoBehaviour, IBinaryCommandHandler
     {
-        public bool Active = true;
+        [Header("Channel Configuration")]
+        [SerializeField]
+        [Tooltip("Channel to raise when player entities data is received.")]
+        private PlayerEntitiesDataChannel Channel;
 
-        //public EventChannel<PlayerEntityData> Channel;
+        [Header("Configuration")]
+        [SerializeField]
+        [Tooltip("Set to false to disable this handler.")]
+        private bool Active = true;
 
         public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_S;
 
@@ -25,26 +32,20 @@ namespace CosmicScavengers.Networking.Handlers.Binary
             try
             {
                 var playerEntitiesData = PlayerEntityListData.Parser.ParseFrom(protobufData);
-                Debug.Log($"Received {playerEntitiesData.Entities.Count} player entities.");
+                Debug.Log(
+                    $"[PlayerEntitiesDataHandler] Received {playerEntitiesData.Entities.Count} player entities."
+                );
 
-                foreach (PlayerEntityData entity in playerEntitiesData.Entities)
-                {
-                    ProcessEntity(entity);
-                }
+                Channel.Raise(playerEntitiesData);
+
+                foreach (PlayerEntityData entity in playerEntitiesData.Entities) { }
             }
             catch (Exception e)
             {
-                Debug.LogError($"Deserialization failed: {e.Message}");
+                Debug.LogError(
+                    $"[PlayerEntitiesDataHandler] Error parsing PlayerEntityListData: {e.Message}"
+                );
             }
-        }
-
-        private void ProcessEntity(PlayerEntityData entity)
-        {
-            Debug.Log(
-                $"Entity ID: {entity.Id}, Type: {entity.EntityType}, Pos: ({entity.PosX}, {entity.PosY})"
-            );
-
-            //Channel.Raise(entity);
         }
     }
 }

@@ -24,20 +24,23 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     static PlayerEntityDataReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChhwbGF5ZXJfZW50aXR5X2RhdGEucHJvdG8SM0Nvc21pY1NjYXZlbmdlcnMu",
-            "TmV0d29ya2luZy5Qcm90b2J1Zi5QbGF5ZXJFbnRpdGllcxofZ29vZ2xlL3By",
-            "b3RvYnVmL3RpbWVzdGFtcC5wcm90byLCAgoQUGxheWVyRW50aXR5RGF0YRIK",
-            "CgJpZBgBIAEoAxIPCgdjaHVua194GAIgASgFEg8KB2NodW5rX3kYAyABKAUS",
-            "EwoLZW50aXR5X3R5cGUYBCABKAkSDgoGaGVhbHRoGAUgASgFEg0KBXBvc194",
-            "GAYgASgCEg0KBXBvc195GAcgASgCEhIKCnN0YXRlX2RhdGEYCCABKAkSEQoJ",
-            "cGxheWVyX2lkGAkgASgDEhAKCHdvcmxkX2lkGAogASgDEhEKCXNlY3Rvcl9p",
-            "ZBgLIAEoAxIRCglpc19zdGF0aWMYDCABKAgSLgoKY3JlYXRlZF9hdBgNIAEo",
-            "CzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgO",
-            "IAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBiBnByb3RvMw=="));
+            "ChhwbGF5ZXJfZW50aXR5X2RhdGEucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90",
+            "aW1lc3RhbXAucHJvdG8i6AIKEFBsYXllckVudGl0eURhdGESCgoCaWQYASAB",
+            "KAMSEQoJcGxheWVyX2lkGAIgASgDEhAKCHdvcmxkX2lkGAMgASgDEhEKCXNl",
+            "Y3Rvcl9pZBgEIAEoAxITCgtlbnRpdHlfdHlwZRgFIAEoCRIRCglpc19zdGF0",
+            "aWMYBiABKAgSDQoFcG9zX3gYByABKAISDQoFcG9zX3kYCCABKAISEAoIcm90",
+            "YXRpb24YCSABKAISDwoHY2h1bmtfeBgKIAEoBRIPCgdjaHVua195GAsgASgF",
+            "Eg4KBmhlYWx0aBgMIAEoBRISCgptYXhfaGVhbHRoGA0gASgFEhIKCnN0YXRl",
+            "X2RhdGEYDiABKAkSLgoKY3JlYXRlZF9hdBgPIAEoCzIaLmdvb2dsZS5wcm90",
+            "b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgQIAEoCzIaLmdvb2dsZS5w",
+            "cm90b2J1Zi5UaW1lc3RhbXBCbwo3Y29tLmNvc21pY3NjYXZlbmdlcnMubmV0",
+            "d29ya2luZy5wcm90b2J1Zi5wbGF5ZXJlbnRpdGllc6oCM0Nvc21pY1NjYXZl",
+            "bmdlcnMuTmV0d29ya2luZy5Qcm90b2J1Zi5QbGF5ZXJFbnRpdGllc2IGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.PlayerEntities.PlayerEntityData), global::CosmicScavengers.Networking.Protobuf.PlayerEntities.PlayerEntityData.Parser, new[]{ "Id", "ChunkX", "ChunkY", "EntityType", "Health", "PosX", "PosY", "StateData", "PlayerId", "WorldId", "SectorId", "IsStatic", "CreatedAt", "UpdatedAt" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.PlayerEntities.PlayerEntityData), global::CosmicScavengers.Networking.Protobuf.PlayerEntities.PlayerEntityData.Parser, new[]{ "Id", "PlayerId", "WorldId", "SectorId", "EntityType", "IsStatic", "PosX", "PosY", "Rotation", "ChunkX", "ChunkY", "Health", "MaxHealth", "StateData", "CreatedAt", "UpdatedAt" }, null, null, null, null)
           }));
     }
     #endregion
@@ -45,7 +48,7 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
   }
   #region Messages
   /// <summary>
-  /// Mirrors the jOOQ PlayerEntities POJO for network transmission.
+  /// Represents a single entity mirrored from the player_entities table.
   /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class PlayerEntityData : pb::IMessage<PlayerEntityData>
@@ -83,17 +86,19 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PlayerEntityData(PlayerEntityData other) : this() {
       id_ = other.id_;
-      chunkX_ = other.chunkX_;
-      chunkY_ = other.chunkY_;
-      entityType_ = other.entityType_;
-      health_ = other.health_;
-      posX_ = other.posX_;
-      posY_ = other.posY_;
-      stateData_ = other.stateData_;
       playerId_ = other.playerId_;
       worldId_ = other.worldId_;
       sectorId_ = other.sectorId_;
+      entityType_ = other.entityType_;
       isStatic_ = other.isStatic_;
+      posX_ = other.posX_;
+      posY_ = other.posY_;
+      rotation_ = other.rotation_;
+      chunkX_ = other.chunkX_;
+      chunkY_ = other.chunkY_;
+      health_ = other.health_;
+      maxHealth_ = other.maxHealth_;
+      stateData_ = other.stateData_;
       createdAt_ = other.createdAt_ != null ? other.createdAt_.Clone() : null;
       updatedAt_ = other.updatedAt_ != null ? other.updatedAt_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -109,7 +114,7 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     public const int IdFieldNumber = 1;
     private long id_;
     /// <summary>
-    /// Database primary key ID
+    /// 1. ID BLOCK
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -120,38 +125,47 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       }
     }
 
-    /// <summary>Field number for the "chunk_x" field.</summary>
-    public const int ChunkXFieldNumber = 2;
-    private int chunkX_;
-    /// <summary>
-    /// Position in chunk coordinates (integer based)
-    /// </summary>
+    /// <summary>Field number for the "player_id" field.</summary>
+    public const int PlayerIdFieldNumber = 2;
+    private long playerId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int ChunkX {
-      get { return chunkX_; }
+    public long PlayerId {
+      get { return playerId_; }
       set {
-        chunkX_ = value;
+        playerId_ = value;
       }
     }
 
-    /// <summary>Field number for the "chunk_y" field.</summary>
-    public const int ChunkYFieldNumber = 3;
-    private int chunkY_;
+    /// <summary>Field number for the "world_id" field.</summary>
+    public const int WorldIdFieldNumber = 3;
+    private long worldId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int ChunkY {
-      get { return chunkY_; }
+    public long WorldId {
+      get { return worldId_; }
       set {
-        chunkY_ = value;
+        worldId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "sector_id" field.</summary>
+    public const int SectorIdFieldNumber = 4;
+    private long sectorId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long SectorId {
+      get { return sectorId_; }
+      set {
+        sectorId_ = value;
       }
     }
 
     /// <summary>Field number for the "entity_type" field.</summary>
-    public const int EntityTypeFieldNumber = 4;
+    public const int EntityTypeFieldNumber = 5;
     private string entityType_ = "";
     /// <summary>
-    /// Entity type identifier (e.g., "Player", "Enemy", "ResourceNode")
+    /// 2. IDENTITY &amp; TYPE
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -162,26 +176,23 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       }
     }
 
-    /// <summary>Field number for the "health" field.</summary>
-    public const int HealthFieldNumber = 5;
-    private int health_;
-    /// <summary>
-    /// Current health value
-    /// </summary>
+    /// <summary>Field number for the "is_static" field.</summary>
+    public const int IsStaticFieldNumber = 6;
+    private bool isStatic_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int Health {
-      get { return health_; }
+    public bool IsStatic {
+      get { return isStatic_; }
       set {
-        health_ = value;
+        isStatic_ = value;
       }
     }
 
     /// <summary>Field number for the "pos_x" field.</summary>
-    public const int PosXFieldNumber = 6;
+    public const int PosXFieldNumber = 7;
     private float posX_;
     /// <summary>
-    /// Fine-grained position within the chunk (floating point)
+    /// 3. SPATIAL DATA
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -193,7 +204,7 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     }
 
     /// <summary>Field number for the "pos_y" field.</summary>
-    public const int PosYFieldNumber = 7;
+    public const int PosYFieldNumber = 8;
     private float posY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -204,11 +215,80 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       }
     }
 
+    /// <summary>Field number for the "rotation" field.</summary>
+    public const int RotationFieldNumber = 9;
+    private float rotation_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float Rotation {
+      get { return rotation_; }
+      set {
+        rotation_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "chunk_x" field.</summary>
+    public const int ChunkXFieldNumber = 10;
+    private int chunkX_;
+    /// <summary>
+    /// 4. COMPUTED SPATIAL (Optional to send, as client can calculate, 
+    /// but useful for verification)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ChunkX {
+      get { return chunkX_; }
+      set {
+        chunkX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "chunk_y" field.</summary>
+    public const int ChunkYFieldNumber = 11;
+    private int chunkY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ChunkY {
+      get { return chunkY_; }
+      set {
+        chunkY_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "health" field.</summary>
+    public const int HealthFieldNumber = 12;
+    private int health_;
+    /// <summary>
+    /// 5. STATS
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Health {
+      get { return health_; }
+      set {
+        health_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "max_health" field.</summary>
+    public const int MaxHealthFieldNumber = 13;
+    private int maxHealth_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MaxHealth {
+      get { return maxHealth_; }
+      set {
+        maxHealth_ = value;
+      }
+    }
+
     /// <summary>Field number for the "state_data" field.</summary>
-    public const int StateDataFieldNumber = 8;
+    public const int StateDataFieldNumber = 14;
     private string stateData_ = "";
     /// <summary>
-    /// Serialized state data (JSONB in DB, transmitted as a raw JSON string)
+    /// 6. DYNAMIC STATE
+    /// The JSONB data is passed as a string to be parsed by 
+    /// the Unity client's JSON library (like Newtonsoft).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -219,71 +299,11 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       }
     }
 
-    /// <summary>Field number for the "player_id" field.</summary>
-    public const int PlayerIdFieldNumber = 9;
-    private long playerId_;
-    /// <summary>
-    /// Foreign key to Player table (Owner ID)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long PlayerId {
-      get { return playerId_; }
-      set {
-        playerId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "world_id" field.</summary>
-    public const int WorldIdFieldNumber = 10;
-    private long worldId_;
-    /// <summary>
-    /// Foreign key to World table
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long WorldId {
-      get { return worldId_; }
-      set {
-        worldId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "sector_id" field.</summary>
-    public const int SectorIdFieldNumber = 11;
-    private long sectorId_;
-    /// <summary>
-    /// Foreign key to Sector table
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long SectorId {
-      get { return sectorId_; }
-      set {
-        sectorId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_static" field.</summary>
-    public const int IsStaticFieldNumber = 12;
-    private bool isStatic_;
-    /// <summary>
-    /// Whether the entity is static/non-moving
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool IsStatic {
-      get { return isStatic_; }
-      set {
-        isStatic_ = value;
-      }
-    }
-
     /// <summary>Field number for the "created_at" field.</summary>
-    public const int CreatedAtFieldNumber = 13;
+    public const int CreatedAtFieldNumber = 15;
     private global::Google.Protobuf.WellKnownTypes.Timestamp createdAt_;
     /// <summary>
-    /// Timestamps (OffsetDateTime)
+    /// 7. SYSTEM METADATA
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -295,7 +315,7 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     }
 
     /// <summary>Field number for the "updated_at" field.</summary>
-    public const int UpdatedAtFieldNumber = 14;
+    public const int UpdatedAtFieldNumber = 16;
     private global::Google.Protobuf.WellKnownTypes.Timestamp updatedAt_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -322,17 +342,19 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
         return true;
       }
       if (Id != other.Id) return false;
-      if (ChunkX != other.ChunkX) return false;
-      if (ChunkY != other.ChunkY) return false;
-      if (EntityType != other.EntityType) return false;
-      if (Health != other.Health) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosX, other.PosX)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosY, other.PosY)) return false;
-      if (StateData != other.StateData) return false;
       if (PlayerId != other.PlayerId) return false;
       if (WorldId != other.WorldId) return false;
       if (SectorId != other.SectorId) return false;
+      if (EntityType != other.EntityType) return false;
       if (IsStatic != other.IsStatic) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosX, other.PosX)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosY, other.PosY)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
+      if (ChunkX != other.ChunkX) return false;
+      if (ChunkY != other.ChunkY) return false;
+      if (Health != other.Health) return false;
+      if (MaxHealth != other.MaxHealth) return false;
+      if (StateData != other.StateData) return false;
       if (!object.Equals(CreatedAt, other.CreatedAt)) return false;
       if (!object.Equals(UpdatedAt, other.UpdatedAt)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -343,17 +365,19 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
     public override int GetHashCode() {
       int hash = 1;
       if (Id != 0L) hash ^= Id.GetHashCode();
-      if (ChunkX != 0) hash ^= ChunkX.GetHashCode();
-      if (ChunkY != 0) hash ^= ChunkY.GetHashCode();
-      if (EntityType.Length != 0) hash ^= EntityType.GetHashCode();
-      if (Health != 0) hash ^= Health.GetHashCode();
-      if (PosX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosX);
-      if (PosY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosY);
-      if (StateData.Length != 0) hash ^= StateData.GetHashCode();
       if (PlayerId != 0L) hash ^= PlayerId.GetHashCode();
       if (WorldId != 0L) hash ^= WorldId.GetHashCode();
       if (SectorId != 0L) hash ^= SectorId.GetHashCode();
+      if (EntityType.Length != 0) hash ^= EntityType.GetHashCode();
       if (IsStatic != false) hash ^= IsStatic.GetHashCode();
+      if (PosX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosX);
+      if (PosY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosY);
+      if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
+      if (ChunkX != 0) hash ^= ChunkX.GetHashCode();
+      if (ChunkY != 0) hash ^= ChunkY.GetHashCode();
+      if (Health != 0) hash ^= Health.GetHashCode();
+      if (MaxHealth != 0) hash ^= MaxHealth.GetHashCode();
+      if (StateData.Length != 0) hash ^= StateData.GetHashCode();
       if (createdAt_ != null) hash ^= CreatedAt.GetHashCode();
       if (updatedAt_ != null) hash ^= UpdatedAt.GetHashCode();
       if (_unknownFields != null) {
@@ -378,56 +402,64 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
         output.WriteRawTag(8);
         output.WriteInt64(Id);
       }
-      if (ChunkX != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(ChunkX);
-      }
-      if (ChunkY != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(ChunkY);
-      }
-      if (EntityType.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(EntityType);
-      }
-      if (Health != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(Health);
-      }
-      if (PosX != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(PosX);
-      }
-      if (PosY != 0F) {
-        output.WriteRawTag(61);
-        output.WriteFloat(PosY);
-      }
-      if (StateData.Length != 0) {
-        output.WriteRawTag(66);
-        output.WriteString(StateData);
-      }
       if (PlayerId != 0L) {
-        output.WriteRawTag(72);
+        output.WriteRawTag(16);
         output.WriteInt64(PlayerId);
       }
       if (WorldId != 0L) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(24);
         output.WriteInt64(WorldId);
       }
       if (SectorId != 0L) {
-        output.WriteRawTag(88);
+        output.WriteRawTag(32);
         output.WriteInt64(SectorId);
       }
+      if (EntityType.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(EntityType);
+      }
       if (IsStatic != false) {
-        output.WriteRawTag(96);
+        output.WriteRawTag(48);
         output.WriteBool(IsStatic);
       }
+      if (PosX != 0F) {
+        output.WriteRawTag(61);
+        output.WriteFloat(PosX);
+      }
+      if (PosY != 0F) {
+        output.WriteRawTag(69);
+        output.WriteFloat(PosY);
+      }
+      if (Rotation != 0F) {
+        output.WriteRawTag(77);
+        output.WriteFloat(Rotation);
+      }
+      if (ChunkX != 0) {
+        output.WriteRawTag(80);
+        output.WriteInt32(ChunkX);
+      }
+      if (ChunkY != 0) {
+        output.WriteRawTag(88);
+        output.WriteInt32(ChunkY);
+      }
+      if (Health != 0) {
+        output.WriteRawTag(96);
+        output.WriteInt32(Health);
+      }
+      if (MaxHealth != 0) {
+        output.WriteRawTag(104);
+        output.WriteInt32(MaxHealth);
+      }
+      if (StateData.Length != 0) {
+        output.WriteRawTag(114);
+        output.WriteString(StateData);
+      }
       if (createdAt_ != null) {
-        output.WriteRawTag(106);
+        output.WriteRawTag(122);
         output.WriteMessage(CreatedAt);
       }
       if (updatedAt_ != null) {
-        output.WriteRawTag(114);
+        output.WriteRawTag(130, 1);
         output.WriteMessage(UpdatedAt);
       }
       if (_unknownFields != null) {
@@ -444,56 +476,64 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
         output.WriteRawTag(8);
         output.WriteInt64(Id);
       }
-      if (ChunkX != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(ChunkX);
-      }
-      if (ChunkY != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(ChunkY);
-      }
-      if (EntityType.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(EntityType);
-      }
-      if (Health != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(Health);
-      }
-      if (PosX != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(PosX);
-      }
-      if (PosY != 0F) {
-        output.WriteRawTag(61);
-        output.WriteFloat(PosY);
-      }
-      if (StateData.Length != 0) {
-        output.WriteRawTag(66);
-        output.WriteString(StateData);
-      }
       if (PlayerId != 0L) {
-        output.WriteRawTag(72);
+        output.WriteRawTag(16);
         output.WriteInt64(PlayerId);
       }
       if (WorldId != 0L) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(24);
         output.WriteInt64(WorldId);
       }
       if (SectorId != 0L) {
-        output.WriteRawTag(88);
+        output.WriteRawTag(32);
         output.WriteInt64(SectorId);
       }
+      if (EntityType.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(EntityType);
+      }
       if (IsStatic != false) {
-        output.WriteRawTag(96);
+        output.WriteRawTag(48);
         output.WriteBool(IsStatic);
       }
+      if (PosX != 0F) {
+        output.WriteRawTag(61);
+        output.WriteFloat(PosX);
+      }
+      if (PosY != 0F) {
+        output.WriteRawTag(69);
+        output.WriteFloat(PosY);
+      }
+      if (Rotation != 0F) {
+        output.WriteRawTag(77);
+        output.WriteFloat(Rotation);
+      }
+      if (ChunkX != 0) {
+        output.WriteRawTag(80);
+        output.WriteInt32(ChunkX);
+      }
+      if (ChunkY != 0) {
+        output.WriteRawTag(88);
+        output.WriteInt32(ChunkY);
+      }
+      if (Health != 0) {
+        output.WriteRawTag(96);
+        output.WriteInt32(Health);
+      }
+      if (MaxHealth != 0) {
+        output.WriteRawTag(104);
+        output.WriteInt32(MaxHealth);
+      }
+      if (StateData.Length != 0) {
+        output.WriteRawTag(114);
+        output.WriteString(StateData);
+      }
       if (createdAt_ != null) {
-        output.WriteRawTag(106);
+        output.WriteRawTag(122);
         output.WriteMessage(CreatedAt);
       }
       if (updatedAt_ != null) {
-        output.WriteRawTag(114);
+        output.WriteRawTag(130, 1);
         output.WriteMessage(UpdatedAt);
       }
       if (_unknownFields != null) {
@@ -509,27 +549,6 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       if (Id != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
       }
-      if (ChunkX != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChunkX);
-      }
-      if (ChunkY != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChunkY);
-      }
-      if (EntityType.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityType);
-      }
-      if (Health != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Health);
-      }
-      if (PosX != 0F) {
-        size += 1 + 4;
-      }
-      if (PosY != 0F) {
-        size += 1 + 4;
-      }
-      if (StateData.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(StateData);
-      }
       if (PlayerId != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
       }
@@ -539,14 +558,41 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       if (SectorId != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(SectorId);
       }
+      if (EntityType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityType);
+      }
       if (IsStatic != false) {
         size += 1 + 1;
+      }
+      if (PosX != 0F) {
+        size += 1 + 4;
+      }
+      if (PosY != 0F) {
+        size += 1 + 4;
+      }
+      if (Rotation != 0F) {
+        size += 1 + 4;
+      }
+      if (ChunkX != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChunkX);
+      }
+      if (ChunkY != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChunkY);
+      }
+      if (Health != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Health);
+      }
+      if (MaxHealth != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxHealth);
+      }
+      if (StateData.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(StateData);
       }
       if (createdAt_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(CreatedAt);
       }
       if (updatedAt_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdatedAt);
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(UpdatedAt);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -563,27 +609,6 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       if (other.Id != 0L) {
         Id = other.Id;
       }
-      if (other.ChunkX != 0) {
-        ChunkX = other.ChunkX;
-      }
-      if (other.ChunkY != 0) {
-        ChunkY = other.ChunkY;
-      }
-      if (other.EntityType.Length != 0) {
-        EntityType = other.EntityType;
-      }
-      if (other.Health != 0) {
-        Health = other.Health;
-      }
-      if (other.PosX != 0F) {
-        PosX = other.PosX;
-      }
-      if (other.PosY != 0F) {
-        PosY = other.PosY;
-      }
-      if (other.StateData.Length != 0) {
-        StateData = other.StateData;
-      }
       if (other.PlayerId != 0L) {
         PlayerId = other.PlayerId;
       }
@@ -593,8 +618,35 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
       if (other.SectorId != 0L) {
         SectorId = other.SectorId;
       }
+      if (other.EntityType.Length != 0) {
+        EntityType = other.EntityType;
+      }
       if (other.IsStatic != false) {
         IsStatic = other.IsStatic;
+      }
+      if (other.PosX != 0F) {
+        PosX = other.PosX;
+      }
+      if (other.PosY != 0F) {
+        PosY = other.PosY;
+      }
+      if (other.Rotation != 0F) {
+        Rotation = other.Rotation;
+      }
+      if (other.ChunkX != 0) {
+        ChunkX = other.ChunkX;
+      }
+      if (other.ChunkY != 0) {
+        ChunkY = other.ChunkY;
+      }
+      if (other.Health != 0) {
+        Health = other.Health;
+      }
+      if (other.MaxHealth != 0) {
+        MaxHealth = other.MaxHealth;
+      }
+      if (other.StateData.Length != 0) {
+        StateData = other.StateData;
       }
       if (other.createdAt_ != null) {
         if (createdAt_ == null) {
@@ -632,57 +684,65 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
             break;
           }
           case 16: {
-            ChunkX = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            ChunkY = input.ReadInt32();
-            break;
-          }
-          case 34: {
-            EntityType = input.ReadString();
-            break;
-          }
-          case 40: {
-            Health = input.ReadInt32();
-            break;
-          }
-          case 53: {
-            PosX = input.ReadFloat();
-            break;
-          }
-          case 61: {
-            PosY = input.ReadFloat();
-            break;
-          }
-          case 66: {
-            StateData = input.ReadString();
-            break;
-          }
-          case 72: {
             PlayerId = input.ReadInt64();
             break;
           }
-          case 80: {
+          case 24: {
             WorldId = input.ReadInt64();
             break;
           }
-          case 88: {
+          case 32: {
             SectorId = input.ReadInt64();
             break;
           }
-          case 96: {
+          case 42: {
+            EntityType = input.ReadString();
+            break;
+          }
+          case 48: {
             IsStatic = input.ReadBool();
             break;
           }
-          case 106: {
+          case 61: {
+            PosX = input.ReadFloat();
+            break;
+          }
+          case 69: {
+            PosY = input.ReadFloat();
+            break;
+          }
+          case 77: {
+            Rotation = input.ReadFloat();
+            break;
+          }
+          case 80: {
+            ChunkX = input.ReadInt32();
+            break;
+          }
+          case 88: {
+            ChunkY = input.ReadInt32();
+            break;
+          }
+          case 96: {
+            Health = input.ReadInt32();
+            break;
+          }
+          case 104: {
+            MaxHealth = input.ReadInt32();
+            break;
+          }
+          case 114: {
+            StateData = input.ReadString();
+            break;
+          }
+          case 122: {
             if (createdAt_ == null) {
               CreatedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(CreatedAt);
             break;
           }
-          case 114: {
+          case 130: {
             if (updatedAt_ == null) {
               UpdatedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
@@ -713,57 +773,65 @@ namespace CosmicScavengers.Networking.Protobuf.PlayerEntities {
             break;
           }
           case 16: {
-            ChunkX = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            ChunkY = input.ReadInt32();
-            break;
-          }
-          case 34: {
-            EntityType = input.ReadString();
-            break;
-          }
-          case 40: {
-            Health = input.ReadInt32();
-            break;
-          }
-          case 53: {
-            PosX = input.ReadFloat();
-            break;
-          }
-          case 61: {
-            PosY = input.ReadFloat();
-            break;
-          }
-          case 66: {
-            StateData = input.ReadString();
-            break;
-          }
-          case 72: {
             PlayerId = input.ReadInt64();
             break;
           }
-          case 80: {
+          case 24: {
             WorldId = input.ReadInt64();
             break;
           }
-          case 88: {
+          case 32: {
             SectorId = input.ReadInt64();
             break;
           }
-          case 96: {
+          case 42: {
+            EntityType = input.ReadString();
+            break;
+          }
+          case 48: {
             IsStatic = input.ReadBool();
             break;
           }
-          case 106: {
+          case 61: {
+            PosX = input.ReadFloat();
+            break;
+          }
+          case 69: {
+            PosY = input.ReadFloat();
+            break;
+          }
+          case 77: {
+            Rotation = input.ReadFloat();
+            break;
+          }
+          case 80: {
+            ChunkX = input.ReadInt32();
+            break;
+          }
+          case 88: {
+            ChunkY = input.ReadInt32();
+            break;
+          }
+          case 96: {
+            Health = input.ReadInt32();
+            break;
+          }
+          case 104: {
+            MaxHealth = input.ReadInt32();
+            break;
+          }
+          case 114: {
+            StateData = input.ReadString();
+            break;
+          }
+          case 122: {
             if (createdAt_ == null) {
               CreatedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(CreatedAt);
             break;
           }
-          case 114: {
+          case 130: {
             if (updatedAt_ == null) {
               UpdatedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
