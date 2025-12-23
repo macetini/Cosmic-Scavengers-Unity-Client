@@ -2,7 +2,7 @@ using System;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Binary;
 using CosmicScavengers.Networking.Event.Channels;
-using CosmicScavengers.Networking.Protobuf.PlayerEntities;
+using CosmicScavengers.Networking.Protobuf.Entities;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Handlers.Binary
@@ -31,7 +31,7 @@ namespace CosmicScavengers.Networking.Handlers.Binary
 
             try
             {
-                var playerEntitiesData = PlayerEntityListData.Parser.ParseFrom(protobufData);
+                var playerEntitiesData = EntitySyncResponse.Parser.ParseFrom(protobufData);
                 Debug.Log(
                     $"[PlayerEntitiesDataHandler] Received {playerEntitiesData.Entities.Count} player entities."
                 );

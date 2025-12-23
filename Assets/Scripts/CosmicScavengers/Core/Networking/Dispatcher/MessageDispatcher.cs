@@ -26,17 +26,26 @@ namespace CosmicScavengers.Networking.Core.Dispatcher
             {
                 Debug.LogError("ClientConnector reference is missing in MessageDispatcher.");
             }
-            if (textCommandChannel == null)
+        }
+
+        void OnEnable()
+        {
+            if (textCommandChannel == null || binaryCommandChannel == null)
             {
-                Debug.LogError("TextCommandChannel reference is missing in MessageDispatcher.");
+                Debug.LogError("Command channel references are missing in MessageDispatcher.");
+                return;
             }
 
             textCommandChannel.AddListener(DispatchTextMessage);
             binaryCommandChannel.AddListener(DispatchBinaryMessage);
         }
 
-        void OnDestroy()
+        void OnDisable()
         {
+            if (textCommandChannel == null || binaryCommandChannel == null)
+            {
+                return;
+            }
             textCommandChannel.RemoveListener(DispatchTextMessage);
             binaryCommandChannel.RemoveListener(DispatchBinaryMessage);
         }

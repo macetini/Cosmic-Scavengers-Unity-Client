@@ -1,5 +1,5 @@
 using CosmicScavengers.Core.Systems.Entities;
-using CosmicScavengers.Networking.Protobuf.PlayerEntities;
+using CosmicScavengers.Networking.Protobuf.Entities;
 using UnityEngine;
 
 namespace CosmicScavengers.Systems.Entities.Archetypes
@@ -22,7 +22,7 @@ namespace CosmicScavengers.Systems.Entities.Archetypes
 
         public override void UpdateState(object data)
         {
-            if (data is PlayerEntityData buildingData)
+            if (data is PlayerEntityProto buildingData)
             {
                 // Generalized logic: All buildings might have an 'IsActive' flag in the proto
                 // UpdateStatusLights(buildingData.IsActive);

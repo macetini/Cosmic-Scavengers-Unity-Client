@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
 using CosmicScavengers.Networking.Event.Channels;
-using CosmicScavengers.Networking.Protobuf.PlayerEntities;
+using CosmicScavengers.Networking.Protobuf.Entities;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Service
@@ -47,7 +47,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             Channel.RemoveListener(OnPlayerEntitiesDataReceived);
         }
 
-        private void OnPlayerEntitiesDataReceived(PlayerEntityListData data)
+        private void OnPlayerEntitiesDataReceived(EntitySyncResponse data)
         {
             Debug.Log(
                 $"[EntityService] Syncing {data.Entities.Count} player entities from network data."
@@ -57,8 +57,8 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             {
                 SyncEntity(
                     entityData.Id,
-                    entityData.EntityType,
-                    new Vector3(entityData.PosX, 0, entityData.PosY),
+                    entityData.BlueprintId,
+                    new Vector3(entityData.PosX, entityData.PosY, entityData.PosZ),
                     Quaternion.Euler(0, entityData.Rotation, 0)
                 );
             }
