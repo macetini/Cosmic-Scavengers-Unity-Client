@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Registry.Meta;
 using UnityEngine;
@@ -20,11 +19,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Registry
                 lookUp = new Dictionary<string, GameObject>();
                 foreach (var entry in entries)
                 {
-                    if (string.IsNullOrEmpty(entry.typeKey))
+                    if (!string.IsNullOrEmpty(entry.typeKey))
                     {
-                        continue;
+                        lookUp[entry.typeKey] = entry.prefab;
                     }
-                    lookUp[entry.typeKey] = entry.prefab;
                 }
             }
 

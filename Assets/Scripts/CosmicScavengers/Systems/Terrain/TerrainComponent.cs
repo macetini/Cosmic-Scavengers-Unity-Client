@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Entities;
+using CosmicScavengers.Core.Systems.Entities.Service;
 using CosmicScavengers.Core.Systems.Terrain.Meta;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.WorldData;

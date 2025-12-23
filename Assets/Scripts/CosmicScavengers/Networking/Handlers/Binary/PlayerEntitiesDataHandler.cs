@@ -37,8 +37,6 @@ namespace CosmicScavengers.Networking.Handlers.Binary
                 );
 
                 Channel.Raise(playerEntitiesData);
-
-                foreach (PlayerEntityData entity in playerEntitiesData.Entities) { }
             }
             catch (Exception e)
             {

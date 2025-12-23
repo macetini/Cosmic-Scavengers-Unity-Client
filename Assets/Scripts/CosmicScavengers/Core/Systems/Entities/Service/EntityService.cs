@@ -5,7 +5,7 @@ using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.PlayerEntities;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Entities
+namespace CosmicScavengers.Core.Systems.Entities.Service
 {
     /// <summary>
     /// Provides services for spawning, updating, and removing networked entities.
@@ -59,7 +59,7 @@ namespace CosmicScavengers.Core.Systems.Entities
                     entityData.Id,
                     entityData.EntityType,
                     new Vector3(entityData.PosX, 0, entityData.PosY),
-                    Quaternion.identity
+                    Quaternion.Euler(0, entityData.Rotation, 0)
                 );
             }
         }

@@ -1,5 +1,4 @@
 using CosmicScavengers.Core.Systems.Entities.Meta;
-using Unity.Collections;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities
@@ -12,13 +11,12 @@ namespace CosmicScavengers.Core.Systems.Entities
     {
         [SerializeField]
         private string type;
-
-        public long Id { get; set; }
         public string Type
         {
             get => type;
             set => type = value;
         }
+        public long Id { get; set; }
         public bool IsStatic { get; set; }
         public Vector2 Position { get; set; }
 
