@@ -15,3 +15,5 @@ MonoBehaviour:
   entries:
   - typeKey: MAIN_BASE
     prefab: {fileID: 6727067349632393677, guid: 10189d3855dc03a4a94a2a36ee45cd68, type: 3}
+  - typeKey: MAIN_UNIT
+    prefab: {fileID: 9020811767337774286, guid: ae0e49b6b57c2534ea9d85909ef0551d, type: 3}
