@@ -15,7 +15,7 @@ namespace CosmicScavengers.Networking.Communication
     {
         [Header("Debug View")]
         [Tooltip("Visual list of registered handlers (Read Only)")]
-        [SerializeField, ReadOnly(true)]
+        [SerializeField]
         private List<string> registeredHandlersCode = new();
 
         // The actual runtime registry.

@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
+using CosmicScavengers.Core.Systems.Traits.Registry;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.Entities;
+using Google.Protobuf.Collections;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Service
@@ -14,14 +17,17 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
     public class EntityService : MonoBehaviour
     {
         [Header("Channel Configuration")]
-        [SerializeField]
         [Tooltip("Channel to raise when player entities data is received.")]
+        [SerializeField]
         private PlayerEntitiesDataChannel Channel;
 
-        [Header("Configuration")]
-        [SerializeField]
+        [Header("Registry Configuration")]
         [Tooltip("Registry containing entity prefabs and metadata.")]
-        private EntityRegistry registry;
+        [SerializeField]
+        private EntityRegistry entityRegistry;
+
+        [SerializeField]
+        private TraitRegistry traitRegistry;
 
         [SerializeField]
         [Tooltip("Parent transform for spawned entities.")]
@@ -31,7 +37,11 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
 
         void Awake()
         {
-            if (registry == null)
+            if (Channel == null)
+            {
+                Debug.LogError("[EntityService] PlayerEntitiesDataChannel reference is missing!");
+            }
+            if (entityRegistry == null)
             {
                 Debug.LogError("[EntityService] EntityRegistry reference is missing!");
             }
@@ -47,19 +57,20 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             Channel.RemoveListener(OnPlayerEntitiesDataReceived);
         }
 
-        private void OnPlayerEntitiesDataReceived(EntitySyncResponse data)
+        private void OnPlayerEntitiesDataReceived(EntitySyncResponse syncResponse)
         {
             Debug.Log(
-                $"[EntityService] Syncing {data.Entities.Count} player entities from network data."
+                $"[EntityService] Syncing {syncResponse.Entities.Count} player entities from network data."
             );
 
-            foreach (var entityData in data.Entities)
+            foreach (PlayerEntityProto entityData in syncResponse.Entities)
             {
                 SyncEntity(
                     entityData.Id,
                     entityData.BlueprintId,
                     new Vector3(entityData.PosX, entityData.PosY, entityData.PosZ),
-                    Quaternion.Euler(0, entityData.Rotation, 0)
+                    Quaternion.Euler(0, entityData.Rotation, 0),
+                    entityData.StateData
                 );
             }
         }
@@ -73,16 +84,16 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             string typeKey,
             Vector3 position,
             Quaternion rotation,
-            object payload = null
+            string stateData
         )
         {
             if (activeEntities.TryGetValue(id, out var entity))
             {
-                UpdateEntityInstance(entity, position, rotation, payload);
+                UpdateEntityInstance(entity, position, rotation, stateData);
             }
             else
             {
-                SpawnEntityInstance(id, typeKey, position, rotation, payload);
+                SpawnEntityInstance(id, typeKey, position, rotation, stateData);
             }
         }
 
@@ -91,10 +102,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             string typeKey,
             Vector3 position,
             Quaternion rotation,
-            object payload
+            string stateData
         )
         {
-            GameObject prefab = registry.GetPrefab(typeKey);
+            GameObject prefab = entityRegistry.GetPrefab(typeKey);
             if (prefab == null)
             {
                 Debug.LogError($"[EntityService] Registry lookup failed for key: {typeKey}");
@@ -102,8 +113,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             }
 
             GameObject instance = Instantiate(prefab, position, rotation, entityParent);
-
-            if (!instance.TryGetComponent<IEntity>(out var entity))
+            if (!instance.TryGetComponent<EntityBase>(out var entity))
             {
                 Debug.LogError(
                     $"[EntityService] Prefab '{typeKey}' missing IEntity implementation!"
@@ -115,16 +125,15 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             entity.Id = id;
             activeEntities.Add(id, entity);
 
+            entity.UpdateState(stateData);
             entity.OnSpawned();
-            if (payload != null)
-                entity.UpdateState(payload);
         }
 
         private void UpdateEntityInstance(
             IEntity entity,
             Vector3 position,
             Quaternion rotation,
-            object payload
+            string stateData
         )
         {
             if (entity is MonoBehaviour mb)
@@ -132,9 +141,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
                 mb.transform.SetPositionAndRotation(position, rotation);
             }
 
-            if (payload != null)
+            if (!string.IsNullOrEmpty(stateData))
             {
-                entity.UpdateState(payload);
+                entity.UpdateState(stateData);
             }
         }
 

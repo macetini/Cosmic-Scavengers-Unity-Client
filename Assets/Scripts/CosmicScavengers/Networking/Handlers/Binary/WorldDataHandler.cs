@@ -9,13 +9,25 @@ namespace CosmicScavengers.Networking.Handlers.Binary
 {
     public class WorldClientDataHandler : MonoBehaviour, IBinaryCommandHandler
     {
+        [Header("Configuration")]
+        [SerializeField]
         [Tooltip("Set to false to disable this handler.")]
-        public bool Active = true;
+        private bool Active = true;
 
+        [Header("Channel Configuration")]
         [Tooltip("Event channel triggered when world data is received.")]
-        public WorldDataChannel Channel;
+        [SerializeField]
+        private WorldDataChannel Channel;
 
         public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_WORLD_STATE_S;
+
+        void Start()
+        {
+            if (Channel == null)
+            {
+                Debug.LogError("[WorldClientDataHandler] WorldDataChannel reference is missing!");
+            }
+        }
 
         public void Handle(byte[] protobufData)
         {
@@ -24,18 +36,23 @@ namespace CosmicScavengers.Networking.Handlers.Binary
                 Debug.LogWarning("[WorldClientDataHandler] Handler is inactive. Ignoring data.");
                 return;
             }
+
+            WorldData currentWorld;
+
             try
             {
-                WorldData currentWorld = WorldData.Parser.ParseFrom(protobufData);
+                currentWorld = WorldData.Parser.ParseFrom(protobufData);
                 Debug.Log(
                     $"[WorldClientDataHandler] Received data for World: {currentWorld.WorldName}"
                 );
-                Channel.Raise(currentWorld);
             }
             catch (Exception e)
             {
                 Debug.LogError($"[WorldClientDataHandler] Failed to parse world data: {e.Message}");
+                return;
             }
+
+            Channel.Raise(currentWorld);
         }
     }
 }

@@ -20,17 +20,7 @@ namespace CosmicScavengers.Systems.Entities.Archetypes
         [SerializeField]
         private Color inactiveColor = Color.red;
 
-        public override void UpdateState(object data)
-        {
-            if (data is PlayerEntityProto buildingData)
-            {
-                // Generalized logic: All buildings might have an 'IsActive' flag in the proto
-                // UpdateStatusLights(buildingData.IsActive);
-
-                // You can still add specific logic based on a "Type" field in the data
-                // if (buildingData.Type == "Turret") { ... }
-            }
-        }
+        public override void UpdateState(string data) { }
 
         private void UpdateStatusLights(bool isActive)
         {

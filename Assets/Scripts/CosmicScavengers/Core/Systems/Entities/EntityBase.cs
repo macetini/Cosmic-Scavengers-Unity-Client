@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Meta;
+using CosmicScavengers.Core.Systems.Traits.Meta;
+using CosmicScavengers.Networking.Protobuf.Entities;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities
@@ -16,19 +19,25 @@ namespace CosmicScavengers.Core.Systems.Entities
             get => type;
             set => type = value;
         }
+
         public long Id { get; set; }
         public bool IsStatic { get; set; }
-        public Vector2 Position { get; set; }
+        public Vector3 Position { get; set; }
 
-        // Virtual methods allow child classes to choose what they implement
+        [SerializeField]
+        private List<IEntityTrait> traits = new();
+        public List<IEntityTrait> Traits
+        {
+            get => traits;
+            set => traits = value;
+        }
+
         public virtual void OnSpawned() { }
 
-        // Abstract forces child classes to handle their own data parsing
-        public abstract void UpdateState(object data);
+        public abstract void UpdateState(string data);
 
         public virtual void OnRemoved() { }
 
-        // Helper to quickly find the transform without repeated GetComponent calls
         protected Transform CachedTransform { get; private set; }
 
         protected virtual void Awake()

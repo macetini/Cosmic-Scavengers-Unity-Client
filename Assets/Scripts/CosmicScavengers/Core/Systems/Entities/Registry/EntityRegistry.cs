@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry.Meta;
 using UnityEngine;
 
@@ -16,17 +17,21 @@ namespace CosmicScavengers.Core.Systems.Entities.Registry
         {
             if (lookUp == null)
             {
-                lookUp = new Dictionary<string, GameObject>();
-                foreach (var entry in entries)
+                InitializeLookup();
+            }
+            return lookUp.TryGetValue(key.Trim().ToUpper(), out var prefab) ? prefab : null;
+        }
+
+        private void InitializeLookup()
+        {
+            lookUp = new Dictionary<string, GameObject>();
+            foreach (var entry in entries)
+            {
+                if (!string.IsNullOrEmpty(entry.typeKey))
                 {
-                    if (!string.IsNullOrEmpty(entry.typeKey))
-                    {
-                        lookUp[entry.typeKey] = entry.prefab;
-                    }
+                    lookUp[entry.typeKey.Trim().ToUpper()] = entry.prefab;
                 }
             }
-
-            return lookUp.TryGetValue(key, out var prefab) ? prefab : null;
         }
     }
 }
