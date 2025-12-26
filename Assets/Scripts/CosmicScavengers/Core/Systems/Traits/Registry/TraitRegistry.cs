@@ -11,12 +11,12 @@ namespace CosmicScavengers.Core.Systems.Traits.Registry
         public struct TraitEntry
         {
             public string TraitKey; // e.g., "MOVABLE", "SELECTABLE"
-            public TraitBase Prefab; // The Trait Prefab with the Script
+            public BaseTrait Prefab; // The Trait Prefab with the Script
         }
 
         public List<TraitEntry> Registry = new();
 
-        public TraitBase GetPrefab(string key)
+        public BaseTrait GetPrefab(string key)
         {
             var entry = Registry.Find(e => e.TraitKey == key);
             return entry.Prefab;

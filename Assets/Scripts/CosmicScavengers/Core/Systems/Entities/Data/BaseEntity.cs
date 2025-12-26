@@ -24,8 +24,8 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
 
         [SerializeField]
         [Tooltip("List of traits attached to this entity.")]
-        private List<TraitBase> traits = new();
-        public List<TraitBase> Traits
+        private List<BaseTrait> traits = new();
+        public List<BaseTrait> Traits
         {
             get => traits;
             set => traits = value;

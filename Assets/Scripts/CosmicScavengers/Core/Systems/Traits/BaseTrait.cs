@@ -7,7 +7,7 @@ namespace CosmicScavengers.Core.Systems.Traits
     /// <summary>
     /// Abstract base class that removes boilerplate for all Entity Traits.
     /// </summary>
-    public abstract class TraitBase : MonoBehaviour, IEntityTrait
+    public abstract class BaseTrait : MonoBehaviour, IEntityTrait
     {
         // Reference to the Entity that owns this trait
         protected BaseEntity Owner { get; private set; }

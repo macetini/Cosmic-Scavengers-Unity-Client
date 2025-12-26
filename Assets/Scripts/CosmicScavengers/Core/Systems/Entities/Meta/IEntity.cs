@@ -10,7 +10,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Meta
         string Type { get; set; }
         bool IsStatic { get; set; }
         Vector3 Position { get; set; }
-        List<TraitBase> Traits { get; set; }
+        List<BaseTrait> Traits { get; set; }
 
         void OnSpawned();
         void OnRemoved();

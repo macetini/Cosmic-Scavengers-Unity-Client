@@ -8,7 +8,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Archetypes
     /// Following the Trait pattern allows entities to be composed of different
     /// functional blocks (Selection, Movement, Combat) independently.
     /// </summary>
-    public class SelectableTrait : TraitBase
+    public class SelectableTrait : BaseTrait
     {
         [Header("Visual Feedback")]
         [SerializeField]

@@ -138,9 +138,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             entity.OnSpawned();
         }
 
-        private List<TraitBase> GetEntityTraits(string stateData)
+        private List<BaseTrait> GetEntityTraits(string stateData)
         {
-            List<TraitBase> traits = new();
+            List<BaseTrait> traits = new();
             try
             {
                 JObject json = JObject.Parse(stateData);
@@ -149,7 +149,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                     List<string> traitKeys = traitsMap.Properties().Select(p => p.Name).ToList();
                     foreach (string traitKey in traitKeys)
                     {
-                        TraitBase traitPrefab = traitRegistry.GetPrefab(traitKey);
+                        BaseTrait traitPrefab = traitRegistry.GetPrefab(traitKey);
                         if (traitPrefab == null)
                         {
                             Debug.LogWarning(
