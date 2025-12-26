@@ -12,6 +12,7 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
     public abstract class BaseEntity : MonoBehaviour, IEntity
     {
         [SerializeField]
+        [Tooltip("The type identifier for this entity.")]
         private string type;
         public string Type
         {
@@ -20,16 +21,18 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
         }
 
         public long Id { get; set; }
-        public bool IsStatic { get; set; }
-        public Vector3 Position { get; set; }
 
         [SerializeField]
+        [Tooltip("List of traits attached to this entity.")]
         private List<TraitBase> traits = new();
         public List<TraitBase> Traits
         {
             get => traits;
             set => traits = value;
         }
+
+        public bool IsStatic { get; set; }
+        public Vector3 Position { get; set; }
 
         public virtual void OnSpawned() { }
 
