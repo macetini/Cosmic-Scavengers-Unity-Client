@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits;
+using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Traits.Updater

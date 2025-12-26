@@ -1,5 +1,5 @@
 using System;
-using UnityEngine;
+using CosmicScavengers.Core.Systems.Data.Entities;
 
 namespace CosmicScavengers.Core.Systems.Entities.Registry.Meta
 {
@@ -8,9 +8,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Registry.Meta
     /// Used in the EntityRegistry to define available entity types.
     /// </summary>
     [Serializable]
-    public struct EntityPrefabEntry
+    public struct EntityEntry
     {
-        public string typeKey;
-        public GameObject prefab;
+        public string Key;
+        public BaseEntity Prefab;
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f74000000b92ce4a94f75d43b6c5085, type: 3}
   m_Name: EntityRegistry
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Entities.EntityRegistry
-  entries:
-  - typeKey: MAIN_BASE
-    prefab: {fileID: 6727067349632393677, guid: 10189d3855dc03a4a94a2a36ee45cd68, type: 3}
-  - typeKey: MAIN_UNIT
-    prefab: {fileID: 9020811767337774286, guid: ae0e49b6b57c2534ea9d85909ef0551d, type: 3}
+  Entries:
+  - Key: MAIN_BASE
+    Prefab: {fileID: 192930138567931727, guid: 10189d3855dc03a4a94a2a36ee45cd68, type: 3}
+  - Key: MAIN_UNIT
+    Prefab: {fileID: -1045211535305356848, guid: ae0e49b6b57c2534ea9d85909ef0551d, type: 3}

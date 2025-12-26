@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Entities.Meta;
+using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Registry.Meta;
 using UnityEngine;
 
@@ -8,14 +8,12 @@ namespace CosmicScavengers.Core.Systems.Entities.Registry
     [CreateAssetMenu(menuName = "Registry/EntityRegistry")]
     public class EntityRegistry : ScriptableObject
     {
-        [SerializeField]
-        private List<EntityPrefabEntry> entries;
+        public List<EntityEntry> Entries = new();
+        private readonly Dictionary<string, BaseEntity> lookUp = new();
 
-        private Dictionary<string, GameObject> lookUp;
-
-        public GameObject GetPrefab(string key)
+        public BaseEntity GetPrefab(string key)
         {
-            if (lookUp == null)
+            if (lookUp.Count == 0)
             {
                 InitializeLookup();
             }
@@ -24,12 +22,12 @@ namespace CosmicScavengers.Core.Systems.Entities.Registry
 
         private void InitializeLookup()
         {
-            lookUp = new Dictionary<string, GameObject>();
-            foreach (var entry in entries)
+            lookUp.Clear();
+            foreach (var entry in Entries)
             {
-                if (!string.IsNullOrEmpty(entry.typeKey))
+                if (!string.IsNullOrEmpty(entry.Key))
                 {
-                    lookUp[entry.typeKey.Trim().ToUpper()] = entry.prefab;
+                    lookUp[entry.Key.Trim().ToUpper()] = entry.Prefab;
                 }
             }
         }

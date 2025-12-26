@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits;
+using CosmicScavengers.Core.Systems.Base.Traits.Data;
+using CosmicScavengers.Core.Systems.Traits.Registry.Meta;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Traits.Registry
@@ -7,19 +8,28 @@ namespace CosmicScavengers.Core.Systems.Traits.Registry
     [CreateAssetMenu(menuName = "Registry/TraitRegistry")]
     public class TraitRegistry : ScriptableObject
     {
-        [System.Serializable]
-        public struct TraitEntry
-        {
-            public string TraitKey; // e.g., "MOVABLE", "SELECTABLE"
-            public BaseTrait Prefab; // The Trait Prefab with the Script
-        }
-
-        public List<TraitEntry> Registry = new();
+        public List<TraitEntry> Entries = new();
+        private readonly Dictionary<string, BaseTrait> lookUp = new();
 
         public BaseTrait GetPrefab(string key)
         {
-            var entry = Registry.Find(e => e.TraitKey == key);
-            return entry.Prefab;
+            if (lookUp.Count == 0)
+            {
+                InitializeLookup();
+            }
+            return lookUp.TryGetValue(key.Trim().ToUpper(), out var prefab) ? prefab : null;
+        }
+
+        private void InitializeLookup()
+        {
+            lookUp.Clear();
+            foreach (var entry in Entries)
+            {
+                if (!string.IsNullOrEmpty(entry.Key))
+                {
+                    lookUp[entry.Key.Trim().ToUpper()] = entry.Prefab;
+                }
+            }
         }
     }
 }

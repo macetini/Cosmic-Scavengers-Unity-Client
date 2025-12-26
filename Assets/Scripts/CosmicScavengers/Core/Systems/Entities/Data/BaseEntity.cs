@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits;
+using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using UnityEngine;
 
@@ -31,18 +31,12 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
             set => traits = value;
         }
 
+        public GameObject TraitsContainer;
+
         public bool IsStatic { get; set; }
-        public Vector3 Position { get; set; }
 
         public virtual void OnSpawned() { }
 
         public virtual void OnRemoved() { }
-
-        protected Transform CachedTransform { get; private set; }
-
-        protected virtual void Awake()
-        {
-            CachedTransform = transform;
-        }
     }
 }

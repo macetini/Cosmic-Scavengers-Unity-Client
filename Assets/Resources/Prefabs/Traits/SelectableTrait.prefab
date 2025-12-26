@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889b98b0976bb984b98d94d975487c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Traits.Archetypes.SelectableTrait
+  traitName: SELECTABLE
   selectionIndicator: {fileID: 0}

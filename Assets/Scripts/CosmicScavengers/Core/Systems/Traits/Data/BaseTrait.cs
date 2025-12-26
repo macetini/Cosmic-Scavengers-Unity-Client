@@ -1,19 +1,15 @@
 using CosmicScavengers.Core.Systems.Data.Entities;
-using CosmicScavengers.Core.Systems.Traits.Meta;
+using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Base.Traits
+namespace CosmicScavengers.Core.Systems.Base.Traits.Data
 {
     /// <summary>
     /// Abstract base class that removes boilerplate for all Entity Traits.
     /// </summary>
-    public abstract class BaseTrait : MonoBehaviour, IEntityTrait
+    public abstract class BaseTrait : MonoBehaviour, ITrait
     {
-        // Reference to the Entity that owns this trait
         protected BaseEntity Owner { get; private set; }
-
-        // Shortcut to the Transform for performance
-        protected Transform CachedTransform { get; private set; }
 
         [SerializeField]
         private string traitName;
@@ -28,7 +24,6 @@ namespace CosmicScavengers.Core.Systems.Base.Traits
         public virtual void Initialize(BaseEntity owner)
         {
             Owner = owner;
-            CachedTransform = owner.transform;
             OnInitialize();
         }
 
@@ -46,7 +41,7 @@ namespace CosmicScavengers.Core.Systems.Base.Traits
         /// Helper to quickly find another trait on the same entity.
         /// </summary>
         protected T GetOtherTrait<T>()
-            where T : class, IEntityTrait
+            where T : class, ITrait
         {
             if (Owner == null)
                 return null;

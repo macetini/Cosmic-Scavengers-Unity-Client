@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e9d9214641715409443ed7bbe7bf1c, type: 3}
   m_Name: TraitRegistry
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Traits.Registry.TraitRegistry
-  Registry:
-  - TraitKey: SELECTABLE
+  Entries:
+  - Key: SELECTABLE
     Prefab: {fileID: 6243969382796814524, guid: bf22d2548dcecc845a9e21b96bd05d10, type: 3}

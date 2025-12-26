@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using CosmicScavengers.Core.Systems.Base.Traits;
+using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
@@ -33,6 +33,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private TraitRegistry traitRegistry;
 
+        [Header("Orchestrator Configuration")]
         [Tooltip("Traits updater responsible for trait update cycles.")]
         [SerializeField]
         private TraitsUpdater traitsUpdater;
@@ -119,34 +120,26 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             string stateData
         )
         {
-            GameObject prefab = entityRegistry.GetPrefab(typeKey);
-            if (prefab == null)
+            BaseEntity entityPrefab = entityRegistry.GetPrefab(typeKey);
+            if (entityPrefab == null)
             {
                 Debug.LogError($"[EntityOrchestrator] Registry lookup failed for key: {typeKey}");
                 return;
             }
 
-            GameObject instance = Instantiate(prefab, position, rotation, entityParent);
-            if (!instance.TryGetComponent<BaseEntity>(out var entity))
-            {
-                Debug.LogError(
-                    $"[EntityOrchestrator] Prefab '{typeKey}' missing IEntity implementation!"
-                );
-                Destroy(instance);
-                return;
-            }
+            BaseEntity spawnedEntity = Instantiate(entityPrefab, position, rotation, entityParent);
 
-            entity.Id = id;
-            activeEntities.Add(id, entity);
+            spawnedEntity.Id = id;
+            activeEntities.Add(id, spawnedEntity);
 
             if (!string.IsNullOrEmpty(stateData))
             {
-                entity.Traits = GetEntityTraits(stateData);
+                spawnedEntity.Traits = GetEntityTraits(stateData, spawnedEntity.TraitsContainer);
             }
-            entity.OnSpawned();
+            spawnedEntity.OnSpawned();
         }
 
-        private List<BaseTrait> GetEntityTraits(string stateData)
+        private List<BaseTrait> GetEntityTraits(string stateData, GameObject traitsContainer)
         {
             List<BaseTrait> traits = new();
             try
@@ -165,7 +158,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             );
                             continue;
                         }
-                        BaseTrait trait = Instantiate(traitPrefab, entityParent);
+                        BaseTrait trait = Instantiate(traitPrefab, traitsContainer.transform);
                         traits.Add(trait);
                     }
                 }
@@ -193,7 +186,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
             if (!string.IsNullOrEmpty(stateData))
             {
-                entity.Traits = GetEntityTraits(stateData);
+                //entity.Traits = GetEntityTraits(stateData);
             }
         }
 
