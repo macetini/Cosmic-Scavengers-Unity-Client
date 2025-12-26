@@ -7,7 +7,9 @@ namespace CosmicScavengers.Core.Systems.Traits.Meta
     /// </summary>
     public interface IEntityTrait
     {
-        string Name { get; set;}
+        string Name { get; set; }
+
+        int UpdateFrequency { get; }
         void Initialize(BaseEntity owner);
         void OnUpdate(float deltaTime);
     }

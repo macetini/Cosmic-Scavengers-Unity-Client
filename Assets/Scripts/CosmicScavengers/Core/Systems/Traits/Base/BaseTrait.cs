@@ -14,11 +14,16 @@ namespace CosmicScavengers.Core.Systems.Base.Traits
 
         // Shortcut to the Transform for performance
         protected Transform CachedTransform { get; private set; }
+
+        [SerializeField]
+        private string traitName;
         public string Name
         {
-            get => throw new System.NotImplementedException();
-            set => throw new System.NotImplementedException();
+            get => string.IsNullOrEmpty(traitName) ? GetType().Name : traitName;
+            set => traitName = value;
         }
+
+        public virtual int UpdateFrequency => 1;
 
         public virtual void Initialize(BaseEntity owner)
         {

@@ -5,6 +5,7 @@ using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
 using CosmicScavengers.Core.Systems.Traits.Registry;
+using CosmicScavengers.Core.Systems.Traits.Updater;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.Entities;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -28,11 +29,16 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private EntityRegistry entityRegistry;
 
+        [Tooltip("Registry containing trait prefabs.")]
         [SerializeField]
         private TraitRegistry traitRegistry;
 
+        [Tooltip("Traits updater responsible for trait update cycles.")]
         [SerializeField]
+        private TraitsUpdater traitsUpdater;
+
         [Tooltip("Parent transform for spawned entities.")]
+        [SerializeField]
         private Transform entityParent;
 
         private readonly Dictionary<long, IEntity> activeEntities = new();
@@ -41,7 +47,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         {
             if (Channel == null)
             {
-                Debug.LogError("[EntityOrchestrator] PlayerEntitiesDataChannel reference is missing!");
+                Debug.LogError(
+                    "[EntityOrchestrator] PlayerEntitiesDataChannel reference is missing!"
+                );
             }
             if (entityRegistry == null)
             {
@@ -157,7 +165,8 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             );
                             continue;
                         }
-                        traits.Add(traitPrefab);
+                        BaseTrait trait = Instantiate(traitPrefab, entityParent);
+                        traits.Add(trait);
                     }
                 }
             }
