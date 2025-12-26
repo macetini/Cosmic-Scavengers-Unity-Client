@@ -1,5 +1,4 @@
-using CosmicScavengers.Core.Systems.Entities;
-using CosmicScavengers.Networking.Protobuf.Entities;
+using CosmicScavengers.Core.Systems.Data.Entities;
 using UnityEngine;
 
 namespace CosmicScavengers.Systems.Entities.Archetypes
@@ -8,7 +7,7 @@ namespace CosmicScavengers.Systems.Entities.Archetypes
     /// A generalized class for any static structure (Stations, Turrets, Modules).
     /// Handles common building logic like health displays or power states.
     /// </summary>
-    public class BuildingEntity : EntityBase
+    public class BuildingEntity : BaseEntity
     {
         [Header("Building Settings")]
         [SerializeField]

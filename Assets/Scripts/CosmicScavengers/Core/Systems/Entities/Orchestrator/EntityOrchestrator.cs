@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
 using CosmicScavengers.Core.Systems.Traits;
@@ -9,13 +10,13 @@ using CosmicScavengers.Networking.Protobuf.Entities;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Entities.Service
+namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 {
     /// <summary>
     /// Provides services for spawning, updating, and removing networked entities.
     /// Orchestrates the relationship between network data and Unity GameObjects.
     /// </summary>
-    public class EntityService : MonoBehaviour
+    public class EntityOrchestrator : MonoBehaviour
     {
         [Header("Channel Configuration")]
         [Tooltip("Channel to raise when player entities data is received.")]
@@ -40,15 +41,15 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
         {
             if (Channel == null)
             {
-                Debug.LogError("[EntityService] PlayerEntitiesDataChannel reference is missing!");
+                Debug.LogError("[EntityOrchestrator] PlayerEntitiesDataChannel reference is missing!");
             }
             if (entityRegistry == null)
             {
-                Debug.LogError("[EntityService] EntityRegistry reference is missing!");
+                Debug.LogError("[EntityOrchestrator] EntityRegistry reference is missing!");
             }
             if (traitRegistry == null)
             {
-                Debug.LogError("[EntityService] TraitRegistry reference is missing!");
+                Debug.LogError("[EntityOrchestrator] TraitRegistry reference is missing!");
             }
         }
 
@@ -65,7 +66,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
         private void OnPlayerEntitiesDataReceived(EntitySyncResponse syncResponse)
         {
             Debug.Log(
-                $"[EntityService] Syncing {syncResponse.Entities.Count} player entities from network data."
+                $"[EntityOrchestrator] Syncing {syncResponse.Entities.Count} player entities from network data."
             );
 
             foreach (PlayerEntityProto entityData in syncResponse.Entities)
@@ -113,15 +114,15 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             GameObject prefab = entityRegistry.GetPrefab(typeKey);
             if (prefab == null)
             {
-                Debug.LogError($"[EntityService] Registry lookup failed for key: {typeKey}");
+                Debug.LogError($"[EntityOrchestrator] Registry lookup failed for key: {typeKey}");
                 return;
             }
 
             GameObject instance = Instantiate(prefab, position, rotation, entityParent);
-            if (!instance.TryGetComponent<EntityBase>(out var entity))
+            if (!instance.TryGetComponent<BaseEntity>(out var entity))
             {
                 Debug.LogError(
-                    $"[EntityService] Prefab '{typeKey}' missing IEntity implementation!"
+                    $"[EntityOrchestrator] Prefab '{typeKey}' missing IEntity implementation!"
                 );
                 Destroy(instance);
                 return;
@@ -152,7 +153,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
                         if (traitPrefab == null)
                         {
                             Debug.LogWarning(
-                                $"[EntityService] Trait lookup failed for key: {traitKey}"
+                                $"[EntityOrchestrator] Trait lookup failed for key: {traitKey}"
                             );
                             continue;
                         }
@@ -163,7 +164,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             catch (System.Exception ex)
             {
                 Debug.LogError(
-                    $"[EntityService] Failed to parse StateData for traits: {ex.Message}"
+                    $"[EntityOrchestrator] Failed to parse StateData for traits: {ex.Message}"
                 );
             }
             return traits;

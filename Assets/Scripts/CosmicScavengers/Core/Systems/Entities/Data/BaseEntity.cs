@@ -3,13 +3,13 @@ using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Traits;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Entities
+namespace CosmicScavengers.Core.Systems.Data.Entities
 {
     /// <summary>
     /// The "Boilerplate Remover".
     /// Most of your game entities should inherit from this.
     /// </summary>
-    public abstract class EntityBase : MonoBehaviour, IEntity
+    public abstract class BaseEntity : MonoBehaviour, IEntity
     {
         [SerializeField]
         private string type;

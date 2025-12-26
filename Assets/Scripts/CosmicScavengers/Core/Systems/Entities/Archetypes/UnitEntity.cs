@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Systems.Entities;
+using CosmicScavengers.Core.Systems.Data.Entities;
 using UnityEngine;
 
 namespace CosmicScavengers.Systems.Entities.Archetypes
@@ -7,10 +7,10 @@ namespace CosmicScavengers.Systems.Entities.Archetypes
     /// A generalized class for any mobile unit (Ships, Drones).
     /// Handles common unit logic like movement and actions.
     /// </summary>
-    public class UnitEntity : EntityBase
+    public class UnitEntity : BaseEntity
     {
         /// <summary>
-        /// This overrides the abstract method in EntityBase to handle
+        /// This overrides the abstract method in BaseEntity to handle
         /// the specific Protobuf message type.
         /// </summary>
         public override void OnSpawned()

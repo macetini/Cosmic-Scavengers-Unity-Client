@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Entities.Service;
+using CosmicScavengers.Core.Systems.Entities.Orchestrator;
 using CosmicScavengers.Core.Systems.Terrain.Meta;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.WorldData;
@@ -36,8 +36,8 @@ namespace CosmicScavengers.Systems.Terrain
         private WorldDataChannel worldDataChannel;
 
         [SerializeField]
-        [Tooltip("Reference to the EntityService for entity management.")]
-        private EntityService entityService;
+        [Tooltip("Reference to the EntityOrchestrator for entity management.")]
+        private EntityOrchestrator entityOrchestrator;
 
         private MeshFilter meshFilter;
         private Mesh mesh;
@@ -51,10 +51,10 @@ namespace CosmicScavengers.Systems.Terrain
 
         void Start()
         {
-            if (entityService == null)
+            if (entityOrchestrator == null)
             {
                 throw new System.Exception(
-                    "[TerrainComponent] EntityService reference is missing."
+                    "[TerrainComponent] EntityOrchestrator reference is missing."
                 );
             }
             if (terrainData == null)

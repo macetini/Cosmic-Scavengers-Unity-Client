@@ -184,7 +184,7 @@ MonoBehaviour:
     color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0}
   terrainData: {fileID: 340855666}
   worldDataChannel: {fileID: 11400000, guid: fc31cd6309d4a53468d0abd36528ca2e, type: 2}
-  entityService: {fileID: 577005605}
+  entityOrchestrator: {fileID: 577005605}
 --- !u!23 &84648543
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 577005606}
   - component: {fileID: 577005605}
   m_Layer: 0
-  m_Name: EntityService
+  m_Name: EntityOrchestrator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Systems.Entities;
+using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Traits.Meta;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace CosmicScavengers.Core.Systems.Traits
     public abstract class TraitBase : MonoBehaviour, IEntityTrait
     {
         // Reference to the Entity that owns this trait
-        protected EntityBase Owner { get; private set; }
+        protected BaseEntity Owner { get; private set; }
 
         // Shortcut to the Transform for performance
         protected Transform CachedTransform { get; private set; }
@@ -20,7 +20,7 @@ namespace CosmicScavengers.Core.Systems.Traits
             set => throw new System.NotImplementedException();
         }
 
-        public virtual void Initialize(EntityBase owner)
+        public virtual void Initialize(BaseEntity owner)
         {
             Owner = owner;
             CachedTransform = owner.transform;
@@ -33,7 +33,7 @@ namespace CosmicScavengers.Core.Systems.Traits
         protected virtual void OnInitialize() { }
 
         /// <summary>
-        /// The update loop managed by EntityBase.
+        /// The update loop managed by BaseEntity.
         /// </summary>
         public abstract void OnUpdate(float deltaTime);
 
@@ -45,7 +45,7 @@ namespace CosmicScavengers.Core.Systems.Traits
         {
             if (Owner == null)
                 return null;
-            // Assuming EntityBase has a way to expose its list or we use GetComponent
+            // Assuming BaseEntity has a way to expose its list or we use GetComponent
             return Owner.GetComponentInChildren<T>();
         }
     }
