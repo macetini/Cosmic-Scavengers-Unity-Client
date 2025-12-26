@@ -46,6 +46,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             {
                 Debug.LogError("[EntityService] EntityRegistry reference is missing!");
             }
+            if (traitRegistry == null)
+            {
+                Debug.LogError("[EntityService] TraitRegistry reference is missing!");
+            }
         }
 
         void OnEnable()
