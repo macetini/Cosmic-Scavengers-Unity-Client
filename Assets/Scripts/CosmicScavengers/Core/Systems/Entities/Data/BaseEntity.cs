@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using CosmicScavengers.Core.Systems.Base.Traits;
 using CosmicScavengers.Core.Systems.Entities.Meta;
-using CosmicScavengers.Core.Systems.Traits;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Data.Entities

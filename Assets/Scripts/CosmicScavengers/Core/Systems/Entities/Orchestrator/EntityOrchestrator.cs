@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using CosmicScavengers.Core.Systems.Base.Traits;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
-using CosmicScavengers.Core.Systems.Traits;
 using CosmicScavengers.Core.Systems.Traits.Registry;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.Entities;

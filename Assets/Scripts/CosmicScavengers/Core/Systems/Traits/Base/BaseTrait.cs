@@ -2,7 +2,7 @@ using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Traits.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Traits
+namespace CosmicScavengers.Core.Systems.Base.Traits
 {
     /// <summary>
     /// Abstract base class that removes boilerplate for all Entity Traits.
