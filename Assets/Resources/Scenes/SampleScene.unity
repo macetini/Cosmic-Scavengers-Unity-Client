@@ -648,7 +648,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Entities.EntityService
   Channel: {fileID: 11400000, guid: ee33022407d2b674280a5070226a7050, type: 2}
-  registry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
+  entityRegistry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
+  traitRegistry: {fileID: 11400000, guid: 6c230d2a340db0944b7afed4f11600ee, type: 2}
   entityParent: {fileID: 84648541}
 --- !u!4 &577005606
 Transform:
