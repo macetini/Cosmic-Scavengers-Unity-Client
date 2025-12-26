@@ -25,8 +25,6 @@ namespace CosmicScavengers.Core.Systems.Traits.Archetypes
 
         private void OnMouseDown()
         {
-            // Standard RTS selection logic:
-            // If Shift is NOT held, clear current selection for a "fresh" single select.
             if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
             {
                 //DeselectAll();

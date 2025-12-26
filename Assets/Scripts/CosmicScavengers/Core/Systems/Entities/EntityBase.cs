@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Meta;
-using CosmicScavengers.Core.Systems.Traits.Meta;
-using CosmicScavengers.Networking.Protobuf.Entities;
+using CosmicScavengers.Core.Systems.Traits;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities
@@ -25,16 +24,14 @@ namespace CosmicScavengers.Core.Systems.Entities
         public Vector3 Position { get; set; }
 
         [SerializeField]
-        private List<IEntityTrait> traits = new();
-        public List<IEntityTrait> Traits
+        private List<TraitBase> traits = new();
+        public List<TraitBase> Traits
         {
             get => traits;
             set => traits = value;
         }
 
         public virtual void OnSpawned() { }
-
-        public abstract void UpdateState(string data);
 
         public virtual void OnRemoved() { }
 

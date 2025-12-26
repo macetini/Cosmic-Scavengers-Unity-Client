@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Traits.Meta;
-using CosmicScavengers.Networking.Protobuf.Entities;
+using CosmicScavengers.Core.Systems.Traits;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Meta
@@ -11,10 +10,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Meta
         string Type { get; set; }
         bool IsStatic { get; set; }
         Vector3 Position { get; set; }
-        List<IEntityTrait> Traits { get; set; }
+        List<TraitBase> Traits { get; set; }
 
         void OnSpawned();
-        void UpdateState(string data);
         void OnRemoved();
     }
 }

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
+using CosmicScavengers.Core.Systems.Traits;
 using CosmicScavengers.Core.Systems.Traits.Registry;
 using CosmicScavengers.Networking.Event.Channels;
 using CosmicScavengers.Networking.Protobuf.Entities;
-using Google.Protobuf.Collections;
+using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Service
@@ -125,8 +126,43 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
             entity.Id = id;
             activeEntities.Add(id, entity);
 
-            entity.UpdateState(stateData);
+            if (!string.IsNullOrEmpty(stateData))
+            {
+                entity.Traits = GetEntityTraits(stateData);
+            }
             entity.OnSpawned();
+        }
+
+        private List<TraitBase> GetEntityTraits(string stateData)
+        {
+            List<TraitBase> traits = new();
+            try
+            {
+                JObject json = JObject.Parse(stateData);
+                if (json["traits"] is JObject traitsMap)
+                {
+                    List<string> traitKeys = traitsMap.Properties().Select(p => p.Name).ToList();
+                    foreach (string traitKey in traitKeys)
+                    {
+                        TraitBase traitPrefab = traitRegistry.GetPrefab(traitKey);
+                        if (traitPrefab == null)
+                        {
+                            Debug.LogWarning(
+                                $"[EntityService] Trait lookup failed for key: {traitKey}"
+                            );
+                            continue;
+                        }
+                        traits.Add(traitPrefab);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(
+                    $"[EntityService] Failed to parse StateData for traits: {ex.Message}"
+                );
+            }
+            return traits;
         }
 
         private void UpdateEntityInstance(
@@ -143,7 +179,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Service
 
             if (!string.IsNullOrEmpty(stateData))
             {
-                entity.UpdateState(stateData);
+                entity.Traits = GetEntityTraits(stateData);
             }
         }
 

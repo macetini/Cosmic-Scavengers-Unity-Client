@@ -20,8 +20,6 @@ namespace CosmicScavengers.Systems.Entities.Archetypes
         [SerializeField]
         private Color inactiveColor = Color.red;
 
-        public override void UpdateState(string data) { }
-
         private void UpdateStatusLights(bool isActive)
         {
             foreach (var light in statusLights)
