@@ -134,20 +134,20 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
             if (!string.IsNullOrEmpty(stateData))
             {
-                spawnedEntity.Traits = GetEntityTraits(stateData, spawnedEntity.TraitsContainer);
+                SetEntityTraits(stateData, spawnedEntity);
             }
             spawnedEntity.OnSpawned();
         }
 
-        private List<BaseTrait> GetEntityTraits(string stateData, GameObject traitsContainer)
+        private void SetEntityTraits(string stateData, BaseEntity entity)
         {
-            List<BaseTrait> traits = new();
             try
             {
                 JObject json = JObject.Parse(stateData);
                 if (json["traits"] is JObject traitsMap)
                 {
                     List<string> traitKeys = traitsMap.Properties().Select(p => p.Name).ToList();
+                    List<BaseTrait> traits = new(traitKeys.Count);
                     foreach (string traitKey in traitKeys)
                     {
                         BaseTrait traitPrefab = traitRegistry.GetPrefab(traitKey);
@@ -158,9 +158,15 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             );
                             continue;
                         }
-                        BaseTrait trait = Instantiate(traitPrefab, traitsContainer.transform);
+                        BaseTrait trait = Instantiate(
+                            traitPrefab,
+                            entity.TraitsContainer.transform
+                        );
+                        trait.Initialize(entity);
                         traits.Add(trait);
                     }
+
+                    entity.Traits = traits;
                 }
             }
             catch (System.Exception ex)
@@ -169,7 +175,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                     $"[EntityOrchestrator] Failed to parse StateData for traits: {ex.Message}"
                 );
             }
-            return traits;
         }
 
         private void UpdateEntityInstance(

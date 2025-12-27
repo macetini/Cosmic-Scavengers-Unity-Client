@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Systems.Data.Entities;
+using CosmicScavengers.Core.Systems.Entities.Meta;
 
 namespace CosmicScavengers.Core.Systems.Traits.Data.Meta
 {
@@ -9,7 +9,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Data.Meta
     {
         string Name { get; set; }
         int UpdateFrequency { get; }
-        void Initialize(BaseEntity owner);
+        void Initialize(IEntity owner);
         void OnUpdate(float deltaTime);
     }
 }

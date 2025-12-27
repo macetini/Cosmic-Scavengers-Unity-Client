@@ -1,4 +1,5 @@
 using CosmicScavengers.Core.Systems.Data.Entities;
+using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
     /// </summary>
     public abstract class BaseTrait : MonoBehaviour, ITrait
     {
-        protected BaseEntity Owner { get; private set; }
+        protected IEntity Owner { get; private set; }
 
         [SerializeField]
         private string traitName;
@@ -21,7 +22,7 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
 
         public virtual int UpdateFrequency => 1;
 
-        public virtual void Initialize(BaseEntity owner)
+        public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
             OnInitialize();
@@ -32,21 +33,17 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
         /// </summary>
         protected virtual void OnInitialize() { }
 
+        public bool OwnedBySameEntity(BaseTrait otherTrait)
+        {
+            return otherTrait != null
+                && Owner != null
+                && otherTrait.Owner != null
+                && Owner.Id == otherTrait.Owner.Id;
+        }
+
         /// <summary>
         /// The update loop managed by BaseEntity.
         /// </summary>
         public abstract void OnUpdate(float deltaTime);
-
-        /// <summary>
-        /// Helper to quickly find another trait on the same entity.
-        /// </summary>
-        protected T GetOtherTrait<T>()
-            where T : class, ITrait
-        {
-            if (Owner == null)
-                return null;
-            // Assuming BaseEntity has a way to expose its list or we use GetComponent
-            return Owner.GetComponentInChildren<T>();
-        }
     }
 }

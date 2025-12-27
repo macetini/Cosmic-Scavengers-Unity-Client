@@ -24,16 +24,6 @@ namespace CosmicScavengers.Core.Systems.Traits.Archetypes
             }
         }
 
-        private void OnMouseDown()
-        {
-            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
-            {
-                //DeselectAll();
-            }
-
-            ToggleSelection(!IsSelected);
-        }
-
         public void ToggleSelection(bool state)
         {
             if (state)
@@ -59,11 +49,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Archetypes
                 selectionIndicator.SetActive(true);
             }
 
-            // Log identity if this trait is attached to a networked entity
-            if (TryGetComponent<IEntity>(out var entity))
-            {
-                Debug.Log($"[Trait] Selected Entity ID: {entity.Id}");
-            }
+            Debug.Log($"[SelectableTrait] Entity {Owner.Id} selected.");
         }
 
         public void Deselect()
@@ -78,6 +64,8 @@ namespace CosmicScavengers.Core.Systems.Traits.Archetypes
             {
                 selectionIndicator.SetActive(false);
             }
+
+            Debug.Log($"[SelectableTrait] Entity {Owner.Id} deselected.");
         }
 
         public override void OnUpdate(float deltaTime)

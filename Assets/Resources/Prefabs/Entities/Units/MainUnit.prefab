@@ -72,9 +72,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4211040916290710887}
-  - component: {fileID: 5407180090541628080}
   - component: {fileID: -1045211535305356848}
-  m_Layer: 0
+  - component: {fileID: 3091246214711957584}
+  m_Layer: 6
   m_Name: MainUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,22 @@ Transform:
   - {fileID: 7279950601691594162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5407180090541628080
+--- !u!114 &-1045211535305356848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9020811767337774286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce688508b08e60459883d07fc32f3aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Systems.Entities.Archetypes.UnitEntity
+  type: MAIN_UNIT
+  traits: []
+  TraitsContainer: {fileID: 6896014420972236174}
+--- !u!65 &3091246214711957584
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,23 +132,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 2, z: 1}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &-1045211535305356848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9020811767337774286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ce688508b08e60459883d07fc32f3aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Systems.Entities.Archetypes.UnitEntity
-  type: MAIN_UNIT
-  traits: []
-  TraitsContainer: {fileID: 6896014420972236174}
 --- !u!1001 &666029403987963363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,6 +201,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 22e68deea7276e244b05b0643f150c1a, type: 3}
       propertyPath: m_Name
       value: main_unit_exp_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 22e68deea7276e244b05b0643f150c1a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 22e68deea7276e244b05b0643f150c1a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
