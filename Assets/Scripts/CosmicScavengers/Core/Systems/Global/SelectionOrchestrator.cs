@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Traits.Archetypes;
+using CosmicScavengers.Networking.Event.Channels.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,11 @@ namespace CosmicScavengers.Core.Systems.Global
     /// </summary>
     public class SelectionOrchestrator : MonoBehaviour
     {
+        [Header("Channel Configuration")]
+        [SerializeField]
+        [Tooltip("Channel to raise when entity sync data is received.")]
+        private EntitySyncChannel entitySyncChannel;
+
         [Header("Configuration")]
         [SerializeField]
         [Tooltip("Layer mask for entities that can be selected.")]
@@ -34,6 +40,10 @@ namespace CosmicScavengers.Core.Systems.Global
 
         void Start()
         {
+            if (entitySyncChannel == null)
+            {
+                Debug.LogError("[SelectionOrchestrator] EntitySyncChannel reference is missing!");
+            }
             if (mainCamera == null)
             {
                 mainCamera = Camera.main;
@@ -61,10 +71,84 @@ namespace CosmicScavengers.Core.Systems.Global
         private void HandleSelectionClick()
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            int combinedMask = entityLayer | terrainLayer;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, maxRaycastDistance, entityLayer))
+            if (!Physics.Raycast(ray, out RaycastHit hit, maxRaycastDistance, combinedMask))
             {
-                if (!hit.collider.TryGetComponent<BaseEntity>(out var entity))
+                DeselectAll();
+                return;
+            }
+
+            int hitLayer = 1 << hit.collider.gameObject.layer;
+
+            if ((hitLayer & entityLayer) != 0)
+            {
+                HandleEntitySelection(hit.collider);
+            }
+            else if ((hitLayer & terrainLayer) != 0)
+            {
+                HandleTerrainClick(hit.point);
+            }
+        }
+
+        private void HandleEntitySelection(Collider hitCollider)
+        {
+            if (hitCollider.TryGetComponent<BaseEntity>(out var entity))
+            {
+                var selectable = entity.GetTrait<SelectableTrait>();
+                if (selectable != null)
+                {
+                    // Cache input check to avoid multiple native calls
+                    bool isMultiSelect =
+                        Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+                    ProcessSelection(selectable, isMultiSelect);
+                    return;
+                }
+            }
+            DeselectAll();
+        }
+
+        private void HandleTerrainClick(Vector3 targetPoint)
+        {
+            if (currentSelection.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var selectable in currentSelection)
+            {
+                BaseEntity entity = selectable.Owner as BaseEntity;
+                if (entity == null)
+                {
+                    Debug.LogWarning(
+                        $"[SelectionOrchestrator] Selected trait's owner is not a BaseEntity. Skipping entity ID {selectable.Owner?.Id}."
+                    );
+                    continue;
+                }
+
+                // TODO - Optimize: Create a reusable MoveRequest object/struct
+                object moveRequest = new
+                {
+                    EntityId = entity.Id,
+                    From = entity.transform.position,
+                    To = targetPoint,
+                };
+
+                entitySyncChannel.Raise(moveRequest);
+
+                Debug.Log(
+                    $"[SelectionOrchestrator] Moving entity {entity.Id} from: {entity.transform.position} to: {targetPoint}."
+                );
+            }
+        }
+
+        private void HandleSelectionClick_old()
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit entityHit, maxRaycastDistance, entityLayer))
+            {
+                if (!entityHit.collider.TryGetComponent<BaseEntity>(out var entity))
                 {
                     DeselectAll();
                     return;
@@ -80,6 +164,25 @@ namespace CosmicScavengers.Core.Systems.Global
                 else
                 {
                     DeselectAll();
+                }
+            }
+
+            if (Physics.Raycast(ray, out RaycastHit terrainHit, maxRaycastDistance, terrainLayer))
+            {
+                if (currentSelection.Count > 0)
+                {
+                    BaseEntity entity = currentSelection[0].Owner as BaseEntity;
+                    object syncObject = new
+                    {
+                        From = entity.transform.position,
+                        To = terrainHit.point,
+                    };
+
+                    Debug.Log(
+                        $"[SelectionOrchestrator] Moving entity {entity.Id} from: {entity.transform.position} to: {terrainHit.point}."
+                    );
+
+                    entitySyncChannel.Raise(syncObject);
                 }
             }
         }

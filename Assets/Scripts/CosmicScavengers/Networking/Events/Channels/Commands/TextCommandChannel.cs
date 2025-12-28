@@ -3,6 +3,6 @@ using UnityEngine;
 
 namespace CosmicScavengers.Networking.Event.Channels.Commands
 {
-    [CreateAssetMenu(menuName = "Channels/Data/TextCommandChannel")]
+    [CreateAssetMenu(menuName = "Channels/Commands/TextCommandChannel")]
     public class TextCommandChannel : EventChannel<string> { }
 }

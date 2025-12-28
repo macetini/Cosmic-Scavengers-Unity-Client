@@ -4,6 +4,6 @@ using UnityEngine;
 
 namespace CosmicScavengers.Networking.Event.Channels.Data
 {
-    [CreateAssetMenu(menuName = "Channels/WorldDataChannel")]
+    [CreateAssetMenu(menuName = "Channels/Data/WorldDataChannel")]
     public class WorldDataChannel : EventChannel<WorldData> { }
 }

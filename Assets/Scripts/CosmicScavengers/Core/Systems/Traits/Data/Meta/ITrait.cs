@@ -8,6 +8,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Data.Meta
     public interface ITrait
     {
         string Name { get; set; }
+        IEntity Owner { get; }
         int UpdateFrequency { get; }
         void Initialize(IEntity owner);
         void OnUpdate(float deltaTime);

@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 84648544}
   - component: {fileID: 84648543}
   - component: {fileID: 84648542}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TerrainComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 577005606}
   - {fileID: 340855667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -723,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b75d3c177959d4cb9789c66a495703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Entities.EntityService
-  Channel: {fileID: 11400000, guid: ee33022407d2b674280a5070226a7050, type: 2}
+  playerEntitiesDataChannel: {fileID: 11400000, guid: ee33022407d2b674280a5070226a7050, type: 2}
   entityRegistry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
   traitRegistry: {fileID: 11400000, guid: 6c230d2a340db0944b7afed4f11600ee, type: 2}
   traitsUpdater: {fileID: 98069127}
@@ -742,7 +741,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 98069128}
-  m_Father: {fileID: 84648541}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &808927930
 GameObject:
@@ -1088,9 +1087,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d67f5b8d166d54409326f676007a57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Global.SelectionOrchestrator
+  entitySyncChannel: {fileID: 11400000, guid: 777de0ed6bd4ee641ba5ad0eb1f0054f, type: 2}
   entityLayer:
     serializedVersion: 2
     m_Bits: 64
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 128
   mainCamera: {fileID: 330585545}
   maxRaycastDistance: 500
 --- !u!1 &1956342390
@@ -1322,4 +1325,5 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 116000958}
   - {fileID: 1357999020}
+  - {fileID: 577005606}
   - {fileID: 84648541}

@@ -11,7 +11,7 @@ namespace CosmicScavengers.Systems.Terrain
     /// Component responsible for generating a Unity Mesh from the procedural
     /// height data provided by the MapGenerator.
     /// </summary>
-    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
     public class TerrainComponent : MonoBehaviour
     {
         [SerializeField]
@@ -40,11 +40,13 @@ namespace CosmicScavengers.Systems.Terrain
         private EntityOrchestrator entityOrchestrator;
 
         private MeshFilter meshFilter;
+        private MeshCollider meshCollider;
         private Mesh mesh;
 
         void Awake()
         {
             meshFilter = GetComponent<MeshFilter>();
+            meshCollider = GetComponent<MeshCollider>();
             mesh = new Mesh();
             meshFilter.mesh = mesh;
         }
@@ -181,6 +183,9 @@ namespace CosmicScavengers.Systems.Terrain
 
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
+
+            meshCollider.sharedMesh = null;
+            meshCollider.sharedMesh = mesh;
 
             Debug.Log("[TerrainComponent] Mesh generation and coloring complete.");
         }

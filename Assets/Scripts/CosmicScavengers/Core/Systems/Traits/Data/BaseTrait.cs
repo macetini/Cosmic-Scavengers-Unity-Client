@@ -11,8 +11,6 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
     /// </summary>
     public abstract class BaseTrait : MonoBehaviour, ITrait
     {
-        protected IEntity Owner { get; private set; }
-
         [SerializeField]
         private string traitName;
         public string Name
@@ -20,7 +18,8 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
             get => string.IsNullOrEmpty(traitName) ? GetType().Name : traitName;
             set => traitName = value;
         }
-
+        
+        public IEntity Owner { get; private set; }
         public virtual int UpdateFrequency => 1;
 
         public virtual void Initialize(IEntity owner)

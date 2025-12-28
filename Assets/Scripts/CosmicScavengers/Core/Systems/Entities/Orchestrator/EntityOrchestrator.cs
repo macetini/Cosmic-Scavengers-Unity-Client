@@ -22,7 +22,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [Header("Channel Configuration")]
         [Tooltip("Channel to raise when player entities data is received.")]
         [SerializeField]
-        private PlayerEntitiesDataChannel Channel;
+        private PlayerEntitiesDataChannel playerEntitiesDataChannel;
 
         [Header("Registry Configuration")]
         [Tooltip("Registry containing entity prefabs and metadata.")]
@@ -44,9 +44,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
         private readonly Dictionary<long, IEntity> activeEntities = new();
 
-        void Awake()
+        void Start()
         {
-            if (Channel == null)
+            if (playerEntitiesDataChannel == null)
             {
                 Debug.LogError(
                     "[EntityOrchestrator] PlayerEntitiesDataChannel reference is missing!"
@@ -64,12 +64,12 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
         void OnEnable()
         {
-            Channel.AddListener(OnPlayerEntitiesDataReceived);
+            playerEntitiesDataChannel.AddListener(OnPlayerEntitiesDataReceived);
         }
 
         void OnDisable()
         {
-            Channel.RemoveListener(OnPlayerEntitiesDataReceived);
+            playerEntitiesDataChannel.RemoveListener(OnPlayerEntitiesDataReceived);
         }
 
         private void OnPlayerEntitiesDataReceived(EntitySyncResponse syncResponse)
