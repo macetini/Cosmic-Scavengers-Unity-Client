@@ -18,6 +18,9 @@ namespace CosmicScavengers.Core.Systems.Global
         private LayerMask entityLayer;
 
         [SerializeField]
+        private LayerMask terrainLayer;
+
+        [SerializeField]
         [Tooltip("Camera used for raycasting. If null, defaults to Main Camera.")]
         private Camera mainCamera;
 
@@ -44,11 +47,10 @@ namespace CosmicScavengers.Core.Systems.Global
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                if (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject())
                 {
-                    return;
+                    HandleSelectionClick();
                 }
-                HandleSelectionClick();
             }
             else if (Input.GetMouseButtonDown(1))
             {

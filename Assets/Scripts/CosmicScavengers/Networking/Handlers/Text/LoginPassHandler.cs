@@ -1,6 +1,6 @@
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Text;
-using CosmicScavengers.Networking.Event.Channels;
+using CosmicScavengers.Networking.Event.Channels.Commands;
 using CosmicScavengers.Networking.Requests;
 using UnityEngine;
 

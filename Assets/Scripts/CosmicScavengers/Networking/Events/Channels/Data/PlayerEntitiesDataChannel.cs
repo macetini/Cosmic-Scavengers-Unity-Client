@@ -3,7 +3,7 @@ using CosmicScavengers.Networking.Protobuf.Entities;
 using Google.Protobuf.Collections;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Event.Channels
+namespace CosmicScavengers.Networking.Event.Channels.Data
 {
     [CreateAssetMenu(menuName = "Channels/PlayerEntitiesDataChannel")]
     public class PlayerEntitiesDataChannel : EventChannel<EntitySyncResponse> { }

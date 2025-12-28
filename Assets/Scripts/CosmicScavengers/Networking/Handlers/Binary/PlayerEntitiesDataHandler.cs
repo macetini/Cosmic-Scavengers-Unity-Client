@@ -1,7 +1,7 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Binary;
-using CosmicScavengers.Networking.Event.Channels;
+using CosmicScavengers.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.Entities;
 using Google.Protobuf.Collections;
 using UnityEngine;

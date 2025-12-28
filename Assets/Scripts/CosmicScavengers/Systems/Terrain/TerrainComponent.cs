@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Orchestrator;
 using CosmicScavengers.Core.Systems.Terrain.Meta;
-using CosmicScavengers.Networking.Event.Channels;
+using CosmicScavengers.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 

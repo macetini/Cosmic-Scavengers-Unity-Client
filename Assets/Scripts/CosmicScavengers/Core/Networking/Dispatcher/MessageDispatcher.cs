@@ -1,5 +1,5 @@
 using CosmicScavengers.Core.Networking;
-using CosmicScavengers.Networking.Event.Channels;
+using CosmicScavengers.Networking.Event.Channels.Commands;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Core.Dispatcher
