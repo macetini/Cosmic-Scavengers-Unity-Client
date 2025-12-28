@@ -62,10 +62,6 @@ namespace CosmicScavengers.Core.Systems.Global
                     HandleSelectionClick();
                 }
             }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                DeselectAll();
-            }
         }
 
         private void HandleSelectionClick()
@@ -139,51 +135,6 @@ namespace CosmicScavengers.Core.Systems.Global
                 Debug.Log(
                     $"[SelectionOrchestrator] Moving entity {entity.Id} from: {entity.transform.position} to: {targetPoint}."
                 );
-            }
-        }
-
-        private void HandleSelectionClick_old()
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit entityHit, maxRaycastDistance, entityLayer))
-            {
-                if (!entityHit.collider.TryGetComponent<BaseEntity>(out var entity))
-                {
-                    DeselectAll();
-                    return;
-                }
-
-                SelectableTrait selectableTrait = entity.GetTrait<SelectableTrait>();
-                if (selectableTrait != null)
-                {
-                    bool isMultiSelect =
-                        Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-                    ProcessSelection(selectableTrait, isMultiSelect);
-                }
-                else
-                {
-                    DeselectAll();
-                }
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit terrainHit, maxRaycastDistance, terrainLayer))
-            {
-                if (currentSelection.Count > 0)
-                {
-                    BaseEntity entity = currentSelection[0].Owner as BaseEntity;
-                    object syncObject = new
-                    {
-                        From = entity.transform.position,
-                        To = terrainHit.point,
-                    };
-
-                    Debug.Log(
-                        $"[SelectionOrchestrator] Moving entity {entity.Id} from: {entity.transform.position} to: {terrainHit.point}."
-                    );
-
-                    entitySyncChannel.Raise(syncObject);
-                }
             }
         }
 

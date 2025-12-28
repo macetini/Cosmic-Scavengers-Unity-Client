@@ -8,7 +8,6 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
 {
     public bool Active = true;
     public NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
-
     public BinaryCommandChannel Channel;
 
     public void Handle(string[] data)
@@ -42,7 +41,7 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
         WorldStateRequest worldStateRequest = new(Channel);
         worldStateRequest.Request(playerId);
 
-        PlayerEntitiesRequest playerEntitiesRequest = new(Channel);
-        playerEntitiesRequest.Request(playerId);
+        //PlayerEntitiesRequest playerEntitiesRequest = new(Channel);
+        //playerEntitiesRequest.Request(playerId);
     }
 }
