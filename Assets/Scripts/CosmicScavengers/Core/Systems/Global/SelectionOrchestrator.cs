@@ -48,8 +48,11 @@ namespace CosmicScavengers.Core.Systems.Global
                 {
                     return;
                 }
-
                 HandleSelectionClick();
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                DeselectAll();
             }
         }
 
@@ -77,28 +80,27 @@ namespace CosmicScavengers.Core.Systems.Global
                     DeselectAll();
                 }
             }
-            else
-            {
-                DeselectAll();
-            }
         }
 
         private void ProcessSelection(SelectableTrait trait, bool isMultiSelect)
         {
             if (!isMultiSelect)
             {
-                if (trait.IsSelected && currentSelection.Count == 1)
+                if (trait.IsSelected)
                 {
-                    DeselectAll();
+                    if (currentSelection.Count > 1)
+                    {
+                        DeselectAllExcept(trait);
+                    }
+                    else
+                    {
+                        DeselectAll();
+                    }
                 }
                 else
                 {
-                    DeselectAllExcept(trait);
                     trait.Select();
-                    if (!currentSelection.Contains(trait))
-                    {
-                        currentSelection.Add(trait);
-                    }
+                    currentSelection.Add(trait);
                 }
             }
             else
@@ -122,7 +124,6 @@ namespace CosmicScavengers.Core.Systems.Global
             {
                 return;
             }
-
             for (int i = 0; i < currentSelection.Count; i++)
             {
                 if (currentSelection[i] != null)
@@ -130,7 +131,6 @@ namespace CosmicScavengers.Core.Systems.Global
                     currentSelection[i].Deselect();
                 }
             }
-
             currentSelection.Clear();
         }
 
@@ -140,7 +140,6 @@ namespace CosmicScavengers.Core.Systems.Global
             {
                 return;
             }
-
             for (int i = currentSelection.Count - 1; i >= 0; i--)
             {
                 var trait = currentSelection[i];
