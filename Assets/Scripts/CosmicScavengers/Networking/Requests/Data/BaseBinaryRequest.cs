@@ -29,18 +29,12 @@ namespace CosmicScavengers.Core.Networking.Request.Data
 
         protected virtual void Awake()
         {
-            Stream = new MemoryStream(1024 * 1024);
-            Writer = new BinaryWriter(Stream);
-        }
-
-        protected virtual void Start()
-        {
             if (CommandChannel == null)
             {
-                Debug.LogError(
-                    $"[BaseBinaryRequest] CommandChannel is missing on {gameObject.name}!"
-                );
+                Debug.LogError("[BaseBinaryRequest] CommandChannel reference is missing!");
             }
+            Stream = new MemoryStream(1024 * 1024); // TODO - Put this in config
+            Writer = new BinaryWriter(Stream);
         }
 
         public virtual void Execute(params object[] parameters)

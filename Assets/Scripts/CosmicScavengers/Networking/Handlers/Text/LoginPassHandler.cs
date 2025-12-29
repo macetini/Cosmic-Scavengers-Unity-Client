@@ -13,15 +13,13 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
 
     public NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
 
-    void Start()
+    void Awake()
     {
         if (requestChanel == null)
         {
             Debug.LogError("[LoginPassHandler] BinaryCommandChannel reference is missing!");
         }
     }
-
-    //public BinaryCommandChannel Channel;
 
     public void Handle(string[] data)
     {
@@ -51,15 +49,11 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
         // Placeholder for any additional initialization logic for player data
         Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
 
+        requestChanel.Raise(NetworkBinaryCommand.REQUEST_WORLD_STATE_C, new object[] { playerId });
+
         requestChanel.Raise(
             NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C,
             new object[] { playerId }
         );
-
-        //WorldStateRequest worldStateRequest = new(Channel);
-        //worldStateRequest.Request(playerId);
-
-        //PlayerEntitiesRequest playerEntitiesRequest = new(Channel);
-        //playerEntitiesRequest.Request(playerId);
     }
 }

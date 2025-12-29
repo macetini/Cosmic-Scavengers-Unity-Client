@@ -1,35 +1,32 @@
-using System.IO;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Extensions;
-using CosmicScavengers.Networking.Event.Channels.Commands;
+using CosmicScavengers.Core.Networking.Request.Data;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests
 {
-    public class WorldStateRequest
+    public class WorldStateRequest : BaseBinaryRequest
     {
-        private readonly MemoryStream memoryStream;
-        private readonly BinaryWriter binaryWriter;
-        private readonly BinaryCommandChannel channel;
-        private short CommandCode => (short)NetworkBinaryCommand.REQUEST_WORLD_STATE_C;
+        public override NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_WORLD_STATE_C;
 
-        public WorldStateRequest(BinaryCommandChannel channel)
+        public override void Execute(params object[] parameters)
         {
-            memoryStream = new();
-            binaryWriter = new(memoryStream);
+            if (parameters.Length < 1 || parameters[0] is not long playerId)
+            {
+                Debug.LogError(
+                    "[PlayerEntitiesRequest] Invalid parameters for Execute. Expected Player ID (long)."
+                );
+                return;
+            }
 
-            this.channel = channel;
-        }
+            Writer.WriteShort((short)Command);
+            Writer.WriteLong(playerId);
 
-        public void Request(long userId)
-        {
-            binaryWriter.WriteShort(CommandCode);
-            binaryWriter.WriteLong(userId);
+            Debug.Log(
+                "[PlayerEntitiesRequest] Sending world state request for Player ID: " + playerId
+            );
 
-            byte[] requestData = memoryStream.ToArray();
-
-            Debug.Log("[WorldStateRequest] Sending world state request for User ID: " + userId);
-            channel.Raise(requestData);
+            SendBuffer();
         }
     }
 }

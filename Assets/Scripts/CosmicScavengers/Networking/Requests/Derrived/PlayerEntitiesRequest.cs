@@ -17,17 +17,13 @@ public class PlayerEntitiesRequest : BaseBinaryRequest
             return;
         }
 
-        playerId = (long)parameters[0];
-
         Writer.WriteShort((short)Command);
         Writer.WriteLong(playerId);
-
-        byte[] requestData = Stream.ToArray();
 
         Debug.Log(
             "[PlayerEntitiesRequest] Sending player entities request for Player ID: " + playerId
         );
 
-        CommandChannel.Raise(requestData);
+        SendBuffer();
     }
 }
