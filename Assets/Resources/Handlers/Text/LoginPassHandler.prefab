@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::LoginPassHandler
   Active: 1
-  Channel: {fileID: 11400000, guid: 00d99a108dd14c4448ca8d1e621cb420, type: 2}
+  requestChanel: {fileID: 11400000, guid: 64efe2cfb882c594db3c1feae687d092, type: 2}

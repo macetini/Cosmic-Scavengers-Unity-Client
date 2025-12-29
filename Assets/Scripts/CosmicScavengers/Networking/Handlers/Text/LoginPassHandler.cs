@@ -1,14 +1,27 @@
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Text;
-using CosmicScavengers.Networking.Event.Channels.Commands;
-using CosmicScavengers.Networking.Requests;
 using UnityEngine;
 
 public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
 {
     public bool Active = true;
+
+    [Header("Channel Configuration")]
+    [SerializeField]
+    [Tooltip("Channel to send binary requests.")]
+    private BinaryRequestChannel requestChanel;
+
     public NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
-    public BinaryCommandChannel Channel;
+
+    void Start()
+    {
+        if (requestChanel == null)
+        {
+            Debug.LogError("[LoginPassHandler] BinaryCommandChannel reference is missing!");
+        }
+    }
+
+    //public BinaryCommandChannel Channel;
 
     public void Handle(string[] data)
     {
@@ -38,8 +51,13 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
         // Placeholder for any additional initialization logic for player data
         Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
 
-        WorldStateRequest worldStateRequest = new(Channel);
-        worldStateRequest.Request(playerId);
+        requestChanel.Raise(
+            NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C,
+            new object[] { playerId }
+        );
+
+        //WorldStateRequest worldStateRequest = new(Channel);
+        //worldStateRequest.Request(playerId);
 
         //PlayerEntitiesRequest playerEntitiesRequest = new(Channel);
         //playerEntitiesRequest.Request(playerId);

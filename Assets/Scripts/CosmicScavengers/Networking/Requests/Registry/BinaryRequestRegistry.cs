@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Request.Data;
 using CosmicScavengers.Networking.Requests.Registry.Meta;
 using UnityEngine;
 
@@ -8,6 +10,31 @@ namespace CosmicScavengers.Core.Networking.Request.Registry
     public class BinaryRequestRegistry : ScriptableObject
     {
         public List<BinaryRequestEntry> Entries = new();
-        private readonly Dictionary<short, BinaryRequestEntry> lookUp = new();
+        private readonly Dictionary<NetworkBinaryCommand, BaseBinaryRequest> lookUp = new();
+
+        public BaseBinaryRequest GetPrefab(NetworkBinaryCommand key)
+        {
+            if (lookUp.Count == 0)
+            {
+                InitializeLookup();
+            }
+            return lookUp.TryGetValue(key, out var prefab) ? prefab : null;
+        }
+
+        private void InitializeLookup()
+        {
+            lookUp.Clear();
+            foreach (var entry in Entries)
+            {
+                if (entry.RequestPrefab == null)
+                {
+                    Debug.LogWarning(
+                        $"[BinaryRequestRegistry] Entry for Command {entry.Command} has a null RequestPrefab."
+                    );
+                    continue;
+                }
+                lookUp[entry.Command] = entry.RequestPrefab;
+            }
+        }
     }
 }
