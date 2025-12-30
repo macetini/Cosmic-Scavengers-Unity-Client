@@ -26,14 +26,14 @@ namespace CosmicScavengers.Core.Networking.Request.Registry
             lookUp.Clear();
             foreach (var entry in Entries)
             {
-                if (entry.RequestPrefab == null)
+                if (entry.Prefab == null)
                 {
                     Debug.LogWarning(
-                        $"[BinaryRequestRegistry] Entry for Command {entry.Command} has a null RequestPrefab."
+                        $"[BinaryRequestRegistry] Entry for Command {entry.Command} has a null Request Prefab."
                     );
                     continue;
                 }
-                lookUp[entry.Command] = entry.RequestPrefab;
+                lookUp[entry.Command] = entry.Prefab;
             }
         }
     }

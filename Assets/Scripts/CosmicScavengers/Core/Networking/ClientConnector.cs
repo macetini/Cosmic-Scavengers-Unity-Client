@@ -23,13 +23,9 @@ namespace CosmicScavengers.Core.Networking
         private const int MAX_MESSAGE_SIZE = 1024 * 1024; // 1 MB
 
         // -----------------------------------
-
-        // Networking components
         private TcpClient client;
         private NetworkStream stream;
         private Thread clientThread;
-
-        // Lock object for thread-safe stream operations
         private readonly object streamLock = new();
 
         // Thread-safe queues to hold messages received from the server
@@ -37,8 +33,8 @@ namespace CosmicScavengers.Core.Networking
         private readonly Queue<byte[]> incomingBinaryMessages = new();
 
         /// Events for incoming messages
-        public event Action<string> OnTextMessageReceived;
-        public event Action<byte[]> OnBinaryMessageReceived;
+        internal event Action<string> OnTextMessageReceived;
+        internal event Action<byte[]> OnBinaryMessageReceived;
 
         /// <summary>
         /// Indicates whether the client is currently connected to the server.
@@ -118,7 +114,6 @@ namespace CosmicScavengers.Core.Networking
             }
 
             byte[] lengthBytes = new byte[LENGTH_FIELD_SIZE];
-
             try
             {
                 // Read the 4-byte length prefix
@@ -311,26 +306,20 @@ namespace CosmicScavengers.Core.Networking
         /// </summary>
         void Update()
         {
-            // Process text messages (for Auth/Commands)
             lock (incomingTextMessages)
             {
                 while (incomingTextMessages.Count > 0)
                 {
-                    OnTextMessageReceived?.Invoke(incomingTextMessages.Dequeue());
+                    string data = incomingTextMessages.Dequeue();
+                    OnTextMessageReceived?.Invoke(data);
                 }
             }
 
-            // Process binary messages (for Game State)
             lock (incomingBinaryMessages)
             {
                 while (incomingBinaryMessages.Count > 0)
                 {
                     byte[] data = incomingBinaryMessages.Dequeue();
-
-                    // --- DEBUG LOGGING ---
-                    // Debug.Log($"[Connector Debug] Received Binary Message ({data.Length} bytes): {BytesToHexString(data)}");
-                    // ---------------------
-
                     OnBinaryMessageReceived?.Invoke(data);
                 }
             }

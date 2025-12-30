@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Request.Data;
 using CosmicScavengers.Core.Networking.Request.Registry;
+using CosmicScavengers.Core.Networking.Requests.Channels;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Requests
@@ -22,7 +23,7 @@ namespace CosmicScavengers.Core.Networking.Requests
         [Tooltip("Container for instantiated requests.")]
         private GameObject requestsContainer;
 
-        private Dictionary<NetworkBinaryCommand, BaseBinaryRequest> requestLookup = new();
+        private readonly Dictionary<NetworkBinaryCommand, BaseBinaryRequest> requestLookup = new();
 
         void Awake()
         {

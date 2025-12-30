@@ -8,6 +8,6 @@ namespace CosmicScavengers.Networking.Requests.Registry.Meta
     public struct BinaryRequestEntry
     {
         public NetworkBinaryCommand Command;
-        public BaseBinaryRequest RequestPrefab;
+        public BaseBinaryRequest Prefab;
     }
 }

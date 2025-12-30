@@ -2,7 +2,7 @@ using System.IO;
 using System.Linq;
 using CosmicScavengers.Core.Networking.Communication;
 using CosmicScavengers.Core.Networking.Extensions;
-using CosmicScavengers.Networking.Communication;
+using CosmicScavengers.Core.Networking.Responses.Channels;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Commands.Router
@@ -18,37 +18,38 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
         [Tooltip("The ClientConnector responsible for low-level network communication.")]
         private ClientConnector clientConnector;
 
+        [Header("Channel Configuration")]
         [SerializeField]
-        private TextCommandHandlers textCommandHandlers;
+        [Tooltip("Channel to listen for binary responses.")]
+        private BinaryResponseChannel binaryResponseChannel;
 
         [SerializeField]
-        private BinaryCommandHandlers binaryCommandHandlers;
+        private TextCommandHandlers textCommandHandlers; // TODO - Refactor like BinaryCommandHandlers
 
-        void Start()
+        void Awake()
         {
             if (clientConnector == null)
             {
                 Debug.LogError("[NetworkRequestManager] ClientConnector reference is missing!");
-                return;
             }
-            clientConnector.OnBinaryMessageReceived += HandleBinaryMessage;
-            clientConnector.OnTextMessageReceived += HandleTextMessage;
-
-            if (binaryCommandHandlers == null)
+            if (binaryResponseChannel == null)
             {
                 Debug.LogError(
-                    "[NetworkRequestManager] NetworkCommandHandlers reference is missing!"
+                    "[NetworkRequestManager] BinaryResponseChannel reference is missing!"
                 );
             }
         }
 
-        void OnDestroy()
+        void OnEnable()
         {
-            if (clientConnector != null)
-            {
-                clientConnector.OnBinaryMessageReceived -= HandleBinaryMessage;
-                clientConnector.OnTextMessageReceived -= HandleTextMessage;
-            }
+            clientConnector.OnBinaryMessageReceived += HandleBinaryMessage;
+            clientConnector.OnTextMessageReceived += HandleTextMessage;
+        }
+
+        void OnDisable()
+        {
+            clientConnector.OnBinaryMessageReceived -= HandleBinaryMessage;
+            clientConnector.OnTextMessageReceived -= HandleTextMessage;
         }
 
         private void HandleBinaryMessage(byte[] data)
@@ -90,7 +91,9 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
             }
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
-            binaryCommandHandlers.Handle(commandCode, protobufData);
+            //binaryCommandHandlers.Handle(commandCode, protobufData);
+            NetworkBinaryCommand command = (NetworkBinaryCommand)commandCode;
+            binaryResponseChannel.Raise(command, protobufData);
         }
 
         private void HandleTextMessage(string rawMessage)

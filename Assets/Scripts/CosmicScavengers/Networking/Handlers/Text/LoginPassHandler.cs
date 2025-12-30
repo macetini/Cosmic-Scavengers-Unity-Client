@@ -1,5 +1,6 @@
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Handlers.Text;
+using CosmicScavengers.Core.Networking.Requests.Channels;
 using UnityEngine;
 
 public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
