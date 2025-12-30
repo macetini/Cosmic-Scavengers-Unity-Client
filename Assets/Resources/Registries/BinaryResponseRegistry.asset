@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: BinaryResponseRegistry
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Networking.Response.Registry.BinaryResponseRegistry
   responsesContainer: {fileID: 0}
-  Entries: []
+  Entries:
+  - Command: 2
+    Prefab: {fileID: 194011026206109629, guid: 957861b9107eda74d838065010ee8327, type: 3}
+  - Command: 4
+    Prefab: {fileID: 5321195535876054551, guid: feb85fabbe0ef5b48941abe269cc5364, type: 3}

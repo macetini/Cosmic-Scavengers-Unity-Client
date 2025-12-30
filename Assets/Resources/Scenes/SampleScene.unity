@@ -1290,7 +1290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5cccb3f91f36945a30b403486329d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  binaryResponseChannel: {fileID: 11400000, guid: bb64c628137d7994a975d43aec86c709, type: 2}
 --- !u!1001 &4371837346542067679
 PrefabInstance:
   m_ObjectHideFlags: 0

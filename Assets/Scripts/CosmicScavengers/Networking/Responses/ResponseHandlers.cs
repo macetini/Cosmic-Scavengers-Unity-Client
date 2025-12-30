@@ -57,7 +57,7 @@ public class ResponseHandlers : MonoBehaviour
         Debug.Log($"[ResponseHandlers] Handling Binary Response with Command ID: {command}");
         if (responseLookup.TryGetValue(command, out var existingResponse))
         {
-            existingResponse.Execute(data);
+            existingResponse.Handle(data);
             return;
         }
 
@@ -72,6 +72,6 @@ public class ResponseHandlers : MonoBehaviour
         var responseInstance = Instantiate(responsePrefab, responsesContainer.transform);
         responseLookup[command] = responseInstance;
 
-        responseInstance.Execute(data);
+        responseInstance.Handle(data);
     }
 }
