@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb51cd485d3e0a43b34051719ef2ab9, type: 3}
+  m_Name: TextResponseRegistry
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Networking.Response.Registry.TextResponseRegistry
+  Entries:
+  - Command: 2
+    Prefab: {fileID: 5024236454130714300, guid: 77342bd7b3ab57742809d3ec32a634e2, type: 3}

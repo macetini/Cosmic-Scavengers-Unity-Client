@@ -2,7 +2,6 @@ namespace CosmicScavengers.Core.Networking.Request.Data.Meta
 {
     public interface INetworkRequest
     {
-        void Execute(params object[] parameters);
-        void OnDestroy();
+        void Execute(object[] parameters);
     }
 }

@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Responses.Data;
-using CosmicScavengers.Networking.Responses.Registry.Meta;
+using CosmicScavengers.Core.Networking.Request.Data;
+using CosmicScavengers.Networking.Requests.Registry.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Response.Registry
+namespace CosmicScavengers.Core.Networking.Request.Registry
 {
-    [CreateAssetMenu(menuName = "Registry/BinaryResponseRegistry")]
-    public class BinaryResponseRegistry : ScriptableObject
+    [CreateAssetMenu(menuName = "Registry/TextRequestRegistry")]
+    public class TextRequestRegistry : ScriptableObject
     {
-        public List<BinaryResponseEntry> Entries = new();
-        private readonly Dictionary<NetworkBinaryCommand, BaseBinaryResponse> lookUp = new();
+        public List<TextRequestEntry> Entries = new();
+        private readonly Dictionary<NetworkTextCommand, BaseTextRequest> lookUp = new();
 
-        public BaseBinaryResponse GetPrefab(NetworkBinaryCommand key)
+        public BaseTextRequest GetPrefab(NetworkTextCommand key)
         {
             if (lookUp.Count == 0)
             {
@@ -29,7 +29,7 @@ namespace CosmicScavengers.Core.Networking.Response.Registry
                 if (entry.Prefab == null)
                 {
                     Debug.LogWarning(
-                        $"[BinaryResponseRegistry] Entry for Command {entry.Command} has a null Response Prefab."
+                        $"[TextRequestRegistry] Entry for Command {entry.Command} has a null Request Prefab."
                     );
                     continue;
                 }

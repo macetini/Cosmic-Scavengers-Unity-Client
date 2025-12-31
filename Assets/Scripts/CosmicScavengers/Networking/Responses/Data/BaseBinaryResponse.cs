@@ -1,9 +1,8 @@
-using CosmicScavengers.Core.Networking.Request.Data.Meta;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Responses.Data
 {
-    public class BaseBinaryResponse : MonoBehaviour, INetworkResponse
+    public class BaseBinaryResponse : MonoBehaviour
     {
         public virtual void Handle(byte[] parameters) { }
 

@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Response.Registry
 {
-    [CreateAssetMenu(menuName = "Registry/BinaryResponseRegistry")]
-    public class BinaryResponseRegistry : ScriptableObject
+    [CreateAssetMenu(menuName = "Registry/TextResponseRegistry")]
+    public class TextResponseRegistry : ScriptableObject
     {
-        public List<BinaryResponseEntry> Entries = new();
-        private readonly Dictionary<NetworkBinaryCommand, BaseBinaryResponse> lookUp = new();
+        public List<TextResponseEntry> Entries = new();
+        private readonly Dictionary<NetworkTextCommand, BaseTextResponse> lookUp = new();
 
-        public BaseBinaryResponse GetPrefab(NetworkBinaryCommand key)
+        public BaseTextResponse GetPrefab(NetworkTextCommand key)
         {
             if (lookUp.Count == 0)
             {
@@ -29,7 +29,7 @@ namespace CosmicScavengers.Core.Networking.Response.Registry
                 if (entry.Prefab == null)
                 {
                     Debug.LogWarning(
-                        $"[BinaryResponseRegistry] Entry for Command {entry.Command} has a null Response Prefab."
+                        $"[TextResponseRegistry] Entry for Command {entry.Command} has a null Response Prefab."
                     );
                     continue;
                 }

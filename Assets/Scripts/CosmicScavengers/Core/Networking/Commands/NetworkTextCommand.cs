@@ -10,6 +10,9 @@ namespace CosmicScavengers.Core.Networking.Commands
         [Description("Unknown command received.")]
         UNKNOWN,
 
+        [Description("Client initiating connection handshake.")]
+        C_CONNECT,
+
         [Description("Server Handshake Complete. Ready for Login/Register.")]
         S_CONNECT_PASS,
 

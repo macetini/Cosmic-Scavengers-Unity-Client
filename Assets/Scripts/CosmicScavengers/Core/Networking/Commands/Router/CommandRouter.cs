@@ -1,6 +1,5 @@
 using System.IO;
 using System.Linq;
-using CosmicScavengers.Core.Networking.Communication;
 using CosmicScavengers.Core.Networking.Extensions;
 using CosmicScavengers.Core.Networking.Responses.Channels;
 using UnityEngine;
@@ -20,11 +19,12 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
 
         [Header("Channel Configuration")]
         [SerializeField]
-        [Tooltip("Channel to listen for binary responses.")]
+        [Tooltip("Channel to listen for Binary responses.")]
         private BinaryResponseChannel binaryResponseChannel;
 
         [SerializeField]
-        private TextCommandHandlers textCommandHandlers; // TODO - Refactor like BinaryCommandHandlers
+        [Tooltip("Channel to listen for Text responses.")]
+        private TextResponseChannel textResponseChannel;
 
         void Awake()
         {
@@ -37,6 +37,10 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
                 Debug.LogError(
                     "[NetworkRequestManager] BinaryResponseChannel reference is missing!"
                 );
+            }
+            if (textResponseChannel == null)
+            {
+                Debug.LogError("[NetworkRequestManager] TextResponseChannel reference is missing!");
             }
         }
 
@@ -91,7 +95,6 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
             }
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
-            //binaryCommandHandlers.Handle(commandCode, protobufData);
             NetworkBinaryCommand command = (NetworkBinaryCommand)commandCode;
             binaryResponseChannel.Raise(command, protobufData);
         }
@@ -105,9 +108,17 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
                 return;
             }
 
-            string command = parts[0];
+            string rawCommand = parts[0];
+            NetworkTextCommand command = rawCommand.ToNetworkCommand();
+            if (command == NetworkTextCommand.UNKNOWN)
+            {
+                Debug.LogWarning(
+                    $"[NetworkRequestManager] Received unknown text command: {rawCommand}"
+                );
+                return;
+            }
             string[] data = parts.Skip(1).ToArray();
-            textCommandHandlers.Handle(command, data);
+            textResponseChannel.Raise(command, data);
         }
     }
 }
