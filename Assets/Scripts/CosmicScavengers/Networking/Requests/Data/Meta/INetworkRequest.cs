@@ -1,7 +1,7 @@
 namespace CosmicScavengers.Core.Networking.Request.Data.Meta
 {
-    public interface INetworkRequest
+    public interface INetworkRequest<T>
     {
-        void Execute(object[] parameters);
+        void Execute(T[] parameters);
     }
 }

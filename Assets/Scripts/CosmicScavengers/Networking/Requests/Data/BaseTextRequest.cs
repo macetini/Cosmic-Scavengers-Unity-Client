@@ -1,6 +1,6 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Networking.Event.Channels.Commands;
+using CosmicScavengers.Core.Networking.Requests.Channels;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Request.Data
@@ -9,31 +9,24 @@ namespace CosmicScavengers.Core.Networking.Request.Data
     /// Abstract base for binary-serialized network requests.
     /// Inherits from MonoBehaviour to support Unity-native discovery and Inspector configuration.
     /// </summary>
-    public abstract class BaseTextRequest : MonoBehaviour
+    public abstract class BaseTextRequest : BaseRequest<string>
     {
-        public bool Active = true;
-
         [Header("Channel configuration")]
         [SerializeField]
         [Tooltip("The command channel to raise the text command on.")]
-        protected TextCommandChannel CommandChannel;
+        protected TextRequestChannel Channel;
 
-        public virtual NetworkTextCommand Command
+        protected virtual NetworkTextCommand Command
         {
             get => throw new NotImplementedException();
         }
 
         protected virtual void Awake()
         {
-            if (CommandChannel == null)
+            if (Channel == null)
             {
-                Debug.LogError("[BaseBinaryRequest] CommandChannel reference is missing!");
+                Debug.LogError("[BaseTextRequest] Channel reference is missing!");
             }
-        }
-
-        public virtual void Execute(object[] parameters)
-        {
-            throw new NotImplementedException();
         }
     }
 }

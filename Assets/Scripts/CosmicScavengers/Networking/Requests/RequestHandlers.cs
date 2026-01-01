@@ -92,7 +92,7 @@ namespace CosmicScavengers.Core.Networking.Requests
             textRequestChannel.RemoveListener(HandleTextRequest);
         }
 
-        private void HandleBinaryRequest(NetworkBinaryCommand command, object[] data)
+        private void HandleBinaryRequest(NetworkBinaryCommand command, byte[] data)
         {
             Debug.Log($"[RequestHandlers] Handling Binary Request with Command ID: {command}");
 
@@ -116,7 +116,7 @@ namespace CosmicScavengers.Core.Networking.Requests
             requestInstance.Execute(data);
         }
 
-        private void HandleTextRequest(NetworkTextCommand command, object[] data)
+        private void HandleTextRequest(NetworkTextCommand command, string data)
         {
             Debug.Log($"[RequestHandlers] Handling Text Request with Command ID: {command}");
 

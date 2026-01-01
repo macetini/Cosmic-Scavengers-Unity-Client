@@ -1,10 +1,12 @@
 using System.IO;
 using System.Linq;
+using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Extensions;
+using CosmicScavengers.Core.Networking.Requests.Channels;
 using CosmicScavengers.Core.Networking.Responses.Channels;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Commands.Router
+namespace CosmicScavengers.Core.Networking.Connector.Router
 {
     /// <summary>
     /// Listens for high-level game events and translates them into network requests.
@@ -17,7 +19,8 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
         [Tooltip("The ClientConnector responsible for low-level network communication.")]
         private ClientConnector clientConnector;
 
-        [Header("Channel Configuration")]
+        [Header("Channels Configuration")]
+        [Header("Responses")]
         [SerializeField]
         [Tooltip("Channel to listen for Binary responses.")]
         private BinaryResponseChannel binaryResponseChannel;
@@ -25,6 +28,11 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
         [SerializeField]
         [Tooltip("Channel to listen for Text responses.")]
         private TextResponseChannel textResponseChannel;
+
+        [Header("Requests")]
+        [SerializeField]
+        [Tooltip("Channel to send requests.")]
+        private GenericRequestChannel requestChannel;
 
         void Awake()
         {
@@ -41,6 +49,12 @@ namespace CosmicScavengers.Core.Networking.Commands.Router
             if (textResponseChannel == null)
             {
                 Debug.LogError("[NetworkRequestManager] TextResponseChannel reference is missing!");
+            }
+            if (requestChannel == null)
+            {
+                Debug.LogError(
+                    "[NetworkRequestManager] GenericRequestChannel reference is missing!"
+                );
             }
         }
 

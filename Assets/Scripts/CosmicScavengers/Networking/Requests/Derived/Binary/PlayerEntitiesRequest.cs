@@ -7,10 +7,10 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
 {
     public class PlayerEntitiesRequest : BaseBinaryRequest
     {
-        public override NetworkBinaryCommand Command =>
+        protected override NetworkBinaryCommand Command =>
             NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
 
-        public override void Execute(params object[] parameters)
+        public override void Execute(object[] parameters)
         {
             if (parameters.Length < 1 || parameters[0] is not long playerId)
             {

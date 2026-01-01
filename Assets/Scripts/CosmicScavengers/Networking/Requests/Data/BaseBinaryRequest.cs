@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Request.Data.Meta;
-using CosmicScavengers.Networking.Event.Channels.Commands;
+using CosmicScavengers.Core.Networking.Requests.Channels;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Request.Data
@@ -11,25 +11,19 @@ namespace CosmicScavengers.Core.Networking.Request.Data
     /// Abstract base for binary-serialized network requests.
     /// Inherits from MonoBehaviour to support Unity-native discovery and Inspector configuration.
     /// </summary>
-    public abstract class BaseBinaryRequest : MonoBehaviour, INetworkRequest
+    public abstract class BaseBinaryRequest : BaseRequest<object[]>
     {
-        public bool Active = true;
-
         [Header("Channel configuration")]
         [SerializeField]
-        protected BinaryCommandChannel CommandChannel;
-
-        public virtual NetworkBinaryCommand Command
-        {
-            get => throw new NotImplementedException();
-        }
+        protected BinaryRequestChannel Channel;
+        protected virtual NetworkBinaryCommand Command { get; }
 
         protected MemoryStream Stream;
         protected BinaryWriter Writer;
 
         protected virtual void Awake()
         {
-            if (CommandChannel == null)
+            if (Channel == null)
             {
                 Debug.LogError("[BaseBinaryRequest] CommandChannel reference is missing!");
             }
@@ -37,7 +31,7 @@ namespace CosmicScavengers.Core.Networking.Request.Data
             Writer = new BinaryWriter(Stream);
         }
 
-        public virtual void Execute(params object[] parameters)
+        public virtual void Execute(byte[] data)
         {
             throw new NotImplementedException();
         }
@@ -47,7 +41,7 @@ namespace CosmicScavengers.Core.Networking.Request.Data
         /// </summary>
         protected void SendBuffer()
         {
-            CommandChannel.Raise(Stream.ToArray());
+            Channel.Raise(Command, Stream.ToArray());
 
             Stream.SetLength(0);
             Stream.Position = 0;

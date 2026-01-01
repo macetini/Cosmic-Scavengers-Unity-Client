@@ -1,9 +1,8 @@
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Handlers.Text;
 using CosmicScavengers.Core.Networking.Requests.Channels;
 using UnityEngine;
 
-public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
+public class LoginPassHandler : MonoBehaviour
 {
     public bool Active = true;
 
@@ -50,11 +49,12 @@ public class LoginPassHandler : MonoBehaviour, ITextCommandHandler
         // Placeholder for any additional initialization logic for player data
         Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
 
-        requestChanel.Raise(NetworkBinaryCommand.REQUEST_WORLD_STATE_C, new object[] { playerId });
+        /*requestChanel.Raise(NetworkBinaryCommand.REQUEST_WORLD_STATE_C, new object[] { playerId });
 
         requestChanel.Raise(
             NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C,
             new object[] { playerId }
         );
+        */
     }
 }

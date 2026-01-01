@@ -6,9 +6,9 @@ namespace CosmicScavengers.Networking.Requests.Derived.Text
 {
     public class ConnectRequest : BaseTextRequest
     {
-        public override NetworkTextCommand Command => NetworkTextCommand.C_CONNECT;
+        protected override NetworkTextCommand Command => NetworkTextCommand.C_CONNECT;
 
-        public override void Execute(object[] data)
+        public override void Execute(string data)
         {
             if (!Active)
             {
@@ -22,7 +22,7 @@ namespace CosmicScavengers.Networking.Requests.Derived.Text
 
             Debug.Log($"[ConnectPassHandler] Username: {username}, Password: {password}");
 
-            CommandChannel.Raise($"{NetworkTextCommand.C_LOGIN}|{username}|{password}");
+            Channel.Raise(Command, $"{username}|{password}");
         }
     }
 }

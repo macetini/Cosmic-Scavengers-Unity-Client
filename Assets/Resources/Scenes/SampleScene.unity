@@ -796,6 +796,7 @@ MonoBehaviour:
   clientConnector: {fileID: 1956342392}
   binaryResponseChannel: {fileID: 11400000, guid: bb64c628137d7994a975d43aec86c709, type: 2}
   textResponseChannel: {fileID: 11400000, guid: 41e5e04d12f9c304fb9ab1a33b70fe5d, type: 2}
+  requestChannel: {fileID: 11400000, guid: e50e8b9c3b7b6d144bc718653d2e876a, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,7 +1008,6 @@ Transform:
   - {fileID: 1956342391}
   - {fileID: 1286056088}
   - {fileID: 1844729977}
-  - {fileID: 1848436028}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1715413817
@@ -1093,53 +1093,6 @@ MonoBehaviour:
   textResponseRegistry: {fileID: 11400000, guid: 2a6dfcd6cbd95544d8f586afdc8350e9, type: 2}
   binaryResponsesContainer: {fileID: 712535648}
   textResponsesContainer: {fileID: 1933745407}
---- !u!1 &1848436027
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1848436028}
-  - component: {fileID: 1848436029}
-  m_Layer: 0
-  m_Name: MessageDispatcher
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1848436028
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848436027}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1357999020}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1848436029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848436027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3181b12f96572e94da7e1bda5c947838, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.MessageDispatcher
-  clientConnector: {fileID: 1956342392}
-  textCommandChannel: {fileID: 11400000, guid: a6c103f1cf10f224cb5cf5fa01ff77e2, type: 2}
-  binaryCommandChannel: {fileID: 11400000, guid: 00d99a108dd14c4448ca8d1e621cb420, type: 2}
 --- !u!1 &1864966309
 GameObject:
   m_ObjectHideFlags: 0

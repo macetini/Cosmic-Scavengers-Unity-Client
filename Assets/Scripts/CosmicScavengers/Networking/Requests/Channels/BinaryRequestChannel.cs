@@ -5,5 +5,5 @@ using UnityEngine;
 namespace CosmicScavengers.Core.Networking.Requests.Channels
 {
     [CreateAssetMenu(menuName = "Channels/Requests/BinaryRequestChannel")]
-    public class BinaryRequestChannel : EventChannel<NetworkBinaryCommand, object[]> { }
+    public class BinaryRequestChannel : EventChannel<NetworkBinaryCommand, byte[]> { }
 }
