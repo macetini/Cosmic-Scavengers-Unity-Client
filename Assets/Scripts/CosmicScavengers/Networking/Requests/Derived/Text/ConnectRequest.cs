@@ -8,21 +8,23 @@ namespace CosmicScavengers.Networking.Requests.Derived.Text
     {
         protected override NetworkTextCommand Command => NetworkTextCommand.C_CONNECT;
 
-        public override void Execute(string data)
+        public void Execute(string data)
         {
             if (!Active)
             {
-                Debug.Log("[ConnectPassHandler] Handler is inactive. Ignoring message.");
+                Debug.Log("[ConnectRequest] Handler is inactive. Ignoring message.");
                 return;
             }
 
-            Debug.Log("[ConnectPassHandler] Sending login credentials to server.");
             string username = "player_1";
             string password = "secret";
 
-            Debug.Log($"[ConnectPassHandler] Username: {username}, Password: {password}");
+            Debug.Log(
+                $"[ConnectRequest] Executing connect request for user: {username} with password: {password}"
+            );
 
-            Channel.Raise(Command, $"{username}|{password}");
+            Data = $"{username}|{password}";
+            Raise();
         }
     }
 }

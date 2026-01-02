@@ -1,3 +1,5 @@
+using System;
+using System.Data;
 using System.IO;
 using System.Linq;
 using CosmicScavengers.Core.Networking.Commands;
@@ -29,11 +31,6 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
         [Tooltip("Channel to listen for Text responses.")]
         private TextResponseChannel textResponseChannel;
 
-        [Header("Requests")]
-        [SerializeField]
-        [Tooltip("Channel to send requests.")]
-        private GenericRequestChannel requestChannel;
-
         void Awake()
         {
             if (clientConnector == null)
@@ -50,27 +47,21 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
             {
                 Debug.LogError("[NetworkRequestManager] TextResponseChannel reference is missing!");
             }
-            if (requestChannel == null)
-            {
-                Debug.LogError(
-                    "[NetworkRequestManager] GenericRequestChannel reference is missing!"
-                );
-            }
         }
 
         void OnEnable()
         {
-            clientConnector.OnBinaryMessageReceived += HandleBinaryMessage;
-            clientConnector.OnTextMessageReceived += HandleTextMessage;
+            clientConnector.OnBinaryMessageReceived += HandleBinaryResponseMessage;
+            clientConnector.OnTextMessageReceived += HandleTextResponseMessage;
         }
 
         void OnDisable()
         {
-            clientConnector.OnBinaryMessageReceived -= HandleBinaryMessage;
-            clientConnector.OnTextMessageReceived -= HandleTextMessage;
+            clientConnector.OnBinaryMessageReceived -= HandleBinaryResponseMessage;
+            clientConnector.OnTextMessageReceived -= HandleTextResponseMessage;
         }
 
-        private void HandleBinaryMessage(byte[] data)
+        private void HandleBinaryResponseMessage(byte[] data)
         {
             if (data == null || data.Length == 0)
             {
@@ -113,7 +104,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
             binaryResponseChannel.Raise(command, protobufData);
         }
 
-        private void HandleTextMessage(string rawMessage)
+        private void HandleTextResponseMessage(string rawMessage)
         {
             string[] parts = rawMessage.Split('|');
             if (parts.Length < 1)

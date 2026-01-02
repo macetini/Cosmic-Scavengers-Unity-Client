@@ -1,4 +1,5 @@
 using System;
+using CosmicScavengers.Core.Networking.Connector.Dispatcher.Channel;
 using CosmicScavengers.Core.Networking.Request.Data.Meta;
 using UnityEngine;
 
@@ -8,9 +9,19 @@ namespace CosmicScavengers.Core.Networking.Request.Data
     /// Abstract base for binary-serialized network requests.
     /// Inherits from MonoBehaviour to support Unity-native discovery and Inspector configuration.
     /// </summary>
-    public abstract class BaseRequest<T> : MonoBehaviour
+    public abstract class BaseRequest<T> : MonoBehaviour, INetworkRequest<T>
     {
         public bool Active = true;
-        public abstract void Execute(T parameters);
+        public T Data { get; set; }
+
+        [SerializeField]
+        protected MessageDispatchChannel dispatchChannel;
+
+        public void Execute(T[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected abstract void Raise();
     }
 }

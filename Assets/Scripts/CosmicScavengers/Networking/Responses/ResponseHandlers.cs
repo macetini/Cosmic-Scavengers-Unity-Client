@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Response.Registry;
 using CosmicScavengers.Core.Networking.Responses.Channels;
 using CosmicScavengers.Core.Networking.Responses.Data;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ResponseHandlers : MonoBehaviour
 {

@@ -2,10 +2,8 @@ using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Responses.Data
 {
-    public class BaseBinaryResponse : MonoBehaviour
+    public abstract class BaseBinaryResponse : BaseResponse<byte[]>
     {
-        public virtual void Handle(byte[] parameters) { }
-
-        public virtual void OnDestroy() { }
+        public abstract void Handle(byte[] parameters);
     }
 }

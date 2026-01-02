@@ -760,7 +760,7 @@ GameObject:
   - component: {fileID: 808927931}
   - component: {fileID: 808927932}
   m_Layer: 0
-  m_Name: CommandRouter
+  m_Name: ResponseRouter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -796,7 +796,6 @@ MonoBehaviour:
   clientConnector: {fileID: 1956342392}
   binaryResponseChannel: {fileID: 11400000, guid: bb64c628137d7994a975d43aec86c709, type: 2}
   textResponseChannel: {fileID: 11400000, guid: 41e5e04d12f9c304fb9ab1a33b70fe5d, type: 2}
-  requestChannel: {fileID: 11400000, guid: e50e8b9c3b7b6d144bc718653d2e876a, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1009,52 @@ Transform:
   - {fileID: 1844729977}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1705125491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705125492}
+  - component: {fileID: 1705125493}
+  m_Layer: 0
+  m_Name: MessageDispatcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1705125492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705125491}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1956342391}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1705125493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705125491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f098e9df45f0d9c40b1fa6c92f2173ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::MessageDispatcher
+  clientConnector: {fileID: 1956342392}
+  messageDispatchChannel: {fileID: 11400000, guid: a9c1848e030dcb84bbdbe73a5401bbb3, type: 2}
 --- !u!1 &1715413817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1253,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 808927931}
+  - {fileID: 1705125492}
   m_Father: {fileID: 1357999020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1956342392

@@ -16,13 +16,14 @@ namespace CosmicScavengers.Core.Networking.Connector
     /// </summary>
     public class ClientConnector : MonoBehaviour
     {
-        // --- Server Connection Details ---
+        // --- Server Connection Details --- // TODO - Move to config file
         private const string HOST = "127.0.0.1";
         private const int PORT = 8080;
         private const int LENGTH_FIELD_SIZE = 4; // 4 bytes for length prefix
         private const int MAX_MESSAGE_SIZE = 1024 * 1024; // 1 MB
 
         // -----------------------------------
+
         private TcpClient client;
         private NetworkStream stream;
         private Thread clientThread;
@@ -35,6 +36,8 @@ namespace CosmicScavengers.Core.Networking.Connector
         /// Events for incoming messages
         internal event Action<string> OnTextMessageReceived;
         internal event Action<byte[]> OnBinaryMessageReceived;
+        internal event Action OnConnected;
+        internal event Action OnDisconnected;
 
         /// <summary>
         /// Indicates whether the client is currently connected to the server.
@@ -66,7 +69,9 @@ namespace CosmicScavengers.Core.Networking.Connector
                 }
                 Debug.Log("[Connector] Successfully connected to the multiplexed server!");
 
-                InitHandshake();
+                OnConnected?.Invoke();
+
+                InitHandshake(); // TODO: Move to higher-level manager
 
                 while (client.Connected)
                 {
@@ -288,6 +293,7 @@ namespace CosmicScavengers.Core.Networking.Connector
         void OnApplicationQuit()
         {
             Cleanup();
+            OnDisconnected?.Invoke();
         }
 
         private void Cleanup()

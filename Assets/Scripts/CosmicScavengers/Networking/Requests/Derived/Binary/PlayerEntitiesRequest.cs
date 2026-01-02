@@ -10,7 +10,7 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
         protected override NetworkBinaryCommand Command =>
             NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
 
-        public override void Execute(object[] parameters)
+        public void Execute(object[] parameters)
         {
             if (parameters.Length < 1 || parameters[0] is not long playerId)
             {
@@ -27,7 +27,7 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
                 "[PlayerEntitiesRequest] Sending player entities request for Player ID: " + playerId
             );
 
-            SendBuffer();
+            Raise();
         }
     }
 }

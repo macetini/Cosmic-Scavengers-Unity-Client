@@ -1,7 +1,6 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Requests.Channels;
-using UnityEngine;
+using CosmicScavengers.Core.Networking.Commands.Meta;
 
 namespace CosmicScavengers.Core.Networking.Request.Data
 {
@@ -11,22 +10,14 @@ namespace CosmicScavengers.Core.Networking.Request.Data
     /// </summary>
     public abstract class BaseTextRequest : BaseRequest<string>
     {
-        [Header("Channel configuration")]
-        [SerializeField]
-        [Tooltip("The command channel to raise the text command on.")]
-        protected TextRequestChannel Channel;
-
         protected virtual NetworkTextCommand Command
         {
             get => throw new NotImplementedException();
         }
 
-        protected virtual void Awake()
+        protected override void Raise()
         {
-            if (Channel == null)
-            {
-                Debug.LogError("[BaseTextRequest] Channel reference is missing!");
-            }
+            dispatchChannel.Raise(CommandType.TEXT, Command + "|" + Data);
         }
     }
 }

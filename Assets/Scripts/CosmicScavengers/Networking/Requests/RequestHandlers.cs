@@ -92,13 +92,13 @@ namespace CosmicScavengers.Core.Networking.Requests
             textRequestChannel.RemoveListener(HandleTextRequest);
         }
 
-        private void HandleBinaryRequest(NetworkBinaryCommand command, byte[] data)
+        private void HandleBinaryRequest(NetworkBinaryCommand command, object[] data)
         {
             Debug.Log($"[RequestHandlers] Handling Binary Request with Command ID: {command}");
 
             if (requestLookup.TryGetValue(command, out var existingRequest))
             {
-                existingRequest.Execute(data);
+                //existingRequest.Execute(data);
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace CosmicScavengers.Core.Networking.Requests
             var requestInstance = Instantiate(requestPrefab, binaryRequestsContainer.transform);
             requestLookup[command] = requestInstance;
 
-            requestInstance.Execute(data);
+            //requestInstance.Execute(data);
         }
 
         private void HandleTextRequest(NetworkTextCommand command, string data)
@@ -129,7 +129,7 @@ namespace CosmicScavengers.Core.Networking.Requests
                 return;
             }
             var requestInstance = Instantiate(requestPrefab, textRequestsContainer.transform);
-            requestInstance.Execute(data);
+            //requestInstance.Execute(data);
         }
     }
 }
