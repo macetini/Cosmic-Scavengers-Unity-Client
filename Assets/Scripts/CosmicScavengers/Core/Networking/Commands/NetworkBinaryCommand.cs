@@ -7,6 +7,9 @@ namespace CosmicScavengers.Core.Networking.Commands
     /// </summary>
     public enum NetworkBinaryCommand : short
     {
+        [Description("Unknown command.")]
+        UNKNOWN = 0x0000,
+
         [Description("Request the current state of the game world.")]
         REQUEST_WORLD_STATE_C = 0x0001,
 

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Commands.Meta;
 using CosmicScavengers.Core.Networking.Response.Registry;
 using CosmicScavengers.Core.Networking.Responses.Channels;
 using CosmicScavengers.Core.Networking.Responses.Data;
@@ -7,14 +9,9 @@ using UnityEngine;
 
 public class ResponseHandlers : MonoBehaviour
 {
-    [Header("Channel Configuration")]
     [SerializeField]
-    [Tooltip("Channel to listen for binary responses.")]
-    BinaryResponseChannel binaryResponseChannel;
-
-    [SerializeField]
-    [Tooltip("Channel to listen for text responses.")]
-    TextResponseChannel textResponseChannel;
+    [Tooltip("Channel to listen for response handlers.")]
+    ResponseChannel responseChannel;
 
     [Header("Registry Configuration")]
     [SerializeField]
@@ -40,13 +37,9 @@ public class ResponseHandlers : MonoBehaviour
 
     void Awake()
     {
-        if (binaryResponseChannel == null)
+        if (responseChannel == null)
         {
-            Debug.LogError("BinaryResponseChannel is not assigned in ResponseHandlers.");
-        }
-        if (textResponseChannel == null)
-        {
-            Debug.LogError("TextResponseChannel is not assigned in ResponseHandlers.");
+            Debug.LogError("ResponseChannel is not assigned in ResponseHandlers.");
         }
 
         if (binaryResponseRegistry == null)
@@ -82,14 +75,30 @@ public class ResponseHandlers : MonoBehaviour
 
     void OnEnable()
     {
-        binaryResponseChannel.AddListener(HandleBinaryResponse);
-        textResponseChannel.AddListener(HandleBinaryResponse);
+        responseChannel.AddListener(HandleResponse);
     }
 
     void OnDisable()
     {
-        binaryResponseChannel.RemoveListener(HandleBinaryResponse);
-        textResponseChannel.RemoveListener(HandleBinaryResponse);
+        responseChannel.RemoveListener(HandleResponse);
+    }
+
+    private void HandleResponse(NetworkCommand command, ResponseData responseData)
+    {
+        switch (command.Type)
+        {
+            case CommandType.BINARY:
+                HandleBinaryResponse(command.BinaryCommand, responseData.RawBytes);
+                break;
+            case CommandType.TEXT:
+                HandleBinaryResponse(command.TextCommand, responseData.TextParts);
+                break;
+            case CommandType.UNKNOWN:
+                Debug.LogWarning($"Unknown Command Type: {command.Type}");
+                break;
+            default:
+                throw new Exception($"Impossible Command Type: {command.Type}");
+        }
     }
 
     private void HandleBinaryResponse(NetworkBinaryCommand command, byte[] data)
