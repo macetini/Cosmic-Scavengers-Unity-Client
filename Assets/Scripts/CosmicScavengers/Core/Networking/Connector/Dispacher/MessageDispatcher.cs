@@ -27,18 +27,18 @@ namespace CosmicScavengers.Core.Networking.Connector.Dispatcher
             }
             if (messageDispatchChannel == null)
             {
-                Debug.LogError("[MessageDispatcher] MessageDispatchChannel reference is missing!");
+                //Debug.LogError("[MessageDispatcher] MessageDispatchChannel reference is missing!");
             }
         }
 
         void OnEnable()
         {
-            messageDispatchChannel.AddListener(HandleDispatchedMessage);
+            //messageDispatchChannel.AddListener(HandleDispatchedMessage);
         }
 
         void OnDisable()
         {
-            messageDispatchChannel.RemoveListener(HandleDispatchedMessage);
+            //messageDispatchChannel.RemoveListener(HandleDispatchedMessage);
         }
 
         private void HandleDispatchedMessage(CommandType command, object data)

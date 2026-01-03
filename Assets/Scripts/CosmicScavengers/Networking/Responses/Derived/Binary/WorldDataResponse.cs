@@ -9,17 +9,11 @@ namespace CosmicScavengers.Networking.Responses.Derived
 {
     public class WorldDataResponse : BaseBinaryResponse
     {
-        [Header("Configuration")]
-        [SerializeField]
-        [Tooltip("Set to false to disable this handler.")]
-        private bool Active = true;
-
         [Header("Channel Configuration")]
         [Tooltip("Event channel triggered when world data is received.")]
         [SerializeField]
         private WorldDataChannel Channel;
-
-        public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_WORLD_STATE_S;
+        public override NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_WORLD_STATE_S;
 
         void Awake()
         {

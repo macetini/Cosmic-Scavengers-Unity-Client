@@ -10,17 +10,13 @@ namespace CosmicScavengers.Networking.Responses.Derived
 {
     public class PlayerEntitiesResponse : BaseBinaryResponse
     {
-        [Header("Configuration")]
-        [SerializeField]
-        [Tooltip("Set to false to disable this handler.")]
-        private bool Active = true;
-
         [Header("Channel Configuration")]
         [Tooltip("Channel to raise when player entities data is received.")]
         [SerializeField]
         private PlayerEntitiesDataChannel Channel;
 
-        public NetworkBinaryCommand Command => NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_S;
+        public override NetworkBinaryCommand Command =>
+            NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_S;
 
         void Awake()
         {

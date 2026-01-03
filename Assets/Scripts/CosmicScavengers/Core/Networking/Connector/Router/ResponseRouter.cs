@@ -2,9 +2,9 @@ using System.IO;
 using System.Linq;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Extensions;
-using CosmicScavengers.Core.Networking.Responses.Channels;
+using CosmicScavengers.Networking.Channel;
+using CosmicScavengers.Networking.Channel.Data;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace CosmicScavengers.Core.Networking.Connector.Router
 {
@@ -21,7 +21,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
 
         [Header("Channels Configuration")]
         [SerializeField]
-        private ResponseChannel responseChannel;
+        private NetworkingChannel responseChannel;
 
         void Awake()
         {
@@ -88,7 +88,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
             NetworkBinaryCommand command = (NetworkBinaryCommand)commandCode;
-            responseChannel.Raise(command, new ResponseData(protobufData));
+            responseChannel.Raise(command, new ChannelData(protobufData));
         }
 
         private void HandleTextResponseMessage(string rawMessage)
@@ -110,7 +110,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
                 return;
             }
             string[] data = parts.Skip(1).ToArray();
-            responseChannel.Raise(command, new ResponseData(data));
+            responseChannel.Raise(command, new ChannelData(data));
         }
     }
 }

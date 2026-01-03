@@ -728,7 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 712535649}
   m_Layer: 0
-  m_Name: BinaryResponsesContainer
+  m_Name: BinaryHandlersContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -794,7 +794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.NetworkRequestManager
   clientConnector: {fileID: 1956342392}
-  responseChannel: {fileID: 11400000, guid: e578236373578bf4ebc78f23d5becbd0, type: 2}
+  responseChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,11 +1131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8faec34a22dfb4a81239a034d0b6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::ResponseHandlers
-  responseChannel: {fileID: 11400000, guid: e578236373578bf4ebc78f23d5becbd0, type: 2}
+  responseChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
   binaryResponseRegistry: {fileID: 11400000, guid: 9ca9c9e6f4f081e448c332c8a6e25261, type: 2}
   textResponseRegistry: {fileID: 11400000, guid: 2a6dfcd6cbd95544d8f586afdc8350e9, type: 2}
-  binaryResponsesContainer: {fileID: 712535648}
-  textResponsesContainer: {fileID: 1933745407}
+  binaryHandlersContainer: {fileID: 712535648}
+  textHandlersContainer: {fileID: 1933745407}
 --- !u!1 &1864966309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,7 +1199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1933745408}
   m_Layer: 0
-  m_Name: TextResponsesContainer
+  m_Name: TextHandlersContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

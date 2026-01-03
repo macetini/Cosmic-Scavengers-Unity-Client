@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
 using CosmicScavengers.Core.Networking.Commands.Meta;
 using CosmicScavengers.Core.Networking.Response.Registry;
-using CosmicScavengers.Core.Networking.Responses.Channels;
 using CosmicScavengers.Core.Networking.Responses.Data;
+using CosmicScavengers.Networking.Channel;
+using CosmicScavengers.Networking.Channel.Data;
 using UnityEngine;
 
 public class ResponseHandlers : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Channel to listen for response handlers.")]
-    ResponseChannel responseChannel;
+    NetworkingChannel responseChannel;
 
     [Header("Registry Configuration")]
     [SerializeField]
@@ -24,12 +25,12 @@ public class ResponseHandlers : MonoBehaviour
 
     [Header("Response Containers")]
     [SerializeField]
-    [Tooltip("Channel to listen for response handlers")]
-    private GameObject binaryResponsesContainer;
+    [Tooltip("GameObject Container for binary response handlers")]
+    private GameObject binaryHandlersContainer;
 
     [SerializeField]
-    [Tooltip("Channel to listen for response handlers")]
-    private GameObject textResponsesContainer;
+    [Tooltip("GameObject Container for text response handlers")]
+    private GameObject textHandlersContainer;
 
     private readonly Dictionary<NetworkBinaryCommand, BaseBinaryResponse> binaryResponsesLookup =
         new();
@@ -51,25 +52,19 @@ public class ResponseHandlers : MonoBehaviour
             Debug.LogError("TextResponseRegistry is not assigned in ResponseHandlers.");
         }
 
-        if (binaryResponsesContainer == null)
+        if (binaryHandlersContainer == null)
         {
             Debug.LogWarning(
                 "ResponsesContainer is not assigned. Creating a new GameObject for it."
             );
-            binaryResponsesContainer = Instantiate(
-                new GameObject("BinaryResponsesContainer"),
-                transform
-            );
+            binaryHandlersContainer = Instantiate(new GameObject("BinaryHandlers"), transform);
         }
-        if (textResponsesContainer == null)
+        if (textHandlersContainer == null)
         {
             Debug.LogWarning(
                 "ResponsesContainer is not assigned. Creating a new GameObject for it."
             );
-            textResponsesContainer = Instantiate(
-                new GameObject("TextResponsesContainer"),
-                transform
-            );
+            textHandlersContainer = Instantiate(new GameObject("TextHandlers"), transform);
         }
     }
 
@@ -83,7 +78,7 @@ public class ResponseHandlers : MonoBehaviour
         responseChannel.RemoveListener(HandleResponse);
     }
 
-    private void HandleResponse(NetworkCommand command, ResponseData responseData)
+    private void HandleResponse(NetworkCommand command, ChannelData responseData)
     {
         switch (command.Type)
         {
@@ -94,7 +89,9 @@ public class ResponseHandlers : MonoBehaviour
                 HandleBinaryResponse(command.TextCommand, responseData.TextParts);
                 break;
             case CommandType.UNKNOWN:
-                Debug.LogWarning($"Unknown Command Type: {command.Type}");
+                Debug.LogWarning(
+                    $"[ResponseHandlers] - Received Unknown Command Type: {command.Type}"
+                );
                 break;
             default:
                 throw new Exception($"Impossible Command Type: {command.Type}");
@@ -118,7 +115,7 @@ public class ResponseHandlers : MonoBehaviour
             );
             return;
         }
-        var responseInstance = Instantiate(responsePrefab, binaryResponsesContainer.transform);
+        var responseInstance = Instantiate(responsePrefab, binaryHandlersContainer.transform);
         binaryResponsesLookup[command] = responseInstance;
 
         responseInstance.Handle(data);
@@ -141,7 +138,7 @@ public class ResponseHandlers : MonoBehaviour
             );
             return;
         }
-        var responseInstance = Instantiate(responsePrefab, textResponsesContainer.transform);
+        var responseInstance = Instantiate(responsePrefab, textHandlersContainer.transform);
         textResponsesLookup[command] = responseInstance;
 
         responseInstance.Handle(data);

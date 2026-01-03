@@ -1,17 +1,17 @@
-namespace CosmicScavengers.Core.Networking.Responses.Channels
+namespace CosmicScavengers.Networking.Channel.Data
 {
-    public readonly struct ResponseData
+    public readonly struct ChannelData
     {
         public readonly byte[] RawBytes;
         public readonly string[] TextParts;
 
-        public ResponseData(byte[] bytes)
+        public ChannelData(byte[] bytes)
         {
             RawBytes = bytes;
             TextParts = null;
         }
 
-        public ResponseData(string[] text)
+        public ChannelData(string[] text)
         {
             TextParts = text;
             RawBytes = null;
