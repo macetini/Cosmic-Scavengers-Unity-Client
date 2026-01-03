@@ -1,6 +1,5 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Commands.Meta;
 
 namespace CosmicScavengers.Core.Networking.Request.Data
 {
@@ -17,7 +16,7 @@ namespace CosmicScavengers.Core.Networking.Request.Data
 
         protected override void Raise()
         {
-            dispatchChannel.Raise(CommandType.TEXT, Command + "|" + Data);
+            //dispatchChannel.Raise(CommandType.TEXT, Command + "|" + Data);
         }
     }
 }

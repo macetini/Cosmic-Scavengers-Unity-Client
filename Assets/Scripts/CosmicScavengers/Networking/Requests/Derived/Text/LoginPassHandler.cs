@@ -1,25 +1,10 @@
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Requests.Channels;
 using UnityEngine;
 
 public class LoginPassHandler : MonoBehaviour
 {
     public bool Active = true;
-
-    [Header("Channel Configuration")]
-    [SerializeField]
-    [Tooltip("Channel to send binary requests.")]
-    private BinaryRequestChannel requestChanel;
-
     public NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
-
-    void Awake()
-    {
-        if (requestChanel == null)
-        {
-            Debug.LogError("[LoginPassHandler] BinaryCommandChannel reference is missing!");
-        }
-    }
 
     public void Handle(string[] data)
     {

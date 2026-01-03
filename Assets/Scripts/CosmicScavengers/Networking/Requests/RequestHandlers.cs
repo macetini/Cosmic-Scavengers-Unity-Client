@@ -9,15 +9,6 @@ namespace CosmicScavengers.Core.Networking.Requests
 {
     public class RequestHandlers : MonoBehaviour
     {
-        [Header("Channel Configuration")]
-        [SerializeField]
-        [Tooltip("Channel to listen for binary requests.")]
-        BinaryRequestChannel binaryRequestChannel;
-
-        [SerializeField]
-        [Tooltip("Channel to listen for text requests.")]
-        TextRequestChannel textRequestChannel;
-
         [Header("Registry Configuration")]
         [SerializeField]
         [Tooltip("Registry containing binary request handlers.")]
@@ -40,15 +31,6 @@ namespace CosmicScavengers.Core.Networking.Requests
 
         void Awake()
         {
-            if (binaryRequestChannel == null)
-            {
-                Debug.LogError("BinaryRequestChannel is not assigned in RequestHandlers.");
-            }
-            if (textRequestChannel == null)
-            {
-                Debug.LogError("TextRequestChannel is not assigned in RequestHandlers.");
-            }
-
             if (binaryRequestRegistry == null)
             {
                 Debug.LogError("BinaryRequestRegistry is not assigned in RequestHandlers.");
@@ -80,17 +62,9 @@ namespace CosmicScavengers.Core.Networking.Requests
             }
         }
 
-        void OnEnable()
-        {
-            binaryRequestChannel.AddListener(HandleBinaryRequest);
-            textRequestChannel.AddListener(HandleTextRequest);
-        }
+        void OnEnable() { }
 
-        void OnDisable()
-        {
-            binaryRequestChannel.RemoveListener(HandleBinaryRequest);
-            textRequestChannel.RemoveListener(HandleTextRequest);
-        }
+        void OnDisable() { }
 
         private void HandleBinaryRequest(NetworkBinaryCommand command, object[] data)
         {
@@ -112,7 +86,6 @@ namespace CosmicScavengers.Core.Networking.Requests
             }
             var requestInstance = Instantiate(requestPrefab, binaryRequestsContainer.transform);
             requestLookup[command] = requestInstance;
-
             //requestInstance.Execute(data);
         }
 
@@ -129,6 +102,7 @@ namespace CosmicScavengers.Core.Networking.Requests
                 return;
             }
             var requestInstance = Instantiate(requestPrefab, textRequestsContainer.transform);
+            //requestLookup[command] = requestInstance;
             //requestInstance.Execute(data);
         }
     }
