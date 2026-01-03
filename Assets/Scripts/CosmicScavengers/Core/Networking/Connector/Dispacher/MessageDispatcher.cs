@@ -20,6 +20,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Dispatcher
                 Debug.LogError("[MessageDispatcher] ClientConnector reference is missing!");
             }
         }
+
         private void HandleDispatchedMessage(CommandType command, object data)
         {
             // Implement message handling logic based on command type

@@ -1,4 +1,5 @@
 using System;
+using CosmicScavengers.Networking.Channel;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Request.Data
@@ -9,8 +10,12 @@ namespace CosmicScavengers.Core.Networking.Request.Data
     /// </summary>
     public abstract class BaseRequest<T> : MonoBehaviour
     {
+        [Header("Active")]
         public bool Active = true;
-        public T Data { get; set; }
+
+        [Header("RequestChannel")]
+        [SerializeField]
+        protected NetworkingChannel requestChannel;
 
         public void Execute(T[] parameters)
         {

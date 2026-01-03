@@ -1,5 +1,5 @@
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Request.Data;
+using CosmicScavengers.Core.Networking.Request.Text.Data;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests.Derived.Text
@@ -23,8 +23,8 @@ namespace CosmicScavengers.Networking.Requests.Derived.Text
                 $"[ConnectRequest] Executing connect request for user: {username} with password: {password}"
             );
 
-            Data = $"{username}|{password}";
-            Raise();
+            //Data = $"{username}|{password}";
+            //Raise();
         }
     }
 }

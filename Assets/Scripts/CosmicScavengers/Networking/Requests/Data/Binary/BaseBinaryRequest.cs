@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Request.Data;
+using CosmicScavengers.Networking.Channel.Data;
 
-namespace CosmicScavengers.Core.Networking.Request.Data
+namespace CosmicScavengers.Core.Networking.Request.Binary.Data
 {
     /// <summary>
     /// Abstract base for binary-serialized network requests.
@@ -26,7 +28,11 @@ namespace CosmicScavengers.Core.Networking.Request.Data
         /// </summary>
         protected override void Raise()
         {
-            byte[] buffer = Stream.ToArray();
+            byte[] bytes = Stream.ToArray();
+
+            ChannelData data = new(bytes);
+
+            requestChannel.Raise(Command, data);
 
             Stream.SetLength(0);
             Stream.Position = 0;

@@ -1,7 +1,8 @@
 using System;
 using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Core.Networking.Request.Data;
 
-namespace CosmicScavengers.Core.Networking.Request.Data
+namespace CosmicScavengers.Core.Networking.Request.Text.Data
 {
     /// <summary>
     /// Abstract base for binary-serialized network requests.

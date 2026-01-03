@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Requests.Derived.Text.ConnectRequest
   Active: 1
-  dispatchChannel: {fileID: 11400000, guid: a9c1848e030dcb84bbdbe73a5401bbb3, type: 2}
+  requestChannel: {fileID: 11400000, guid: 52c3c1c27495e2a458e9d284691d059e, type: 2}

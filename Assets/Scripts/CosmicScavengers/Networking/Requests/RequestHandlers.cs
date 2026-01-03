@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Request.Data;
+using CosmicScavengers.Core.Networking.Request.Binary.Data;
 using CosmicScavengers.Core.Networking.Request.Registry;
-using CosmicScavengers.Core.Networking.Requests.Channels;
+using CosmicScavengers.Core.Networking.Request.Text.Data;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Requests

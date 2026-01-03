@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Request.Data;
+using CosmicScavengers.Core.Networking.Request.Binary.Data;
 using CosmicScavengers.Networking.Requests.Registry.Meta;
 using UnityEngine;
 
