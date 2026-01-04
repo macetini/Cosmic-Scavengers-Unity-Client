@@ -1,5 +1,5 @@
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Request.Text.Data;
+using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Request.Text.Data;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests.Derived.Text

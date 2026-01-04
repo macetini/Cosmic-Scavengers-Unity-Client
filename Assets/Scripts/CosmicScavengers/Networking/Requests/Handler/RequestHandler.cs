@@ -1,14 +1,22 @@
+using System;
 using System.Collections.Generic;
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Request.Binary.Data;
-using CosmicScavengers.Core.Networking.Request.Registry;
-using CosmicScavengers.Core.Networking.Request.Text.Data;
+using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Commands.Meta;
+using CosmicScavengers.Networking.Request.Binary.Data;
+using CosmicScavengers.Networking.Request.Registry;
+using CosmicScavengers.Networking.Request.Text.Data;
+using CosmicScavengers.Networking.Requests.Channels;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Requests
+namespace CosmicScavengers.Networking.Requests.Handler
 {
-    public class RequestHandlers : MonoBehaviour
+    public class RequestHandler : MonoBehaviour
     {
+        [Header("Request Channels")]
+        [SerializeField]
+        [Tooltip("Channel for Requests.")]
+        private RequestCommandChannel requestCommandChannel;
+
         [Header("Registry Configuration")]
         [SerializeField]
         [Tooltip("Registry containing binary request handlers.")]
@@ -31,6 +39,11 @@ namespace CosmicScavengers.Core.Networking.Requests
 
         void Awake()
         {
+            if (requestCommandChannel == null)
+            {
+                Debug.LogError("RequestCommandChannel is not assigned in RequestHandlers.");
+            }
+
             if (binaryRequestRegistry == null)
             {
                 Debug.LogError("BinaryRequestRegistry is not assigned in RequestHandlers.");
@@ -62,11 +75,39 @@ namespace CosmicScavengers.Core.Networking.Requests
             }
         }
 
-        void OnEnable() { }
+        void OnEnable()
+        {
+            requestCommandChannel.AddListener(HandleRequestCommand);
+        }
 
-        void OnDisable() { }
+        void OnDisable()
+        {
+            requestCommandChannel.RemoveListener(HandleRequestCommand);
+        }
 
-        private void HandleBinaryRequest(NetworkBinaryCommand command, object[] data)
+        private void HandleRequestCommand(NetworkCommand command, object data)
+        {
+            Debug.Log($"[RequestHandlers] Handling Request Command with Command ID: {command}");
+
+            switch (command.Type)
+            {
+                case CommandType.BINARY:
+                    HandleBinaryRequest(command.BinaryCommand, data);
+                    break;
+                case CommandType.TEXT:
+                    //HandleTextRequest(command.TextCommand, data);
+                    break;
+                case CommandType.UNKNOWN:
+                    Debug.LogWarning(
+                        $"[RequestHandlers] - Received Unknown Command Type: {command.Type}"
+                    );
+                    break;
+                default:
+                    throw new Exception($"Impossible Command Type: {command.Type}");
+            }
+        }
+
+        private void HandleBinaryRequest(NetworkBinaryCommand command, object data)
         {
             Debug.Log($"[RequestHandlers] Handling Binary Request with Command ID: {command}");
 

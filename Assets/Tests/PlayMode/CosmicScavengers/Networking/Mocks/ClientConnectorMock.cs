@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CosmicScavengers.Core.Networking.Connector;
+using CosmicScavengers.Networking.Connector;
 
 namespace Assets.Tests.PlayMode.CosmicScavengers.Networking.Mocks
 {

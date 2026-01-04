@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Responses.Data
+namespace CosmicScavengers.Networking.Responses.Data
 {
     public class BaseResponse<T> : MonoBehaviour
     {

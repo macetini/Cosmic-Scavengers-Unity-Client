@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 1286056088}
   - component: {fileID: 1286056089}
   m_Layer: 0
-  m_Name: RequestHandlers
+  m_Name: RequestHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -890,8 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a50bc01c0186e42be71788659f90ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::RequestHandlers
-  binaryRequestChannel: {fileID: 11400000, guid: 64efe2cfb882c594db3c1feae687d092, type: 2}
-  textRequestChannel: {fileID: 11400000, guid: d8ed977795e77394680de9a1b6d03086, type: 2}
+  requestCommandChannel: {fileID: 11400000, guid: 2c89fcb451be2334b8b67b6230115cff, type: 2}
   binaryRequestRegistry: {fileID: 11400000, guid: 68f5bbfc834f51e4087c06e2a0b9afaf, type: 2}
   textRequestRegistry: {fileID: 11400000, guid: 968ab6c63c0a39d49ab69c6fd33a269b, type: 2}
   binaryRequestsContainer: {fileID: 1715413817}
@@ -1053,7 +1052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::MessageDispatcher
   clientConnector: {fileID: 1956342392}
-  messageDispatchChannel: {fileID: 11400000, guid: a9c1848e030dcb84bbdbe73a5401bbb3, type: 2}
 --- !u!1 &1715413817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1094,7 @@ GameObject:
   - component: {fileID: 1844729977}
   - component: {fileID: 1844729978}
   m_Layer: 0
-  m_Name: ResponseHandlers
+  m_Name: ResponseHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

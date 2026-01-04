@@ -1,7 +1,7 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Networking.Commands;
 
-namespace CosmicScavengers.Core.Networking.Extensions
+namespace CosmicScavengers.Networking.Extensions
 {
     public static class NetworkCommandExtensions
     {

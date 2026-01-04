@@ -2,8 +2,8 @@ namespace CosmicScavengers.Networking.Channel.Data
 {
     public readonly struct ChannelData
     {
-        public readonly byte[] RawBytes;
-        public readonly string[] TextParts;
+        public readonly byte[] RawBytes { get; }
+        public readonly string[] TextParts { get; }
 
         public ChannelData(byte[] bytes)
         {

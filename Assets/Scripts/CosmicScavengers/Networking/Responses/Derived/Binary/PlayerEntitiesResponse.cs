@@ -1,8 +1,8 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Responses.Data;
+using CosmicScavengers.Networking.Commands;
 using CosmicScavengers.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.Entities;
+using CosmicScavengers.Networking.Responses.Data;
 using Google.Protobuf.Collections;
 using UnityEngine;
 
@@ -28,7 +28,7 @@ namespace CosmicScavengers.Networking.Responses.Derived
             }
         }
 
-        public override void Handle(byte[] protobufData)
+        public override void Handle(byte[] parameters)
         {
             if (!Active)
             {
@@ -39,7 +39,7 @@ namespace CosmicScavengers.Networking.Responses.Derived
             EntitySyncResponse entitySyncResponse;
             try
             {
-                entitySyncResponse = EntitySyncResponse.Parser.ParseFrom(protobufData);
+                entitySyncResponse = EntitySyncResponse.Parser.ParseFrom(parameters);
 
                 RepeatedField<PlayerEntityProto> entities = entitySyncResponse.Entities;
 

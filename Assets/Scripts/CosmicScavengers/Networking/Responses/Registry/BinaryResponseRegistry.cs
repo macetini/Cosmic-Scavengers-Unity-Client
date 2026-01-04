@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Responses.Data;
+using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Responses.Data;
 using CosmicScavengers.Networking.Responses.Registry.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Response.Registry
+namespace CosmicScavengers.Networking.Response.Registry
 {
     [CreateAssetMenu(menuName = "Registry/BinaryResponseRegistry")]
     public class BinaryResponseRegistry : ScriptableObject

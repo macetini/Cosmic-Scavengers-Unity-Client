@@ -1,6 +1,6 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Responses.Data;
+using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Responses.Data;
 using CosmicScavengers.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;

@@ -1,8 +1,7 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands.Meta;
-using UnityEngine;
+using CosmicScavengers.Networking.Commands.Meta;
 
-namespace CosmicScavengers.Core.Networking.Commands
+namespace CosmicScavengers.Networking.Commands
 {
     /// <summary>
     /// A unified wrapper that can represent either a Binary or Text command.
@@ -48,20 +47,24 @@ namespace CosmicScavengers.Core.Networking.Commands
         public override readonly bool Equals(object obj) =>
             obj is NetworkCommand other && Equals(other);
 
-        public override readonly int GetHashCode() =>
-            Type switch
+        public override readonly int GetHashCode()
+        {
+            return Type switch
             {
                 CommandType.BINARY => HashCode.Combine(true, BinaryCommand),
                 CommandType.TEXT => HashCode.Combine(false, TextCommand),
                 _ => throw new Exception($"Unknown Command Type: {Type}"),
             };
+        }
 
-        public override readonly string ToString() =>
-            Type switch
+        public override readonly string ToString()
+        {
+            return Type switch
             {
                 CommandType.BINARY => $"[B] {BinaryCommand}",
                 CommandType.TEXT => $"[T] {TextCommand}",
                 _ => throw new Exception($"Unknown Command Type: {Type}"),
             };
+        }
     }
 }

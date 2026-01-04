@@ -1,8 +1,8 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Networking.Commands;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Responses.Data
+namespace CosmicScavengers.Networking.Responses.Data
 {
     public class BaseTextResponse : MonoBehaviour
     {

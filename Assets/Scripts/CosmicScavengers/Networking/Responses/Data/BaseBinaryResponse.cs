@@ -1,8 +1,7 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands;
-using UnityEngine;
+using CosmicScavengers.Networking.Commands;
 
-namespace CosmicScavengers.Core.Networking.Responses.Data
+namespace CosmicScavengers.Networking.Responses.Data
 {
     public abstract class BaseBinaryResponse : BaseResponse<byte[]>
     {
@@ -10,6 +9,6 @@ namespace CosmicScavengers.Core.Networking.Responses.Data
         {
             get => throw new NotImplementedException();
         }
-        public abstract void Handle(byte[] parameters);
+        public abstract void Handle(byte[] data);
     }
 }

@@ -5,10 +5,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using CosmicScavengers.Core.Networking.Commands.Meta;
+using CosmicScavengers.Networking.Commands.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Connector
+namespace CosmicScavengers.Networking.Connector
 {
     /// <summary>
     /// Manages low-level TCP connection to the multiplexed server.

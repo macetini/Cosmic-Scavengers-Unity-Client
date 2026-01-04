@@ -1,6 +1,6 @@
 using System;
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Responses.Data;
+using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Responses.Data;
 
 namespace CosmicScavengers.Networking.Responses.Registry.Meta
 {

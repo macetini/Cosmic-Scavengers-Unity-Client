@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Networking.Commands;
-using CosmicScavengers.Core.Networking.Request.Text.Data;
+using CosmicScavengers.Networking.Request.Text.Data;
+using CosmicScavengers.Networking.Commands;
 using CosmicScavengers.Networking.Requests.Registry.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Request.Registry
+namespace CosmicScavengers.Networking.Request.Registry
 {
     [CreateAssetMenu(menuName = "Registry/TextRequestRegistry")]
     public class TextRequestRegistry : ScriptableObject

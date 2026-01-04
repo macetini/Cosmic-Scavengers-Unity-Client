@@ -2,7 +2,7 @@ using System;
 using CosmicScavengers.Networking.Channel;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Request.Data
+namespace CosmicScavengers.Networking.Request.Data
 {
     /// <summary>
     /// Abstract base for binary-serialized network requests.

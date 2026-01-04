@@ -1,7 +1,7 @@
-using CosmicScavengers.Core.Networking.Commands.Meta;
+using CosmicScavengers.Networking.Commands.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Networking.Connector.Dispatcher
+namespace CosmicScavengers.Networking.Connector.Dispatcher
 {
     /// <summary>
     /// Dispatches incoming messages from the ClientConnector to the appropriate handlers.

@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace CosmicScavengers.Core.Networking.Commands.Meta
+namespace CosmicScavengers.Networking.Commands.Meta
 {
     /// <summary>
     /// Defines the types of messages exchanged between client and server.

@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Networking.Commands;
+using CosmicScavengers.Networking.Commands;
 using UnityEngine;
 
 public class LoginPassHandler : MonoBehaviour
