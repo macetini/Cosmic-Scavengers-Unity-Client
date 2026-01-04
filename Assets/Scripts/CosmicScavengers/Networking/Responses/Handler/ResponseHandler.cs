@@ -87,7 +87,7 @@ namespace CosmicScavengers.Networking.Handler.ResponseHandler
             responseChannel.RemoveListener(HandleResponse);
         }
 
-        private void HandleResponse(NetworkCommand command, ChannelData responseData)
+        private void HandleResponse(BaseNetworkCommand command, ChannelData responseData)
         {
             switch (command.Type)
             {

@@ -87,7 +87,7 @@ namespace CosmicScavengers.Networking.Requests.Handler
             requestCommandChannel.RemoveListener(HandleRequestCommand);
         }
 
-        private void HandleRequestCommand(NetworkCommand command, object data)
+        private void HandleRequestCommand(BaseNetworkCommand command, object data)
         {
             Debug.Log($"[RequestHandlers] Handling Request Command with Command ID: {command}");
 

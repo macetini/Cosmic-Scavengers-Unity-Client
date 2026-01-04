@@ -10,33 +10,33 @@ namespace CosmicScavengers.Networking.Commands
     /// Supports implicit conversion for seamless usage in method signatures.
     /// </summary>
     [Serializable]
-    public readonly struct NetworkCommand : IEquatable<NetworkCommand>
+    public readonly struct BaseNetworkCommand : IEquatable<BaseNetworkCommand>
     {
         public NetworkBinaryCommand BinaryCommand { get; }
         public NetworkTextCommand TextCommand { get; }
         public CommandType Type { get; }
 
-        public NetworkCommand(NetworkBinaryCommand binaryCommand)
+        public BaseNetworkCommand(NetworkBinaryCommand binaryCommand)
         {
             BinaryCommand = binaryCommand;
             TextCommand = NetworkTextCommand.UNKNOWN;
             Type = CommandType.BINARY;
         }
 
-        public NetworkCommand(NetworkTextCommand textCommand)
+        public BaseNetworkCommand(NetworkTextCommand textCommand)
         {
             BinaryCommand = NetworkBinaryCommand.UNKNOWN;
             TextCommand = textCommand;
             Type = CommandType.TEXT;
         }
 
-        public static implicit operator NetworkCommand(NetworkBinaryCommand binaryCommand) =>
+        public static implicit operator BaseNetworkCommand(NetworkBinaryCommand binaryCommand) =>
             new(binaryCommand);
 
-        public static implicit operator NetworkCommand(NetworkTextCommand textCommand) =>
+        public static implicit operator BaseNetworkCommand(NetworkTextCommand textCommand) =>
             new(textCommand);
 
-        public readonly bool Equals(NetworkCommand other)
+        public readonly bool Equals(BaseNetworkCommand other)
         {
             return Type == other.Type
                 && (
@@ -47,7 +47,7 @@ namespace CosmicScavengers.Networking.Commands
         }
 
         public override readonly bool Equals(object obj) =>
-            obj is NetworkCommand other && Equals(other);
+            obj is BaseNetworkCommand other && Equals(other);
 
         public override readonly int GetHashCode()
         {
