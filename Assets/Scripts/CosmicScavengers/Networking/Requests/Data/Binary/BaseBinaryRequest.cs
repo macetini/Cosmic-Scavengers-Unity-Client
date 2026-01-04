@@ -9,7 +9,7 @@ namespace CosmicScavengers.Networking.Request.Binary.Data
     /// Abstract base for binary-serialized network requests.
     /// Inherits from MonoBehaviour to support Unity-native discovery and Inspector configuration.
     /// </summary>
-    public abstract class BaseBinaryRequest : BaseRequest<object[]>
+    public abstract class BaseBinaryRequest : BaseRequest<object>
     {
         protected virtual NetworkBinaryCommand Command { get; }
 
@@ -29,9 +29,9 @@ namespace CosmicScavengers.Networking.Request.Binary.Data
         {
             byte[] bytes = Stream.ToArray();
 
-            ChannelData data = new(bytes);
+            NetworkingChannelData data = new(bytes);
 
-            requestChannel.Raise(Command, data);
+            networkingChannel.Raise(Command, data);
 
             Stream.SetLength(0);
             Stream.Position = 0;

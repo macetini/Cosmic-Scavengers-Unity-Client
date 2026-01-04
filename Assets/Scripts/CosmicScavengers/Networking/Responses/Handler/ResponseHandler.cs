@@ -17,7 +17,7 @@ namespace CosmicScavengers.Networking.Handler.ResponseHandler
     {
         [SerializeField]
         [Tooltip("Channel to listen for response handlers.")]
-        CommandChannel responseChannel;
+        NetworkingChannel responseChannel;
 
         [Header("Registry Configuration")]
         [SerializeField]
@@ -79,15 +79,15 @@ namespace CosmicScavengers.Networking.Handler.ResponseHandler
 
         void OnEnable()
         {
-            responseChannel.AddListener(HandleResponse);
+            responseChannel.AddListener(RouteResponse);
         }
 
         void OnDisable()
         {
-            responseChannel.RemoveListener(HandleResponse);
+            responseChannel.RemoveListener(RouteResponse);
         }
 
-        private void HandleResponse(BaseNetworkCommand command, ChannelData responseData)
+        private void RouteResponse(BaseNetworkCommand command, NetworkingChannelData responseData)
         {
             switch (command.Type)
             {

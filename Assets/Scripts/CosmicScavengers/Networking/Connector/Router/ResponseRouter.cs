@@ -22,7 +22,7 @@ namespace CosmicScavengers.Networking.Connector.Router
 
         [Header("Channels Configuration")]
         [SerializeField]
-        private CommandChannel responseChannel;
+        private NetworkingChannel responseChannel;
 
         void Awake()
         {
@@ -89,7 +89,7 @@ namespace CosmicScavengers.Networking.Connector.Router
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
             NetworkBinaryCommand command = (NetworkBinaryCommand)commandCode;
-            responseChannel.Raise(command, new ChannelData(protobufData));
+            responseChannel.Raise(command, new NetworkingChannelData(protobufData));
         }
 
         private void HandleTextResponseMessage(string rawMessage)
@@ -111,7 +111,7 @@ namespace CosmicScavengers.Networking.Connector.Router
                 return;
             }
             string[] data = parts.Skip(1).ToArray();
-            responseChannel.Raise(command, new ChannelData(data));
+            responseChannel.Raise(command, new NetworkingChannelData(data));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CosmicScavengers.Networking.Requests.Derived.Text
     {
         protected override NetworkTextCommand Command => NetworkTextCommand.C_CONNECT;
 
-        public void Execute(string data)
+        public override void Execute(string[] data)
         {
             if (!Active)
             {

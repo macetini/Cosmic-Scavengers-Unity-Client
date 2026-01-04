@@ -15,23 +15,19 @@ namespace CosmicScavengers.Networking.Request.Data
 
         [Header("RequestChannel")]
         [SerializeField]
-        protected RequestChannel requestChannel;
+        protected NetworkingChannel networkingChannel;
 
         void Awake()
         {
-            if (requestChannel == null)
+            if (networkingChannel == null)
             {
                 Debug.LogError(
-                    $"[{gameObject.name}]RequestChannel is not assigned in BaseRequest."
+                    $"[{gameObject.name}]: RequestChannel is not assigned in BaseRequest."
                 );
             }
         }
 
-        public void Execute(T[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
+        public abstract void Execute(T[] parameters);
         protected abstract void Raise();
     }
 }

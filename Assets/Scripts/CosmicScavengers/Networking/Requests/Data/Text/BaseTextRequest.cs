@@ -12,11 +12,12 @@ namespace CosmicScavengers.Networking.Request.Text.Data
     /// </summary>
     public abstract class BaseTextRequest : BaseRequest<string>
     {
-        protected string[] Data;
         protected virtual NetworkTextCommand Command
         {
             get => throw new NotImplementedException();
         }
+
+        protected string[] Data;
 
         protected override void Raise()
         {
@@ -29,8 +30,8 @@ namespace CosmicScavengers.Networking.Request.Text.Data
                 );
             }
 
-            ChannelData channelData = new(Data);
-            requestChannel.Raise(Command, channelData);
+            NetworkingChannelData channelData = new(Data);
+            networkingChannel.Raise(Command, channelData);
         }
     }
 }
