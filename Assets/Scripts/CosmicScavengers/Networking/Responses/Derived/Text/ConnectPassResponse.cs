@@ -10,7 +10,7 @@ namespace CosmicScavengers.Networking.Responses.Data
         [Header("Channel Configuration")]
         [SerializeField]
         [Tooltip("Request command chanel for response command.")]
-        private CommandChannel requestCommandChannel;
+        private RequestChannel requestCommandChannel;
 
         void Awake()
         {
@@ -28,7 +28,7 @@ namespace CosmicScavengers.Networking.Responses.Data
                 "[ConnectPassResponse] Handshake with server completed. Ready for login/register."
             );
 
-            //requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, "kkkk");
+            requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, null);
         }
     }
 }

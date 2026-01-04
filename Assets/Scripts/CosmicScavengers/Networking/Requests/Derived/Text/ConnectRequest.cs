@@ -23,8 +23,11 @@ namespace CosmicScavengers.Networking.Requests.Derived.Text
                 $"[ConnectRequest] Executing connect request for user: {username} with password: {password}"
             );
 
-            //Data = $"{username}|{password}";
-            //Raise();
+            Data = new string[2];
+            Data[0] = username;
+            Data[1] = password;
+
+            Raise();
         }
     }
 }

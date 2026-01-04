@@ -890,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a50bc01c0186e42be71788659f90ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::RequestHandlers
-  requestCommandChannel: {fileID: 11400000, guid: 7c2eea02b50329b44b248899017b370d, type: 2}
+  requestChannel: {fileID: 11400000, guid: 4d9b9cdd415cd61469a9e03ea0b173cb, type: 2}
   binaryRequestRegistry: {fileID: 11400000, guid: 68f5bbfc834f51e4087c06e2a0b9afaf, type: 2}
   textRequestRegistry: {fileID: 11400000, guid: 968ab6c63c0a39d49ab69c6fd33a269b, type: 2}
   binaryRequestsContainer: {fileID: 1715413817}

@@ -17,7 +17,7 @@ namespace CosmicScavengers.Networking.Requests.Handler
         [Header("Request Channels")]
         [SerializeField]
         [Tooltip("Channel for Requests.")]
-        private CommandChannel requestCommandChannel;
+        private RequestChannel requestChannel;
 
         [Header("Registry Configuration")]
         [SerializeField]
@@ -37,11 +37,11 @@ namespace CosmicScavengers.Networking.Requests.Handler
         [Tooltip("Container for instantiated text requests.")]
         private GameObject textRequestsContainer;
 
-        private readonly Dictionary<NetworkBinaryCommand, BaseBinaryRequest> requestLookup = new();
+        private readonly Dictionary<BaseNetworkCommand, BaseBinaryRequest> requestLookup = new();
 
         void Awake()
         {
-            if (requestCommandChannel == null)
+            if (requestChannel == null)
             {
                 Debug.LogError("RequestCommandChannel is not assigned in RequestHandlers.");
             }
@@ -79,12 +79,12 @@ namespace CosmicScavengers.Networking.Requests.Handler
 
         void OnEnable()
         {
-            //requestCommandChannel.AddListener(HandleRequestCommand);
+            requestChannel.AddListener(HandleRequestCommand);
         }
 
         void OnDisable()
         {
-            //requestCommandChannel.RemoveListener(HandleRequestCommand);
+            requestChannel.RemoveListener(HandleRequestCommand);
         }
 
         private void HandleRequestCommand(BaseNetworkCommand command, object data)
@@ -97,7 +97,7 @@ namespace CosmicScavengers.Networking.Requests.Handler
                     HandleBinaryRequest(command.BinaryCommand, data);
                     break;
                 case CommandType.TEXT:
-                    //HandleTextRequest(command.TextCommand, data);
+                    HandleTextRequest(command.TextCommand, data);
                     break;
                 case CommandType.UNKNOWN:
                     Debug.LogWarning(
@@ -128,11 +128,11 @@ namespace CosmicScavengers.Networking.Requests.Handler
                 return;
             }
             var requestInstance = Instantiate(requestPrefab, binaryRequestsContainer.transform);
-            requestLookup[command] = requestInstance;
+            //requestLookup[command] = requestInstance;
             //requestInstance.Execute(data);
         }
 
-        private void HandleTextRequest(NetworkTextCommand command, string data)
+        private void HandleTextRequest(NetworkTextCommand command, object data)
         {
             Debug.Log($"[RequestHandlers] Handling Text Request with Command ID: {command}");
 

@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309bc31d5020a61429433801a18130bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::ConnectPassResponse
-  requestCommandChannel: {fileID: 11400000, guid: 2c89fcb451be2334b8b67b6230115cff, type: 2}
+  requestCommandChannel: {fileID: 11400000, guid: 4d9b9cdd415cd61469a9e03ea0b173cb, type: 2}
