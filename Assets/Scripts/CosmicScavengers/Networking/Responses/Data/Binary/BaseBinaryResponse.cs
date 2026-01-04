@@ -1,7 +1,7 @@
 using System;
 using CosmicScavengers.Networking.Commands.Binary;
 
-namespace CosmicScavengers.Networking.Responses.Data
+namespace CosmicScavengers.Networking.Responses.Data.Binary
 {
     public abstract class BaseBinaryResponse : BaseResponse<byte[]>
     {

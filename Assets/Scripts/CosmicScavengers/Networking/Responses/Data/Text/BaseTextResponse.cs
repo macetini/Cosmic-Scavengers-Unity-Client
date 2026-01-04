@@ -2,7 +2,7 @@ using System;
 using CosmicScavengers.Networking.Commands.Text;
 using UnityEngine;
 
-namespace CosmicScavengers.Networking.Responses.Data
+namespace CosmicScavengers.Networking.Responses.Data.Text
 {
     public class BaseTextResponse : MonoBehaviour
     {

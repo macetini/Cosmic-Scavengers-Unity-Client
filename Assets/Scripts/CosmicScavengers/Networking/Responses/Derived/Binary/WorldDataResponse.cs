@@ -2,7 +2,7 @@ using System;
 using CosmicScavengers.Networking.Commands.Binary;
 using CosmicScavengers.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.WorldData;
-using CosmicScavengers.Networking.Responses.Data;
+using CosmicScavengers.Networking.Responses.Data.Binary;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Responses.Derived

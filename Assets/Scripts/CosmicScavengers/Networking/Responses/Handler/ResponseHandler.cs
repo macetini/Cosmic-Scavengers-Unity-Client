@@ -7,7 +7,8 @@ using CosmicScavengers.Networking.Commands.Binary;
 using CosmicScavengers.Networking.Commands.Meta;
 using CosmicScavengers.Networking.Commands.Text;
 using CosmicScavengers.Networking.Response.Registry;
-using CosmicScavengers.Networking.Responses.Data;
+using CosmicScavengers.Networking.Responses.Data.Binary;
+using CosmicScavengers.Networking.Responses.Data.Text;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Handler.ResponseHandler

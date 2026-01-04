@@ -15,7 +15,7 @@ namespace CosmicScavengers.Networking.Extensions
         // --- 16-bit Short / Ushort ---
 
         /// <summary>
-        /// Writes a 16-bit signed integer (short) by converting it from 
+        /// Writes a 16-bit signed integer (short) by converting it from
         /// Host (Little Endian) to Big Endian (Network Order).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,11 +47,10 @@ namespace CosmicScavengers.Networking.Extensions
             writer.Write(signedNetworkValue);
         }
 
-
         // --- 32-bit Integer / Uint ---
 
         /// <summary>
-        /// Writes a 32-bit signed integer (int) by converting it from 
+        /// Writes a 32-bit signed integer (int) by converting it from
         /// Host (Little Endian) to Big Endian (Network Order).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -82,11 +81,10 @@ namespace CosmicScavengers.Networking.Extensions
             writer.Write(signedNetworkValue);
         }
 
-
         // --- 64-bit Long / Ulong ---
 
         /// <summary>
-        /// Writes a 64-bit signed integer (long) by converting it from 
+        /// Writes a 64-bit signed integer (long) by converting it from
         /// Host (Little Endian) to Big Endian (Network Order).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -118,7 +116,7 @@ namespace CosmicScavengers.Networking.Extensions
         }
 
         /// <summary>
-        /// Writes a 32-bit floating point number (float) in Big Endian (Network Order).    
+        /// Writes a 32-bit floating point number (float) in Big Endian (Network Order).
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WriteFloat32BE(this BinaryWriter writer, float value)
