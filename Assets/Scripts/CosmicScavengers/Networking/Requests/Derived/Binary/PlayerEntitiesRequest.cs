@@ -1,4 +1,4 @@
-using CosmicScavengers.Networking.Commands.Binary;
+using CosmicScavengers.Networking.Commands.Data.Binary;
 using CosmicScavengers.Networking.Extensions;
 using CosmicScavengers.Networking.Request.Binary.Data;
 using UnityEngine;

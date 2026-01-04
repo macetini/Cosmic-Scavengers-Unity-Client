@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands.Text;
+using CosmicScavengers.Networking.Commands.Data.Text;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Responses.Data.Text

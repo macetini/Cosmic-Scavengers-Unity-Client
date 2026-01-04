@@ -15,7 +15,7 @@ namespace CosmicScavengers.Networking.Request.Data
 
         [Header("RequestChannel")]
         [SerializeField]
-        protected NetworkingChannel requestChannel;
+        protected CommandChannel requestChannel;
 
         public void Execute(T[] parameters)
         {

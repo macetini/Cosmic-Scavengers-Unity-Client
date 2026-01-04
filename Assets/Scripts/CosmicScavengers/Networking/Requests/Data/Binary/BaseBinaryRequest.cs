@@ -1,6 +1,6 @@
 using System.IO;
 using CosmicScavengers.Networking.Channel.Data;
-using CosmicScavengers.Networking.Commands.Binary;
+using CosmicScavengers.Networking.Commands.Data.Binary;
 using CosmicScavengers.Networking.Request.Data;
 
 namespace CosmicScavengers.Networking.Request.Binary.Data

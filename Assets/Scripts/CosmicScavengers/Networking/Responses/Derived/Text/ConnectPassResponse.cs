@@ -1,5 +1,5 @@
-using CosmicScavengers.Networking.Commands.Text;
-using CosmicScavengers.Networking.Requests.Channels;
+using CosmicScavengers.Networking.Channel;
+using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Responses.Data.Text;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace CosmicScavengers.Networking.Responses.Data
         [Header("Channel Configuration")]
         [SerializeField]
         [Tooltip("Request command chanel for response command.")]
-        private RequestCommandChannel requestCommandChannel;
+        private CommandChannel requestCommandChannel;
 
         void Awake()
         {
@@ -28,7 +28,7 @@ namespace CosmicScavengers.Networking.Responses.Data
                 "[ConnectPassResponse] Handshake with server completed. Ready for login/register."
             );
 
-            requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, "kkkk");
+            //requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, "kkkk");
         }
     }
 }

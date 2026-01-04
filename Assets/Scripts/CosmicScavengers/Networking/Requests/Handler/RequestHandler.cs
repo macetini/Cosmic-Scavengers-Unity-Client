@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using CosmicScavengers.Networking.Channel;
 using CosmicScavengers.Networking.Commands;
-using CosmicScavengers.Networking.Commands.Binary;
-using CosmicScavengers.Networking.Commands.Meta;
-using CosmicScavengers.Networking.Commands.Text;
+using CosmicScavengers.Networking.Commands.Data.Binary;
+using CosmicScavengers.Networking.Commands.Data.Meta;
+using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Request.Binary.Data;
 using CosmicScavengers.Networking.Request.Registry;
 using CosmicScavengers.Networking.Request.Text.Data;
-using CosmicScavengers.Networking.Requests.Channels;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests.Handler
@@ -17,7 +17,7 @@ namespace CosmicScavengers.Networking.Requests.Handler
         [Header("Request Channels")]
         [SerializeField]
         [Tooltip("Channel for Requests.")]
-        private RequestCommandChannel requestCommandChannel;
+        private CommandChannel requestCommandChannel;
 
         [Header("Registry Configuration")]
         [SerializeField]
@@ -79,12 +79,12 @@ namespace CosmicScavengers.Networking.Requests.Handler
 
         void OnEnable()
         {
-            requestCommandChannel.AddListener(HandleRequestCommand);
+            //requestCommandChannel.AddListener(HandleRequestCommand);
         }
 
         void OnDisable()
         {
-            requestCommandChannel.RemoveListener(HandleRequestCommand);
+            //requestCommandChannel.RemoveListener(HandleRequestCommand);
         }
 
         private void HandleRequestCommand(BaseNetworkCommand command, object data)

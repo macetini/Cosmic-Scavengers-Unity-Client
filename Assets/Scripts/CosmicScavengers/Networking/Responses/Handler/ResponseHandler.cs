@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using CosmicScavengers.Networking.Channel;
 using CosmicScavengers.Networking.Channel.Data;
 using CosmicScavengers.Networking.Commands;
-using CosmicScavengers.Networking.Commands.Binary;
-using CosmicScavengers.Networking.Commands.Meta;
-using CosmicScavengers.Networking.Commands.Text;
+using CosmicScavengers.Networking.Commands.Data.Binary;
+using CosmicScavengers.Networking.Commands.Data.Meta;
+using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Response.Registry;
 using CosmicScavengers.Networking.Responses.Data.Binary;
 using CosmicScavengers.Networking.Responses.Data.Text;
@@ -17,7 +17,7 @@ namespace CosmicScavengers.Networking.Handler.ResponseHandler
     {
         [SerializeField]
         [Tooltip("Channel to listen for response handlers.")]
-        NetworkingChannel responseChannel;
+        CommandChannel responseChannel;
 
         [Header("Registry Configuration")]
         [SerializeField]

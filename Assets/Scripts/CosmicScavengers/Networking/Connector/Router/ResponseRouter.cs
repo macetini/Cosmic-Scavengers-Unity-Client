@@ -2,8 +2,8 @@ using System.IO;
 using System.Linq;
 using CosmicScavengers.Networking.Channel;
 using CosmicScavengers.Networking.Channel.Data;
-using CosmicScavengers.Networking.Commands.Binary;
-using CosmicScavengers.Networking.Commands.Text;
+using CosmicScavengers.Networking.Commands.Data.Binary;
+using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Extensions;
 using UnityEngine;
 
@@ -22,7 +22,7 @@ namespace CosmicScavengers.Networking.Connector.Router
 
         [Header("Channels Configuration")]
         [SerializeField]
-        private NetworkingChannel responseChannel;
+        private CommandChannel responseChannel;
 
         void Awake()
         {

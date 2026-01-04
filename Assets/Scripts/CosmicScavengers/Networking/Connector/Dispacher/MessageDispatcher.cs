@@ -1,4 +1,4 @@
-using CosmicScavengers.Networking.Commands.Meta;
+using CosmicScavengers.Networking.Commands.Data.Meta;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Connector.Dispatcher

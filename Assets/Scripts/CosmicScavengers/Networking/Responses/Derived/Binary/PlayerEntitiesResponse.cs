@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands.Binary;
+using CosmicScavengers.Networking.Commands.Data.Binary;
 using CosmicScavengers.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.Entities;
 using CosmicScavengers.Networking.Responses.Data.Binary;

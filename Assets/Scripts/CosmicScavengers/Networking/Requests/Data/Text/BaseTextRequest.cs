@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands.Text;
+using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Request.Data;
 
 namespace CosmicScavengers.Networking.Request.Text.Data

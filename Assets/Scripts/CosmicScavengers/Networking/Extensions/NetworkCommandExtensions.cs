@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands.Text;
+using CosmicScavengers.Networking.Commands.Data.Text;
 
 namespace CosmicScavengers.Networking.Extensions
 {
