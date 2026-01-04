@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Commands.Binary;
 using CosmicScavengers.Networking.Responses.Data;
 
 namespace CosmicScavengers.Networking.Responses.Registry.Meta

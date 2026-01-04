@@ -1,31 +1,33 @@
-using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Commands.Text;
 using CosmicScavengers.Networking.Requests.Channels;
-using CosmicScavengers.Networking.Responses.Data;
 using UnityEngine;
 
-public class ConnectPassResponse : BaseTextResponse
+namespace CosmicScavengers.Networking.Responses.Data
 {
-    [Header("Channel Configuration")]
-    [SerializeField]
-    [Tooltip("Request command chanel for response command.")]
-    private RequestCommandChannel requestCommandChannel;
-
-    void Awake()
+    public class ConnectPassResponse : BaseTextResponse
     {
-        if (requestCommandChannel == null)
+        [Header("Channel Configuration")]
+        [SerializeField]
+        [Tooltip("Request command chanel for response command.")]
+        private RequestCommandChannel requestCommandChannel;
+
+        void Awake()
         {
-            Debug.LogError("RequestCommandChannel is not assigned in ConnectPassResponse.");
+            if (requestCommandChannel == null)
+            {
+                Debug.LogError("RequestCommandChannel is not assigned in ConnectPassResponse.");
+            }
         }
-    }
 
-    public override NetworkTextCommand Command => NetworkTextCommand.S_CONNECT_PASS;
+        public override NetworkTextCommand Command => NetworkTextCommand.S_CONNECT_PASS;
 
-    public override void Handle(string[] parameters)
-    {
-        Debug.Log(
-            "[ConnectPassResponse] Handshake with server completed. Ready for login/register."
-        );
+        public override void Handle(string[] parameters)
+        {
+            Debug.Log(
+                "[ConnectPassResponse] Handshake with server completed. Ready for login/register."
+            );
 
-        requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, "kkkk");
+            requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, "kkkk");
+        }
     }
 }

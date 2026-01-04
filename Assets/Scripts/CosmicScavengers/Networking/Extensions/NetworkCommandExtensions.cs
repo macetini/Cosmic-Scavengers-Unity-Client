@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Commands.Text;
 
 namespace CosmicScavengers.Networking.Extensions
 {
@@ -14,12 +14,10 @@ namespace CosmicScavengers.Networking.Extensions
             {
                 return NetworkTextCommand.UNKNOWN;
             }
-
             if (Enum.TryParse<NetworkTextCommand>(commandString, ignoreCase, out var result))
             {
                 return result;
             }
-
             return NetworkTextCommand.UNKNOWN;
         }
     }

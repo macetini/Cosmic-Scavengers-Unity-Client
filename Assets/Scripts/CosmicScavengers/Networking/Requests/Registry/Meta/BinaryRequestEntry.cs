@@ -1,6 +1,6 @@
 using System;
+using CosmicScavengers.Networking.Commands.Binary;
 using CosmicScavengers.Networking.Request.Binary.Data;
-using CosmicScavengers.Networking.Commands;
 
 namespace CosmicScavengers.Networking.Requests.Registry.Meta
 {

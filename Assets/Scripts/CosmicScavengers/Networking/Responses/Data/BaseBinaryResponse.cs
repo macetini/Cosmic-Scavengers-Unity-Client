@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Networking.Commands;
+using CosmicScavengers.Networking.Commands.Binary;
 
 namespace CosmicScavengers.Networking.Responses.Data
 {

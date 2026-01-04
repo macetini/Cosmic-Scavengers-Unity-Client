@@ -1,5 +1,7 @@
 using System;
+using CosmicScavengers.Networking.Commands.Binary;
 using CosmicScavengers.Networking.Commands.Meta;
+using CosmicScavengers.Networking.Commands.Text;
 
 namespace CosmicScavengers.Networking.Commands
 {
