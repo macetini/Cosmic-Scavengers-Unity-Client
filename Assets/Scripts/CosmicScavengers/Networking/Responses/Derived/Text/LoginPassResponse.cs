@@ -1,12 +1,12 @@
 using CosmicScavengers.Networking.Commands.Data.Text;
+using CosmicScavengers.Networking.Responses.Data.Text;
 using UnityEngine;
 
-public class LoginPassHandler : MonoBehaviour
+public class LoginPassResponse : BaseTextResponse
 {
-    public bool Active = true;
-    public NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
+    public override NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
 
-    public void Handle(string[] data)
+    public override void Handle(string[] data)
     {
         if (!Active)
         {
