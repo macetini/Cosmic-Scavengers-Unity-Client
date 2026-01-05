@@ -15,3 +15,5 @@ MonoBehaviour:
   Entries:
   - Command: 1
     Prefab: {fileID: 3740964968978222026, guid: dc7e25d1d10d7bd419f2586689ab616e, type: 3}
+  - Command: 5
+    Prefab: {fileID: 6479346326806446535, guid: a658000315748e84da927cd2cc68c17c, type: 3}
