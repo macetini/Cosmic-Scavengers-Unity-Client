@@ -4,30 +4,25 @@ using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests.Derived.Text
 {
+    /// <summary>
+    /// Handles the initial handshake request to the server.
+    /// Serializes as: "C_CONNECT|username|password"
+    ///
     public class LoginRequest : BaseTextRequest
     {
         protected override NetworkTextCommand Command => NetworkTextCommand.C_LOGIN;
 
-        public override void Execute(string[] data)
+        protected override bool PackParameters(object[] parameters)
         {
-            if (!Active)
-            {
-                Debug.Log("[LoginRequest] Handler is inactive. Ignoring message.");
-                return;
-            }
-
+            // For now, we use hardcoded credentials.
             string username = "player_1";
             string password = "secret";
 
-            Debug.Log(
-                $"[LoginRequest] Executing login request for user: {username} with password: {password}"
-            );
+            Debug.Log($"[LoginRequest] Packing credentials for: {username}");
 
-            Data = new string[2];
-            Data[0] = username;
-            Data[1] = password;
+            WriteArgs(username, password);
 
-            Raise();
+            return true;
         }
     }
 }

@@ -1,10 +1,6 @@
-using System;
 using CosmicScavengers.Networking.Channel;
 using CosmicScavengers.Networking.Channel.Data;
 using CosmicScavengers.Networking.Commands;
-using CosmicScavengers.Networking.Commands.Data.Binary;
-using CosmicScavengers.Networking.Commands.Data.Meta;
-using CosmicScavengers.Networking.Commands.Data.Text;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Connector.Dispatcher
@@ -22,9 +18,7 @@ namespace CosmicScavengers.Networking.Connector.Dispatcher
         [Header("Channel Configuration")]
         [SerializeField]
         [Tooltip("Inbound channel for incoming requests.")]
-        private NetworkingChannel networkingChannel;
-
-        private const string COMMAND_DELIMITER = "|";
+        private NetworkingRequestChannel networkingChannel;
 
         void Awake()
         {
@@ -40,47 +34,27 @@ namespace CosmicScavengers.Networking.Connector.Dispatcher
 
         void OnEnable()
         {
-            networkingChannel.AddListener(RouteNetworkingRequest);
+            networkingChannel.AddListener(HandleRequest);
         }
 
         void OnDisable()
         {
-            networkingChannel.RemoveListener(RouteNetworkingRequest);
+            networkingChannel.RemoveListener(HandleRequest);
         }
 
-        private void RouteNetworkingRequest(BaseNetworkCommand command, NetworkingChannelData data)
+        private void HandleRequest(BaseNetworkCommand command, RequestData data)
         {
-            switch (command.Type)
+            byte[] buffer = data.RawBytes;
+            int bufferLength = data.DataLength;
+            if (buffer == null || buffer.Length == 0 || bufferLength <= 0)
             {
-                case CommandType.BINARY:
-                    HandleBinaryRequest(command.BinaryCommand, data.RawBytes);
-                    break;
-                case CommandType.TEXT:
-                    HandleTextRequest(command.TextCommand, data.TextParts);
-                    break;
-                case CommandType.UNKNOWN:
-                    Debug.LogWarning(
-                        $"[MessageDispatcher] - Received Unknown Command Type: {command.Type}"
-                    );
-                    break;
-                default:
-                    throw new Exception($"Impossible Command Type: {command.Type}");
+                Debug.LogWarning(
+                    "[MessageDispatcher] Received empty or null binary data for command: "
+                        + command.ToString()
+                );
+                return;
             }
-        }
-
-        private void HandleBinaryRequest(NetworkBinaryCommand binaryCommand, byte[] data)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void HandleTextRequest(NetworkTextCommand textCommand, string[] data)
-        {
-            string fullMessage =
-                (data == null || data.Length == 0)
-                    ? textCommand.ToString()
-                    : $"{textCommand}|{string.Join(COMMAND_DELIMITER, data)}";
-
-            clientConnector.DispatchTextMessage(fullMessage);
+            clientConnector.DispatchMessage(buffer, bufferLength, command.Type);
         }
     }
 }

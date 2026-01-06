@@ -22,7 +22,7 @@ namespace CosmicScavengers.Networking.Connector.Router
 
         [Header("Channels Configuration")]
         [SerializeField]
-        private NetworkingChannel responseChannel;
+        private NetworkingResponseChannel responseChannel;
 
         void Awake()
         {
@@ -30,7 +30,6 @@ namespace CosmicScavengers.Networking.Connector.Router
             {
                 Debug.LogError("[NetworkRequestManager] ClientConnector reference is missing!");
             }
-
             if (responseChannel == null)
             {
                 Debug.LogError("[NetworkRequestManager] ResponseChannel reference is missing!");
@@ -89,7 +88,7 @@ namespace CosmicScavengers.Networking.Connector.Router
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
             NetworkBinaryCommand command = (NetworkBinaryCommand)commandCode;
-            responseChannel.Raise(command, new NetworkingChannelData(protobufData));
+            responseChannel.Raise(command, new ResponseData(protobufData, protobufData.Length));
         }
 
         private void HandleTextResponseMessage(string rawMessage)
@@ -110,8 +109,8 @@ namespace CosmicScavengers.Networking.Connector.Router
                 );
                 return;
             }
-            string[] data = parts.Skip(1).ToArray();
-            responseChannel.Raise(command, new NetworkingChannelData(data));
+            string[] dataParts = parts.Skip(1).ToArray();
+            responseChannel.Raise(command, new ResponseData(dataParts, dataParts.Length));
         }
     }
 }

@@ -1,33 +1,14 @@
 using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Request.Text.Data;
-using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests.Derived.Text
 {
+    /// <summary>
+    /// Handles the initial handshake request to the server.
+    /// Serializes as: "C_CONNECT"
+    /// </summary>
     public class ConnectRequest : BaseTextRequest
     {
         protected override NetworkTextCommand Command => NetworkTextCommand.C_CONNECT;
-
-        public override void Execute(string[] data)
-        {
-            if (!Active)
-            {
-                Debug.Log("[ConnectRequest] Handler is inactive. Ignoring message.");
-                return;
-            }
-
-            string username = "player_1";
-            string password = "secret";
-
-            Debug.Log(
-                $"[ConnectRequest] Executing connect request for user: {username} with password: {password}"
-            );
-
-            Data = new string[2];
-            Data[0] = username;
-            Data[1] = password;
-
-            Raise();
-        }
     }
 }

@@ -10,23 +10,21 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
         protected override NetworkBinaryCommand Command =>
             NetworkBinaryCommand.REQUEST_WORLD_STATE_C;
 
-        public override void Execute(object[] parameters)
+        protected override bool PackParameters(object[] parameters)
         {
             if (parameters.Length < 1 || parameters[0] is not long playerId)
             {
                 Debug.LogError(
-                    "[PlayerEntitiesRequest] Invalid parameters for Execute. Expected Player ID (long)."
+                    "[WorldStateRequest] Invalid parameters for Execute. Expected Player ID (long)."
                 );
-                return;
+                return false;
             }
 
             Writer.WriteLong(playerId);
 
-            Debug.Log(
-                "[PlayerEntitiesRequest] Sending world state request for Player ID: " + playerId
-            );
+            Debug.Log("[WorldStateRequest] Sending world state request for Player ID: " + playerId);
 
-            Raise();
+            return true;
         }
     }
 }

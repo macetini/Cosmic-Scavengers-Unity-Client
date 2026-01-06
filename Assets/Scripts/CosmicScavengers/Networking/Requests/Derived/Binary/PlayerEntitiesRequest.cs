@@ -10,14 +10,14 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
         protected override NetworkBinaryCommand Command =>
             NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C;
 
-        public override void Execute(object[] parameters)
+        protected override bool PackParameters(object[] parameters)
         {
             if (parameters.Length < 1 || parameters[0] is not long playerId)
             {
                 Debug.LogError(
                     "[PlayerEntitiesRequest] Invalid parameters for Execute. Expected Player ID (long)."
                 );
-                return;
+                return false;
             }
 
             Writer.WriteShort((short)Command);
@@ -28,6 +28,7 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
             );
 
             Raise();
+            return true;
         }
     }
 }

@@ -1,6 +1,5 @@
 using CosmicScavengers.Networking.Channel;
 using CosmicScavengers.Networking.Commands.Data.Text;
-using CosmicScavengers.Networking.Requests.Channel;
 using CosmicScavengers.Networking.Responses.Data.Text;
 using UnityEngine;
 
@@ -25,11 +24,17 @@ namespace CosmicScavengers.Networking.Responses.Data
 
         public override void Handle(string[] parameters)
         {
+            if (!Active)
+            {
+                Debug.Log("[ConnectPassResponse] Handler is inactive. Ignoring message.");
+                return;
+            }
+
             Debug.Log(
                 "[ConnectPassResponse] Handshake with server completed. Ready for login/register."
             );
 
-            requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN, RequestChannelData.Empty);
+            requestCommandChannel.Raise(NetworkTextCommand.C_LOGIN);
         }
     }
 }

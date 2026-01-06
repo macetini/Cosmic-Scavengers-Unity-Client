@@ -1,45 +1,57 @@
+using CosmicScavengers.Networking.Channel;
+using CosmicScavengers.Networking.Commands.Data.Binary;
 using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Responses.Data.Text;
 using UnityEngine;
 
-public class LoginPassResponse : BaseTextResponse
+namespace CosmicScavengers.Networking.Responses.Data
 {
-    public override NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
-
-    public override void Handle(string[] data)
+    public class LoginPassResponse : BaseTextResponse
     {
-        if (!Active)
+        [Header("Channel Configuration")]
+        [SerializeField]
+        [Tooltip("Request command chanel for response command.")]
+        private RequestChannel requestChannel;
+
+        public override NetworkTextCommand Command => NetworkTextCommand.S_LOGIN_PASS;
+
+        void Awake()
         {
-            Debug.Log("[LoginPassHandler] Handler is inactive. Ignoring message.");
-            return;
-        }
-        if (data.Length < 1)
-        {
-            Debug.LogError(
-                "[LoginPassHandler] Invalid data received. Expected at least 1 parameter."
-            );
-            return;
-        }
-        if (!long.TryParse(data[0], out long playerId))
-        {
-            Debug.LogError("[LoginPassHandler] Failed to parse Player ID from data: " + data[0]);
-            return;
+            if (requestChannel == null)
+            {
+                Debug.LogError("RequestCommandChannel is not assigned in LoginPassResponse.");
+            }
         }
 
-        InitPlayerData(playerId);
-    }
+        public override void Handle(string[] data)
+        {
+            if (!Active)
+            {
+                Debug.Log("[LoginPassHandler] Handler is inactive. Ignoring message.");
+                return;
+            }
+            if (data.Length < 1)
+            {
+                Debug.LogError(
+                    "[LoginPassHandler] Invalid data received. Expected at least 1 parameter."
+                );
+                return;
+            }
+            if (!long.TryParse(data[0], out long playerId))
+            {
+                Debug.LogError(
+                    "[LoginPassHandler] Failed to parse Player ID from data: " + data[0]
+                );
+                return;
+            }
 
-    private void InitPlayerData(long playerId)
-    {
-        // Placeholder for any additional initialization logic for player data
-        Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
+            InitPlayerData(playerId);
+        }
 
-        /*requestChanel.Raise(NetworkBinaryCommand.REQUEST_WORLD_STATE_C, new object[] { playerId });
-
-        requestChanel.Raise(
-            NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C,
-            new object[] { playerId }
-        );
-        */
+        private void InitPlayerData(long playerId)
+        {
+            Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
+            requestChannel.Raise(NetworkBinaryCommand.REQUEST_WORLD_STATE_C, playerId);
+        }
     }
 }

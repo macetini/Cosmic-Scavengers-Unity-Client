@@ -63,8 +63,8 @@ namespace CosmicScavengers.Networking.Commands
         {
             return Type switch
             {
-                CommandType.BINARY => $"[B] {BinaryCommand}",
-                CommandType.TEXT => $"[T] {TextCommand}",
+                CommandType.BINARY => $"[{CommandType.BINARY}][{BinaryCommand}]",
+                CommandType.TEXT => $"[{CommandType.TEXT}][{TextCommand}]",
                 _ => throw new Exception($"Unknown Command Type: {Type}"),
             };
         }

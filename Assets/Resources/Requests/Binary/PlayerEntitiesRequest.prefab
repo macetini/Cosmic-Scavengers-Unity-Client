@@ -44,5 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a61c390508c7c43926e159cdd54334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::PlayerEntitiesRequest
-  Active: 1
-  requestChannel: {fileID: 11400000, guid: e50e8b9c3b7b6d144bc718653d2e876a, type: 2}
+  networkingChannel: {fileID: 11400000, guid: 52c3c1c27495e2a458e9d284691d059e, type: 2}

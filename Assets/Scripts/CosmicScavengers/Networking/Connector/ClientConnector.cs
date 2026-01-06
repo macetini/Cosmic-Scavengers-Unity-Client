@@ -71,8 +71,6 @@ namespace CosmicScavengers.Networking.Connector
 
                 OnConnected?.Invoke();
 
-                InitHandshake(); // TODO: Move to higher-level manager
-
                 while (client.Connected)
                 {
                     ReadNextMessage();
@@ -96,15 +94,6 @@ namespace CosmicScavengers.Networking.Connector
             {
                 Cleanup();
             }
-        }
-
-        /// <summary>
-        /// Initiates the handshake process with the server by sending a connect command.
-        /// </summary>
-        public void InitHandshake()
-        {
-            Debug.Log("[Connector] Initiating handshake with server.");
-            DispatchTextMessage("C_CONNECT");
         }
 
         /// <summary>
@@ -217,70 +206,50 @@ namespace CosmicScavengers.Networking.Connector
         }
 
         /// <summary>
-        /// Sends a text command, automatically framing it with MessageType.TEXT.
-        /// Used by ClientAuth/Lobby Managers.
-        /// </summary>
-        public void DispatchTextMessage(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                Debug.LogWarning("Cannot send empty command.");
-                return;
-            }
-            SendTypedMessage(Encoding.UTF8.GetBytes(text), CommandType.TEXT);
-        }
-
-        /// <summary>
         /// Sends raw binary data, automatically framing it with MessageType.BINARY.
         /// Used by ClientGameState for high-frequency updates.
         /// </summary>
-        public void DispatchBinaryMessage(byte[] data)
+        public void DispatchMessage(byte[] buffer, int bufferLength, CommandType type)
         {
-            if (data == null || data.Length == 0)
+            if (buffer == null || buffer.Length == 0 || bufferLength <= 0)
             {
                 Debug.LogWarning("Cannot send empty binary data.");
                 return;
             }
-            SendTypedMessage(data, CommandType.BINARY);
+            SendTypedMessage(buffer, bufferLength, type);
         }
 
         /// <summary>
         /// Core method for sending messages, constructing the full frame:
         /// [4-byte Length] + [1-byte Type] + [Payload]
         /// </summary>
-        private void SendTypedMessage(byte[] dataBytes, CommandType type)
+        private void SendTypedMessage(byte[] buffer, int bufferLength, CommandType type)
         {
             if (!IsConnected || stream == null)
             {
                 Debug.LogError($"[Connector] Cannot send {type} message: Not connected to server.");
                 return;
             }
-            Debug.Log($"[Connector] Sending {type} message of length {dataBytes.Length} bytes.");
+            Debug.Log($"[Connector] Sending {type} message of length {bufferLength} bytes.");
 
             try
             {
-                // Payload length = 1 (Type byte) + Data length
-                int payloadLength = 1 + dataBytes.Length;
-                byte[] lengthBytes = BitConverter.GetBytes(payloadLength);
+                // Payload length = 1 (Type byte) + Buffer N length
+                int totalPacketLength = sizeof(byte) + bufferLength;
+                // Convert to Network Byte Order (Big Endian)
+                byte[] lengthBytes = BitConverter.GetBytes(
+                    IPAddress.HostToNetworkOrder(totalPacketLength)
+                );
 
-                // Convert to Big-Endian for Java/Netty compatibility
-                if (BitConverter.IsLittleEndian)
-                {
-                    Array.Reverse(lengthBytes);
-                }
-
-                using MemoryStream ms = new();
-                // 1. Write 4-byte Length Prefix (Big-Endian)
-                ms.Write(lengthBytes, 0, lengthBytes.Length);
-                // 2. Write 1-byte Message Type
-                ms.WriteByte((byte)type);
-                // 3. Write the Payload Data
-                ms.Write(dataBytes, 0, dataBytes.Length);
-
-                byte[] finalBuffer = ms.ToArray();
                 lock (streamLock)
                 {
-                    stream.Write(finalBuffer, 0, finalBuffer.Length);
+                    // 1. Write 4-byte Length Prefix (Big-Endian)
+                    stream.Write(lengthBytes, 0, lengthBytes.Length);
+                    // 2. Write 1-byte Message Type
+                    stream.WriteByte((byte)type);
+                    // 3. Write the Payload Data
+                    stream.Write(buffer, 0, bufferLength);
+                    // 4. Flush
                     stream.Flush();
                 }
             }

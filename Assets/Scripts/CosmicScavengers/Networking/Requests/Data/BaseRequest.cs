@@ -1,5 +1,6 @@
-using System;
+using System.IO;
 using CosmicScavengers.Networking.Channel;
+using CosmicScavengers.Networking.Requests.Base;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Request.Data
@@ -8,26 +9,51 @@ namespace CosmicScavengers.Networking.Request.Data
     /// Abstract base for binary-serialized network requests.
     /// Inherits from MonoBehaviour to support Unity-native discovery and Inspector configuration.
     /// </summary>
-    public abstract class BaseRequest<T> : MonoBehaviour
+    public abstract class BaseRequest<T> : MonoBehaviour, IRequest<T>
     {
-        [Header("Active")]
-        public bool Active = true;
+        [Header("Status")]
+        [Tooltip("Whether this request is currently active and should be processed.")]
+        public bool Active => true;
 
-        [Header("RequestChannel")]
+        [Header("Channel Configuration")]
         [SerializeField]
-        protected NetworkingChannel networkingChannel;
+        protected NetworkingRequestChannel networkingChannel;
 
-        void Awake()
+        protected MemoryStream Stream;
+
+        protected virtual void Awake()
         {
             if (networkingChannel == null)
             {
                 Debug.LogError(
-                    $"[{gameObject.name}]: RequestChannel is not assigned in BaseRequest."
+                    $"[{gameObject.name}]: NetworkingRequestChannel is not assigned in BaseRequest."
                 );
             }
+            Stream = new MemoryStream(4096); // TODO - Capacity should ideally come from a config
         }
 
+        /// <summary>
+        /// Public entry point to trigger the request.
+        /// </summary>
         public abstract void Execute(T[] parameters);
+
+        /// <summary>
+        /// Logic for writing specific parameters into the Stream.
+        /// Returns true if packing was successful.
+        /// </summary>
+        protected abstract bool PackParameters(T[] parameters);
+
+        /// <summary>
+        /// Finalizes the internal buffer and broadcasts it via the NetworkingChannel.
+        /// </summary>
         protected abstract void Raise();
+
+        /// <summary>
+        /// Centralized cleanup.
+        /// </summary>
+        protected virtual void OnDestroy()
+        {
+            Stream?.Dispose();
+        }
     }
 }

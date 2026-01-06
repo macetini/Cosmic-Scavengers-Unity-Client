@@ -6,9 +6,9 @@ using CosmicScavengers.Networking.Commands.Data.Binary;
 using CosmicScavengers.Networking.Commands.Data.Meta;
 using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Request.Binary.Data;
+using CosmicScavengers.Networking.Request.Data;
 using CosmicScavengers.Networking.Request.Registry;
 using CosmicScavengers.Networking.Request.Text.Data;
-using CosmicScavengers.Networking.Requests.Channel;
 using UnityEngine;
 
 namespace CosmicScavengers.Networking.Requests.Handler
@@ -38,9 +38,7 @@ namespace CosmicScavengers.Networking.Requests.Handler
         [Tooltip("Container for instantiated text requests.")]
         private GameObject textRequestsContainer;
 
-        private readonly Dictionary<BaseNetworkCommand, BaseBinaryRequest> binaryRequestsLookup =
-            new();
-        private readonly Dictionary<BaseNetworkCommand, BaseTextRequest> textRequestsLookup = new();
+        private readonly Dictionary<BaseNetworkCommand, BaseRequest<object>> requestsLookup = new();
 
         void Awake()
         {
@@ -90,15 +88,15 @@ namespace CosmicScavengers.Networking.Requests.Handler
             requestChannel.RemoveListener(RouteRequest);
         }
 
-        private void RouteRequest(BaseNetworkCommand command, RequestChannelData data)
+        private void RouteRequest(BaseNetworkCommand command, object[] data)
         {
             switch (command.Type)
             {
-                case CommandType.BINARY:
-                    HandleBinaryRequest(command.BinaryCommand, data.ObjectParts);
-                    break;
                 case CommandType.TEXT:
-                    HandleTextRequest(command.TextCommand, data.TextParts);
+                    HandleTextRequest(command.TextCommand, data);
+                    break;
+                case CommandType.BINARY:
+                    HandleBinaryRequest(command.BinaryCommand, data);
                     break;
                 case CommandType.UNKNOWN:
                     Debug.LogWarning(
@@ -110,34 +108,11 @@ namespace CosmicScavengers.Networking.Requests.Handler
             }
         }
 
-        private void HandleBinaryRequest(NetworkBinaryCommand command, object[] data)
-        {
-            Debug.Log($"[RequestHandlers] Handling Binary Request with Command ID: {command}");
-
-            if (binaryRequestsLookup.TryGetValue(command, out var existingRequest))
-            {
-                existingRequest.Execute(data);
-                return;
-            }
-
-            BaseBinaryRequest requestPrefab = binaryRequestRegistry.GetPrefab(command);
-            if (requestPrefab == null)
-            {
-                Debug.LogWarning(
-                    $"[RequestHandlers] No request prefab found for Command ID: {command}"
-                );
-                return;
-            }
-            var requestInstance = Instantiate(requestPrefab, binaryRequestsContainer.transform);
-            binaryRequestsLookup[command] = requestInstance;
-            requestInstance.Execute(data);
-        }
-
-        private void HandleTextRequest(NetworkTextCommand command, string[] data)
+        private void HandleTextRequest(NetworkTextCommand command, object[] data)
         {
             Debug.Log($"[RequestHandlers] Handling Text Request with Command ID: {command}");
 
-            if (textRequestsLookup.TryGetValue(command, out var existingRequest))
+            if (requestsLookup.TryGetValue(command, out var existingRequest))
             {
                 existingRequest.Execute(data);
                 return;
@@ -152,7 +127,30 @@ namespace CosmicScavengers.Networking.Requests.Handler
                 return;
             }
             var requestInstance = Instantiate(requestPrefab, textRequestsContainer.transform);
-            textRequestsLookup[command] = requestInstance;
+            requestsLookup[command] = requestInstance;
+            requestInstance.Execute(data);
+        }
+
+        private void HandleBinaryRequest(NetworkBinaryCommand command, object[] data)
+        {
+            Debug.Log($"[RequestHandlers] Handling Binary Request with Command ID: {command}");
+
+            if (requestsLookup.TryGetValue(command, out var existingRequest))
+            {
+                existingRequest.Execute(data);
+                return;
+            }
+
+            BaseBinaryRequest requestPrefab = binaryRequestRegistry.GetPrefab(command);
+            if (requestPrefab == null)
+            {
+                Debug.LogWarning(
+                    $"[RequestHandlers] No request prefab found for Command ID: {command}"
+                );
+                return;
+            }
+            var requestInstance = Instantiate(requestPrefab, binaryRequestsContainer.transform);
+            requestsLookup[command] = requestInstance;
             requestInstance.Execute(data);
         }
     }
