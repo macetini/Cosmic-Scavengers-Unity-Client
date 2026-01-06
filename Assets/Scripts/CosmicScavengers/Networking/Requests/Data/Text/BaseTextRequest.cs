@@ -1,6 +1,6 @@
 using System.IO;
 using System.Text;
-using CosmicScavengers.Networking.Channel.Data;
+using CosmicScavengers.Networking.Channel.Data.Request;
 using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Request.Data;
 using UnityEngine;

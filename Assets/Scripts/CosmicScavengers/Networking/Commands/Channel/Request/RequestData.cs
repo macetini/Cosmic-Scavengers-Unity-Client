@@ -1,10 +1,10 @@
-namespace CosmicScavengers.Networking.Channel.Data
+namespace CosmicScavengers.Networking.Channel.Data.Request
 {
     public readonly struct RequestData
     {
         public readonly byte[] RawBytes { get; }
         public readonly int DataLength { get; }
-        public static ResponseData Empty = new(new byte[0], 0);
+        public static RequestData Empty = new(new byte[0], 0);
 
         public RequestData(byte[] bytes, int length)
         {

@@ -1,5 +1,5 @@
 using System.IO;
-using CosmicScavengers.Networking.Channel;
+using CosmicScavengers.Networking.Channel.Request;
 using CosmicScavengers.Networking.Requests.Base;
 using UnityEngine;
 

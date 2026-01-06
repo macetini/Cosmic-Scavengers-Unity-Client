@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
-using CosmicScavengers.Networking.Channel;
-using CosmicScavengers.Networking.Channel.Data;
+using CosmicScavengers.Networking.Channel.Data.Response;
+using CosmicScavengers.Networking.Channel.Response;
 using CosmicScavengers.Networking.Commands.Data.Binary;
 using CosmicScavengers.Networking.Commands.Data.Text;
 using CosmicScavengers.Networking.Extensions;

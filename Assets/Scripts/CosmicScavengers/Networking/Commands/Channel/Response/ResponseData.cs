@@ -1,4 +1,4 @@
-namespace CosmicScavengers.Networking.Channel.Data
+namespace CosmicScavengers.Networking.Channel.Data.Response
 {
     public readonly struct ResponseData
     {
