@@ -20,7 +20,6 @@ namespace CosmicScavengers.Networking.Requests.Derived.Binary
                 return false;
             }
 
-            Writer.WriteShort((short)Command);
             Writer.WriteLong(playerId);
 
             Debug.Log(
