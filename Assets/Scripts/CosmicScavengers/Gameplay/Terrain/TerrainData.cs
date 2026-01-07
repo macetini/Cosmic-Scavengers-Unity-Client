@@ -2,7 +2,7 @@ using System.Text;
 using CosmicScavengers.Core.Utils.Math.Noise;
 using UnityEngine;
 
-namespace CosmicScavengers.Systems.Terrain
+namespace CosmicScavengers.Gameplay.Terrain
 {
     public class TerrainData : MonoBehaviour
     {

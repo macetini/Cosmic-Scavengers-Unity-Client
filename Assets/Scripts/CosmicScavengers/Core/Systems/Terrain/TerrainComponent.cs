@@ -30,7 +30,7 @@ namespace CosmicScavengers.Systems.Terrain
 
         [Header("References")]
         [SerializeField]
-        private TerrainData terrainData;
+        private Gameplay.Terrain.TerrainData terrainData;
 
         [SerializeField]
         private WorldDataChannel worldDataChannel;
