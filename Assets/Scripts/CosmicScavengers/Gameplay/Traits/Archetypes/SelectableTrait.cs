@@ -1,8 +1,7 @@
 using CosmicScavengers.Core.Systems.Base.Traits.Data;
-using CosmicScavengers.Core.Systems.Entities.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Traits.Archetypes
+namespace CosmicScavengers.GamePlay.Traits.Archetypes
 {
     /// <summary>
     /// A modular "Trait" that adds selection capability to a GameObject.
