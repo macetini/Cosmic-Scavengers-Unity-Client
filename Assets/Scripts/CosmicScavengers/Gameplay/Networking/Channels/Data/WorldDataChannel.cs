@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Events;
+using CosmicScavengers.Core.Events.Unary;
 using CosmicScavengers.Networking.Protobuf.WorldData;
 using UnityEngine;
 

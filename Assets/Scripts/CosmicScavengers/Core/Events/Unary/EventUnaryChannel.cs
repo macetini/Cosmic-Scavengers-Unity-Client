@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CosmicScavengers.Core.Events
+namespace CosmicScavengers.Core.Events.Unary
 {
     /// <summary>
     /// A generic, reusable event channel that uses a ScriptableObject as the event bus.
