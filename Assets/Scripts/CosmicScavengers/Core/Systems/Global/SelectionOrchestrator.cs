@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Traits.Archetypes;
-using CosmicScavengers.Networking.Event.Channels.Data;
+using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

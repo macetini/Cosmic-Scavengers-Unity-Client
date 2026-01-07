@@ -6,7 +6,7 @@ using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
 using CosmicScavengers.Core.Systems.Traits.Registry;
 using CosmicScavengers.Core.Systems.Traits.Updater;
-using CosmicScavengers.Networking.Event.Channels.Data;
+using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.Entities;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;

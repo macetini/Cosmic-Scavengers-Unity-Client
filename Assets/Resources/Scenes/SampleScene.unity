@@ -318,7 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 116000958}
   m_Layer: 0
-  m_Name: Global
+  m_Name: Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -571,7 +571,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1357999020}
+  m_Father: {fileID: 1956342391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &362778176
 MonoBehaviour:
@@ -586,8 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Initialization.NetworkBootstrapper
   requestChannel: {fileID: 11400000, guid: 4d9b9cdd415cd61469a9e03ea0b173cb, type: 2}
-  autoConnectOnStart: 1
-  delayBeforeConnect: 0.3
+  clientConnector: {fileID: 1956342392}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1048,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 362778175}
   - {fileID: 1956342391}
   - {fileID: 1286056088}
   - {fileID: 1844729977}
@@ -1297,6 +1295,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 362778175}
   - {fileID: 808927931}
   - {fileID: 1705125492}
   m_Father: {fileID: 1357999020}
