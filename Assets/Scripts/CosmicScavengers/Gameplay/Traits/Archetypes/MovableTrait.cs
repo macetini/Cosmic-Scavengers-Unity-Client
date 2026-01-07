@@ -10,8 +10,6 @@ namespace CosmicScavengers.GamePlay.Traits.Archetypes
     /// </summary>
     public class MovableTrait : BaseTrait
     {
-        private void Start() { }
-
         public override void OnUpdate(float deltaTime)
         {
             throw new System.NotImplementedException();
