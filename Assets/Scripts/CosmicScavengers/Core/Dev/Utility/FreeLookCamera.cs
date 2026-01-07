@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CosmicScavengers.Dev.Utility
+namespace CosmicScavengers.Core.Dev.Utility
 {
     /// <summary>
     /// Provides a simple, free-moving "spectator mode" camera for inspecting environments in Play Mode.
