@@ -15,3 +15,5 @@ MonoBehaviour:
   Entries:
   - Key: SELECTABLE
     Prefab: {fileID: 6243969382796814524, guid: bf22d2548dcecc845a9e21b96bd05d10, type: 3}
+  - Key: MOVABLE
+    Prefab: {fileID: 7396583714986560138, guid: 732c8906c6ff6b741a455cc8cdb3bda9, type: 3}
