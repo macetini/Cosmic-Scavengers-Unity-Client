@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CosmicScavengers.Core.Event
+namespace CosmicScavengers.Core.Events
 {
     /// <summary>
     /// A non-generic base for EventChannel to allow for lists of different types of event channels.

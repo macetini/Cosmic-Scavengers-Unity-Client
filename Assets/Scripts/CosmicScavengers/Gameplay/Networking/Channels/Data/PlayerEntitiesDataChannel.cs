@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Event;
+using CosmicScavengers.Core.Events;
 using CosmicScavengers.Networking.Protobuf.Entities;
 using UnityEngine;
 

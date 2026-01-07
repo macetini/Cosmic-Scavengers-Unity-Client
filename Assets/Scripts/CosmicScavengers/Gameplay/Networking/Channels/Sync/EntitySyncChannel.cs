@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Event;
+using CosmicScavengers.Core.Events;
 using UnityEngine;
 
 namespace CosmicScavengers.Gameplay.Networking.Event.Channels.Data

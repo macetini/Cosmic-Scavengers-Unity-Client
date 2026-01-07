@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CosmicScavengers.Core.Event
+namespace CosmicScavengers.Core.Events
 {
     public abstract class EventChannel<T1, T2> : EventChannelBase
     {
