@@ -5,7 +5,7 @@ using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CosmicScavengers.Core.Systems.Global
+namespace CosmicScavengers.Core.Systems.Interaction
 {
     /// <summary>
     /// The high-performance "Brain" for selection.

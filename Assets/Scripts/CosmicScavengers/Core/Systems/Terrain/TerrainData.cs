@@ -1,5 +1,5 @@
 using System.Text;
-using CosmicScavengers.Core.Systems.Noise;
+using CosmicScavengers.Core.Utils.Math.Noise;
 using UnityEngine;
 
 namespace CosmicScavengers.Systems.Terrain

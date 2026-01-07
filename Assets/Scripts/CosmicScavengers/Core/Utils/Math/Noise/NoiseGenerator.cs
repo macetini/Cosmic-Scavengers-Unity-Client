@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Noise
+namespace CosmicScavengers.Core.Utils.Math.Noise
 {
     /// <summary>
     /// Static utility for generating coherent, repeatable noise used for
