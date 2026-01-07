@@ -1,7 +1,7 @@
 using CosmicScavengers.Core.Systems.Data.Entities;
 using UnityEngine;
 
-namespace CosmicScavengers.Systems.Entities.Archetypes
+namespace CosmicScavengers.Gameplay.Entities.Archetypes
 {
     /// <summary>
     /// A generalized class for any mobile unit (Ships, Drones).
