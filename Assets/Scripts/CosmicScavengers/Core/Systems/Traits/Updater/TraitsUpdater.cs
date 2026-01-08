@@ -1,19 +1,19 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
+using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Traits.Updater
 {
     public class TraitsUpdater : MonoBehaviour
     {
-        private readonly List<BaseTrait> highPriorityTraits = new();
-        private readonly List<BaseTrait> throttledTraits = new();
+        private readonly List<ITrait> highPriorityTraits = new();
+        private readonly List<ITrait> throttledTraits = new();
         private int frameCount;
 
         /// <summary>
         /// Registers a trait into the appropriate update bucket.
         /// </summary>
-        public void Register(BaseTrait trait)
+        public void Register(ITrait trait)
         {
             if (trait.UpdateFrequency <= 1)
             {
@@ -28,7 +28,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Updater
         /// <summary>
         /// Removes a trait from the update cycle.
         /// </summary>
-        public void Unregister(BaseTrait trait)
+        public void Unregister(ITrait trait)
         {
             highPriorityTraits.Remove(trait);
             throttledTraits.Remove(trait);
@@ -36,7 +36,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Updater
 
         void Update()
         {
-            float dt = Time.deltaTime;
+            float deltaTime = Time.deltaTime;
             frameCount++;
 
             // 1. Process High-Priority (Every Frame)
@@ -44,7 +44,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Updater
             int highCount = highPriorityTraits.Count;
             for (int i = 0; i < highCount; i++)
             {
-                highPriorityTraits[i].OnUpdate(dt);
+                highPriorityTraits[i].OnUpdate(deltaTime);
             }
 
             // 2. Process Throttled (Every Nth Frame)
@@ -56,7 +56,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Updater
                 if (frameCount % trait.UpdateFrequency == 0)
                 {
                     // Normalize delta time so logic remains consistent regardless of frequency
-                    trait.OnUpdate(dt * trait.UpdateFrequency);
+                    trait.OnUpdate(deltaTime * trait.UpdateFrequency);
                 }
             }
         }

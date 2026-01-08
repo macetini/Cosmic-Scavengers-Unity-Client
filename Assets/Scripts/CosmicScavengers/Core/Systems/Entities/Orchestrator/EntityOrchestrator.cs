@@ -4,6 +4,7 @@ using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
+using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using CosmicScavengers.Core.Systems.Traits.Registry;
 using CosmicScavengers.Core.Systems.Traits.Updater;
 using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
@@ -43,6 +44,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         private Transform entityParent;
 
         private readonly Dictionary<long, IEntity> activeEntities = new();
+        private const string TRAITS_KEY = "traits";
 
         void Start()
         {
@@ -128,6 +130,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             }
 
             BaseEntity spawnedEntity = Instantiate(entityPrefab, position, rotation, entityParent);
+            spawnedEntity.LinkOrchestrator(this);
 
             spawnedEntity.Id = id;
             activeEntities.Add(id, spawnedEntity);
@@ -144,9 +147,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             try
             {
                 JObject json = JObject.Parse(stateData);
-                if (json["traits"] is JObject traitsMap)
+                if (json[TRAITS_KEY] is JObject traitsMap)
                 {
-                    List<BaseTrait> traits = new();
+                    List<ITrait> traits = new();
                     foreach (var property in traitsMap.Properties())
                     {
                         if (property.Value is not JObject traitConfig)
@@ -156,7 +159,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             );
                             continue;
                         }
-
                         string traitKey = property.Name;
                         BaseTrait traitPrefab = traitRegistry.GetPrefab(traitKey);
                         if (traitPrefab == null)
@@ -171,10 +173,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             traitPrefab,
                             entity.TraitsContainer.transform
                         );
-
-                        //if (traitConfig["data"] is JObject specificData)
                         traitInstance.Initialize(entity, traitConfig);
-
                         traits.Add(traitInstance);
                     }
                     entity.Traits = traits;
@@ -204,6 +203,13 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             }
         }
 
+        public void RequestEntityTraitSync(IEntity entity, ITrait trait)
+        {
+            Debug.Log(
+                $"[EntityOrchestrator] Requesting trait sync for {trait.GetType().Name} on entity {entity.Id}"
+            );
+        }
+
         /// <summary>
         /// Removes an entity from the simulation.
         /// </summary>
@@ -212,12 +218,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             if (activeEntities.TryGetValue(id, out var entity))
             {
                 entity.OnRemoved();
-
                 if (entity is MonoBehaviour mb)
                 {
                     Destroy(mb.gameObject);
                 }
-
                 activeEntities.Remove(id);
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -6,9 +7,7 @@ using UnityEngine;
 namespace CosmicScavengers.GamePlay.Traits.Archetypes
 {
     /// <summary>
-    /// A modular "Trait" that adds selection capability to a GameObject.
-    /// Following the Trait pattern allows entities to be composed of different
-    /// functional blocks (Selection, Movement, Combat) independently.
+    /// A modular "Trait" that adds movement capability to a GameObject.
     /// </summary>
     public class MovableTrait : BaseTrait
     {
@@ -17,8 +16,8 @@ namespace CosmicScavengers.GamePlay.Traits.Archetypes
         /// <summary>
         /// Local data structure matching the server's JSON format.
         /// </summary>
-        [System.Serializable]
-        public struct MovableSettings
+        [Serializable]
+        private struct MovableSettings
         {
             [JsonProperty("movement_speed")]
             public float MovementSpeed;
@@ -37,9 +36,6 @@ namespace CosmicScavengers.GamePlay.Traits.Archetypes
         [Header("Movement State")]
         [SerializeField]
         private Vector3 targetPosition;
-
-        [SerializeField]
-        private bool isMoving;
 
         protected override void OnInitialize()
         {
@@ -60,9 +56,19 @@ namespace CosmicScavengers.GamePlay.Traits.Archetypes
             }
         }
 
-        public override void OnUpdate(float deltaTime)
+        /// <summary>
+        /// Issues a new move instruction.
+        /// This marks the trait as 'PendingSync', which the EntityOrchestrator
+        /// will detect and dispatch to the server.
+        /// </summary>
+        public void IssueMoveOrder(Vector3 destination)
         {
-            throw new System.NotImplementedException();
+            Debug.Log($"[MovableTrait] IssueMoveOrder to {destination}");
+            targetPosition = destination;
+
+            RequestSync();
         }
+
+        public override void OnUpdate(float deltaTime) { }
     }
 }

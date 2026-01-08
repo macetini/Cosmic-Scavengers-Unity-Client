@@ -24,13 +24,37 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
             set => traitName = value;
         }
 
-        public IEntity Owner { get; private set; }
+        /// <summary>
+        /// Indicates if the trait has a pending request (Movement, Attack, etc.)
+        /// that needs to be synchronized with the server via a Service.
+        /// </summary>
+        public bool IsPendingSync { get; protected set; } = false;
 
+        /// <summary>
+        /// Controls whether the OnUpdate logic should run.
+        /// </summary>
+        public bool IsEnabled { get; } = true;
+
+        public IEntity Owner { get; private set; }
         protected JObject Config;
         public int Priority { get; private set; }
         public int UpdateFrequency { get; private set; }
 
-        public virtual void Initialize(IEntity owner, JObject config)
+        /// <summary>
+        /// Called by the TraitsUpdater/Service once the sync request has been dispatched.
+        /// </summary>
+        public void ClearSync()
+        {
+            IsPendingSync = false;
+        }
+
+        public void RequestSync()
+        {
+            IsPendingSync = true;
+            Owner.RequestTraitSync(this);
+        }
+
+        public void Initialize(IEntity owner, JObject config)
         {
             SetOwner(owner);
             ParseConfig(config);

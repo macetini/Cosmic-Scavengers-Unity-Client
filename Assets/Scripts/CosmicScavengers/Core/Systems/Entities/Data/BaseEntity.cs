@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using CosmicScavengers.Core.Systems.Entities.Meta;
+using CosmicScavengers.Core.Systems.Entities.Orchestrator;
 using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using UnityEngine;
 
@@ -28,8 +28,8 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
 
         [SerializeField]
         [Tooltip("List of traits attached to this entity.")]
-        private List<BaseTrait> traits = new();
-        public List<BaseTrait> Traits
+        private List<ITrait> traits = new();
+        public List<ITrait> Traits
         {
             get => GetAllTraits();
             set
@@ -41,6 +41,32 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
 
         public GameObject TraitsContainer;
         private readonly Dictionary<Type, ITrait> traitCache = new();
+
+        /// <summary>
+        /// The orchestrator managing this entity.
+        /// </summary>
+        private EntityOrchestrator orchestrator;
+
+        /// <summary>
+        /// Links this entity to its managing orchestrator.
+        /// Called once by the EntityOrchestrator immediately after instantiation.
+        /// </summary>
+        public void LinkOrchestrator(EntityOrchestrator orchestrator)
+        {
+            this.orchestrator = orchestrator;
+        }
+
+        public void RequestTraitSync(ITrait trait)
+        {
+            if (orchestrator == null)
+            {
+                Debug.LogError(
+                    $"[{gameObject.name}] Attempted to request trait sync on an entity id '{Id}' not managed by an orchestrator."
+                );
+                return;
+            }
+            orchestrator.RequestEntityTraitSync(this, trait);
+        }
 
         public void RebuildTraitCache()
         {
@@ -76,9 +102,9 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
             }
         }
 
-        public List<BaseTrait> GetAllTraits()
+        public List<ITrait> GetAllTraits()
         {
-            return new List<BaseTrait>(traits);
+            return new List<ITrait>(traits);
         }
 
         public T GetTrait<T>()

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Data.Entities;
-using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
 using CosmicScavengers.GamePlay.Traits.Archetypes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,11 +12,6 @@ namespace CosmicScavengers.Core.Systems.Interaction
     /// </summary>
     public class SelectionOrchestrator : MonoBehaviour
     {
-        [Header("Channel Configuration")]
-        [SerializeField]
-        [Tooltip("Channel to raise when entity sync data is received.")]
-        private EntitySyncChannel entitySyncChannel;
-
         [Header("Configuration")]
         [SerializeField]
         [Tooltip("Layer mask for entities that can be selected.")]
@@ -40,10 +34,6 @@ namespace CosmicScavengers.Core.Systems.Interaction
 
         void Start()
         {
-            if (entitySyncChannel == null)
-            {
-                Debug.LogError("[SelectionOrchestrator] EntitySyncChannel reference is missing!");
-            }
             if (mainCamera == null)
             {
                 mainCamera = Camera.main;
@@ -122,19 +112,11 @@ namespace CosmicScavengers.Core.Systems.Interaction
                     continue;
                 }
 
-                // TODO - Optimize: Create a reusable MoveRequest object/struct
-                object moveRequest = new
-                {
-                    EntityId = entity.Id,
-                    From = entity.transform.position,
-                    To = targetPoint,
-                };
-
-                entitySyncChannel.Raise(moveRequest);
-
                 Debug.Log(
                     $"[SelectionOrchestrator] Moving entity {entity.Id} from: {entity.transform.position} to: {targetPoint}."
                 );
+
+                entity.GetTrait<MovableTrait>().IssueMoveOrder(targetPoint);
             }
         }
 
