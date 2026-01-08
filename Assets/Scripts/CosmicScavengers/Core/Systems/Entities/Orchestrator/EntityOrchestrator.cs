@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
@@ -146,34 +146,49 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                 JObject json = JObject.Parse(stateData);
                 if (json["traits"] is JObject traitsMap)
                 {
-                    List<string> traitKeys = traitsMap.Properties().Select(p => p.Name).ToList();
-                    List<BaseTrait> traits = new(traitKeys.Count);
-                    foreach (string traitKey in traitKeys)
+                    List<BaseTrait> traits = new();
+                    foreach (var property in traitsMap.Properties())
                     {
+                        if (property.Value is not JObject traitConfig)
+                        {
+                            Debug.LogWarning(
+                                $"[EntityOrchestrator] Trait config for '{property.Name}' is not a JObject. Skipping."
+                            );
+                            continue;
+                        }
+
+                        string traitKey = property.Name;
                         BaseTrait traitPrefab = traitRegistry.GetPrefab(traitKey);
                         if (traitPrefab == null)
                         {
                             Debug.LogWarning(
-                                $"[EntityOrchestrator] Trait lookup failed for key: {traitKey}"
+                                $"[EntityOrchestrator] Trait prefab not found: {traitKey}"
                             );
                             continue;
                         }
-                        BaseTrait trait = Instantiate(
+
+                        BaseTrait traitInstance = Instantiate(
                             traitPrefab,
                             entity.TraitsContainer.transform
                         );
-                        trait.Initialize(entity);
-                        traits.Add(trait);
-                    }
 
+                        if (traitConfig["data"] is JObject specificData)
+                        {
+                            traitInstance.Initialize(entity, specificData);
+                        }
+                        else
+                        {
+                            traitInstance.Initialize(entity);
+                        }
+
+                        traits.Add(traitInstance);
+                    }
                     entity.Traits = traits;
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                Debug.LogError(
-                    $"[EntityOrchestrator] Failed to parse StateData for traits: {ex.Message}"
-                );
+                Debug.LogError($"[EntityOrchestrator] Failed to parse StateData: {ex.Message}");
             }
         }
 

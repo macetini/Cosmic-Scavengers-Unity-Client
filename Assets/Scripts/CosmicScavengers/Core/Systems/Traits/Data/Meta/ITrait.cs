@@ -1,4 +1,5 @@
 using CosmicScavengers.Core.Systems.Entities.Meta;
+using Unity.Plastic.Newtonsoft.Json.Linq;
 
 namespace CosmicScavengers.Core.Systems.Traits.Data.Meta
 {
@@ -10,7 +11,7 @@ namespace CosmicScavengers.Core.Systems.Traits.Data.Meta
         string Name { get; set; }
         IEntity Owner { get; }
         int UpdateFrequency { get; }
-        void Initialize(IEntity owner);
+        void Initialize(IEntity owner, JObject data);
         void OnUpdate(float deltaTime);
     }
 }

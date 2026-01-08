@@ -21,5 +21,11 @@ namespace CosmicScavengers.Core.Networking.Commands.Data.Binary
 
         [Description("Send the entities associated with a player.")]
         REQUEST_PLAYER_ENTITIES_S = 0x0004,
+
+        [Description("Request an entity to movement.")]
+        REQUEST_ENTITY_MOVE_C = 0x0005,
+
+        [Description("Entity movement Server response.")]
+        REQUEST_ENTITY_MOVE_S = 0x0006,
     }
 }

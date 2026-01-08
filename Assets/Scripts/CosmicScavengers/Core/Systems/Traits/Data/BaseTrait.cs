@@ -1,4 +1,3 @@
-using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -12,19 +11,21 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
     public abstract class BaseTrait : MonoBehaviour, ITrait
     {
         [SerializeField]
+        [Tooltip("The display name of this trait. If empty, the class name will be used.")]
         private string traitName;
         public string Name
         {
             get => string.IsNullOrEmpty(traitName) ? GetType().Name : traitName;
             set => traitName = value;
         }
-        
         public IEntity Owner { get; private set; }
+        protected JObject Data;
         public virtual int UpdateFrequency => 1;
 
-        public virtual void Initialize(IEntity owner)
+        public virtual void Initialize(IEntity owner, JObject data = null)
         {
             Owner = owner;
+            Data = data;
             OnInitialize();
         }
 
