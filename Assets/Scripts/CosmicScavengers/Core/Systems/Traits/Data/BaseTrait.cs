@@ -1,3 +1,4 @@
+using System;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -10,6 +11,10 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
     /// </summary>
     public abstract class BaseTrait : MonoBehaviour, ITrait
     {
+        private const string PRIORITY = "priority";
+        private const string UPDATE_FREQUENCY = "update_frequency";
+
+        [Header("Visual Feedback")]
         [SerializeField]
         [Tooltip("The display name of this trait. If empty, the class name will be used.")]
         private string traitName;
@@ -18,15 +23,50 @@ namespace CosmicScavengers.Core.Systems.Base.Traits.Data
             get => string.IsNullOrEmpty(traitName) ? GetType().Name : traitName;
             set => traitName = value;
         }
-        public IEntity Owner { get; private set; }
-        protected JObject Data;
-        public virtual int UpdateFrequency => 1;
 
-        public virtual void Initialize(IEntity owner, JObject data = null)
+        public IEntity Owner { get; private set; }
+
+        protected JObject Config;
+        public int Priority { get; private set; }
+        public int UpdateFrequency { get; private set; }
+
+        public virtual void Initialize(IEntity owner, JObject config)
         {
-            Owner = owner;
-            Data = data;
+            SetOwner(owner);
+            ParseConfig(config);
+
             OnInitialize();
+        }
+
+        private void SetOwner(IEntity owner)
+        {
+            Owner =
+                owner
+                ?? throw new ArgumentNullException(
+                    "Owner cannot be null for BaseTrait initialization."
+                );
+        }
+
+        private void ParseConfig(JObject config)
+        {
+            Config =
+                config
+                ?? throw new ArgumentNullException(
+                    "Config cannot be null for BaseTrait initialization."
+                );
+
+            if (
+                Config.TryGetValue(PRIORITY, out JToken priorityToken)
+                && Config.TryGetValue(UPDATE_FREQUENCY, out JToken updateFrequencyToken)
+            )
+            {
+                Priority = priorityToken.Value<int>();
+                UpdateFrequency = updateFrequencyToken.Value<int>();
+            }
+            else
+            {
+                throw new ArgumentException($"Missing required fields in {GetType().Name} config.");
+            }
         }
 
         /// <summary>

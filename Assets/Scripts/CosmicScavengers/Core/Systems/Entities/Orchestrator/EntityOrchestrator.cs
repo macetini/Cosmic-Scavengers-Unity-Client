@@ -172,14 +172,8 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             entity.TraitsContainer.transform
                         );
 
-                        if (traitConfig["data"] is JObject specificData)
-                        {
-                            traitInstance.Initialize(entity, specificData);
-                        }
-                        else
-                        {
-                            traitInstance.Initialize(entity);
-                        }
+                        //if (traitConfig["data"] is JObject specificData)
+                        traitInstance.Initialize(entity, traitConfig);
 
                         traits.Add(traitInstance);
                     }
