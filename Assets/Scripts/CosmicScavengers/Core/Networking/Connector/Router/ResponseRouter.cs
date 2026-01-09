@@ -14,15 +14,15 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
     /// </summary>
     public class ResponseRouter : MonoBehaviour
     {
-        [Header("Dependencies")]
-        [SerializeField]
-        [Tooltip("The ClientConnector responsible for low-level network communication.")]
-        private ClientConnector clientConnector;
-
         [Header("Channels Configuration")]
         [Tooltip("Inbound channel for incoming networking messages.")]
         [SerializeField]
         private NetworkingInboundChannel inboundChannel;
+
+        [Header("Dependencies")]
+        [SerializeField]
+        [Tooltip("The ClientConnector responsible for low-level network communication.")]
+        private ClientConnector clientConnector;
 
         void Awake()
         {

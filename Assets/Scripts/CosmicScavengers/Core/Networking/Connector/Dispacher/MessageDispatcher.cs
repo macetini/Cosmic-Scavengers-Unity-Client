@@ -9,15 +9,15 @@ namespace CosmicScavengers.Core.Networking.Connector.Dispatcher
     /// </summary>
     public class MessageDispatcher : MonoBehaviour
     {
-        [Header("Dependencies")]
-        [SerializeField]
-        [Tooltip("The ClientConnector responsible for low-level network communication.")]
-        private ClientConnector clientConnector;
-
         [Header("Channel Configuration")]
         [SerializeField]
         [Tooltip("Inbound channel for incoming requests.")]
         private NetworkingOutboundChannel outboundChannel;
+
+        [Header("Dependencies")]
+        [SerializeField]
+        [Tooltip("The ClientConnector responsible for low-level network communication.")]
+        private ClientConnector clientConnector;
 
         void Awake()
         {
