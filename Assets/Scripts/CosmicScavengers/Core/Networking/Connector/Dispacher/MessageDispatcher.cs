@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Networking.Commands.Channel.Request;
+using CosmicScavengers.Core.Networking.Commands.Channel.Outbound;
 using CosmicScavengers.Core.Networking.Commands.Data;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Dispatcher
         [Header("Channel Configuration")]
         [SerializeField]
         [Tooltip("Inbound channel for incoming requests.")]
-        private NetworkingRequestChannel networkingChannel;
+        private NetworkingOutboundChannel outboundChannel;
 
         void Awake()
         {
@@ -25,23 +25,25 @@ namespace CosmicScavengers.Core.Networking.Connector.Dispatcher
             {
                 Debug.LogError("[MessageDispatcher] ClientConnector reference is missing!");
             }
-            if (networkingChannel == null)
+            if (outboundChannel == null)
             {
-                Debug.LogError("[MessageDispatcher] NetworkingChannel reference is missing!");
+                Debug.LogError(
+                    "[MessageDispatcher] NetworkingOutboundChannel reference is missing!"
+                );
             }
         }
 
         void OnEnable()
         {
-            networkingChannel.AddListener(HandleRequest);
+            outboundChannel.AddListener(HandleRequest);
         }
 
         void OnDisable()
         {
-            networkingChannel.RemoveListener(HandleRequest);
+            outboundChannel.RemoveListener(HandleRequest);
         }
 
-        private void HandleRequest(BaseNetworkCommand command, RequestData data)
+        private void HandleRequest(BaseNetworkCommand command, OutboundData data)
         {
             byte[] buffer = data.RawBytes;
             int bufferLength = data.DataLength;

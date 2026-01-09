@@ -4,6 +4,7 @@ using CosmicScavengers.Core.Systems.Base.Traits.Data;
 using CosmicScavengers.Core.Systems.Data.Entities;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
+using CosmicScavengers.Core.Systems.Entities.Services;
 using CosmicScavengers.Core.Systems.Traits.Data.Meta;
 using CosmicScavengers.Core.Systems.Traits.Registry;
 using CosmicScavengers.Core.Systems.Traits.Updater;
@@ -34,6 +35,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private TraitRegistry traitRegistry;
 
+        [Tooltip("Services for managing entities.")]
+        [SerializeField]
+        private EntitiesServices entitiesServices;
+
         [Header("Orchestrator Configuration")]
         [Tooltip("Traits updater responsible for trait update cycles.")]
         [SerializeField]
@@ -41,7 +46,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
         [Tooltip("Parent transform for spawned entities.")]
         [SerializeField]
-        private Transform entityParent;
+        private Transform entityParent; // TODO. TRANSFER SOMEWHERE ELSE
 
         private readonly Dictionary<long, IEntity> activeEntities = new();
         private const string TRAITS_KEY = "traits";
@@ -82,7 +87,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
             foreach (PlayerEntityProto entityData in syncResponse.Entities)
             {
-                SyncEntity(
+                SyncEntity( // TODO - Less arguments
                     entityData.Id,
                     entityData.BlueprintId,
                     new Vector3(entityData.PosX, entityData.PosY, entityData.PosZ),
@@ -96,7 +101,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         /// Synchronizes an entity based on network data.
         /// Spawns the entity if it doesn't exist, otherwise updates it.
         /// </summary>
-        public void SyncEntity(
+        public void SyncEntity( // TODO - Less arguments
             long id,
             string typeKey,
             Vector3 position,
@@ -235,7 +240,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             {
                 entity.OnRemoved();
                 if (entity is MonoBehaviour mb)
+                {
                     Destroy(mb.gameObject);
+                }
             }
             activeEntities.Clear();
         }

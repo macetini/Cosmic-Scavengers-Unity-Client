@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CosmicScavengers.Core.Networking.Commands.Channel.Response;
+using CosmicScavengers.Core.Networking.Commands.Channel.Inbound;
 using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Networking.Commands.Data.Meta;
@@ -16,8 +16,8 @@ namespace CosmicScavengers.Networking.Commands.Responses.Handler
     public class ResponseHandler : MonoBehaviour
     {
         [SerializeField]
-        [Tooltip("Channel to listen for response handlers.")]
-        NetworkingResponseChannel responseChannel;
+        [Tooltip("Channel to listen for inbound networking message handlers.")]
+        NetworkingInboundChannel inboundChannel;
 
         [Header("Registry Configuration")]
         [SerializeField]
@@ -47,7 +47,7 @@ namespace CosmicScavengers.Networking.Commands.Responses.Handler
 
         void Awake()
         {
-            if (responseChannel == null)
+            if (inboundChannel == null)
             {
                 Debug.LogError("ResponseChannel is not assigned in ResponseHandlers.");
             }
@@ -79,15 +79,15 @@ namespace CosmicScavengers.Networking.Commands.Responses.Handler
 
         void OnEnable()
         {
-            responseChannel.AddListener(RouteResponse);
+            inboundChannel.AddListener(RouteResponse);
         }
 
         void OnDisable()
         {
-            responseChannel.RemoveListener(RouteResponse);
+            inboundChannel.RemoveListener(RouteResponse);
         }
 
-        private void RouteResponse(BaseNetworkCommand command, ResponseData responseData)
+        private void RouteResponse(BaseNetworkCommand command, InboundData responseData)
         {
             switch (command.Type)
             {

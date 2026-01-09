@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
 using CosmicScavengers.Core.Extensions;
-using CosmicScavengers.Core.Networking.Commands.Channel.Response;
+using CosmicScavengers.Core.Networking.Commands.Channel.Inbound;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Networking.Commands.Data.Text;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
     /// Listens for high-level game events and translates them into network requests.
     /// This acts as a bridge between the game logic and the low-level ClientConnector.
     /// </summary>
-    public class CommandRouter : MonoBehaviour
+    public class ResponseRouter : MonoBehaviour
     {
         [Header("Dependencies")]
         [SerializeField]
@@ -20,18 +20,19 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
         private ClientConnector clientConnector;
 
         [Header("Channels Configuration")]
+        [Tooltip("Inbound channel for incoming networking messages.")]
         [SerializeField]
-        private NetworkingResponseChannel responseChannel;
+        private NetworkingInboundChannel inboundChannel;
 
         void Awake()
         {
             if (clientConnector == null)
             {
-                Debug.LogError("[NetworkRequestManager] ClientConnector reference is missing!");
+                Debug.LogError("[ResponseRouter] ClientConnector reference is missing!");
             }
-            if (responseChannel == null)
+            if (inboundChannel == null)
             {
-                Debug.LogError("[NetworkRequestManager] ResponseChannel reference is missing!");
+                Debug.LogError("[ResponseRouter] ResponseChannel reference is missing!");
             }
         }
 
@@ -51,7 +52,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
         {
             if (data == null || data.Length == 0)
             {
-                Debug.LogWarning("[NetworkRequestManager] Received empty binary message.");
+                Debug.LogWarning("[ResponseRouter] Received empty binary message.");
                 return;
             }
 
@@ -69,7 +70,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
             if (frameLength < MIN_PAYLOAD_SIZE || frameLength > data.Length - HEADER_SIZE_READ)
             {
                 Debug.LogError(
-                    $"[NetworkRequestManager] Invalid frame length ({frameLength} bytes). Expected size: >={MIN_PAYLOAD_SIZE} and <={data.Length - HEADER_SIZE_READ}"
+                    $"[ResponseRouter] Invalid frame length ({frameLength} bytes). Expected size: >={MIN_PAYLOAD_SIZE} and <={data.Length - HEADER_SIZE_READ}"
                 );
                 return;
             }
@@ -80,14 +81,14 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
             if (protobufLength > frameLength - sizeof(int))
             {
                 Debug.LogError(
-                    $"[NetworkRequestManager] Corrupt data: Protobuf length ({protobufLength}) exceeds remaining frame payload size."
+                    $"[ResponseRouter] Corrupt data: Protobuf length ({protobufLength}) exceeds remaining frame payload size."
                 );
                 return;
             }
 
             byte[] protobufData = reader.ReadBytes(protobufLength);
             NetworkBinaryCommand command = (NetworkBinaryCommand)commandCode;
-            responseChannel.Raise(command, new ResponseData(protobufData, protobufData.Length));
+            inboundChannel.Raise(command, new InboundData(protobufData, protobufData.Length));
         }
 
         private void HandleTextResponseMessage(string rawMessage)
@@ -95,7 +96,7 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
             string[] parts = rawMessage.Split('|');
             if (parts.Length < 1)
             {
-                Debug.LogWarning("[NetworkRequestManager] Received malformed text message.");
+                Debug.LogWarning("[ResponseRouter] Received malformed text message.");
                 return;
             }
 
@@ -103,13 +104,11 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
             NetworkTextCommand command = rawCommand.ToNetworkCommand();
             if (command == NetworkTextCommand.UNKNOWN)
             {
-                Debug.LogWarning(
-                    $"[NetworkRequestManager] Received unknown text command: {rawCommand}"
-                );
+                Debug.LogWarning($"[ResponseRouter] Received unknown text command: {rawCommand}");
                 return;
             }
             string[] dataParts = parts.Skip(1).ToArray();
-            responseChannel.Raise(command, new ResponseData(dataParts, dataParts.Length));
+            inboundChannel.Raise(command, new InboundData(dataParts, dataParts.Length));
         }
     }
 }

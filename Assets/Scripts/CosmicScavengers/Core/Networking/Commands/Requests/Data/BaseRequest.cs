@@ -1,5 +1,5 @@
 using System.IO;
-using CosmicScavengers.Core.Networking.Commands.Channel.Request;
+using CosmicScavengers.Core.Networking.Commands.Channel.Outbound;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
@@ -15,18 +15,17 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
         public bool Active => true;
 
         [Header("Channel Configuration")]
+        [Tooltip("Channel for outgoing networking messages.")]
         [SerializeField]
-        protected NetworkingRequestChannel networkingChannel;
+        protected NetworkingOutboundChannel outboundChannel;
 
         protected MemoryStream Stream;
 
         protected virtual void Awake()
         {
-            if (networkingChannel == null)
+            if (outboundChannel == null) // TODO - Find a way to show this error in the derived class - show a class name.
             {
-                Debug.LogError(
-                    $"[{gameObject.name}]: NetworkingRequestChannel is not assigned in BaseRequest."
-                );
+                Debug.LogError($"NetworkingOutboundChannel is not assigned in BaseRequest.");
             }
             Stream = new MemoryStream(4096); // TODO - Capacity should ideally come from a config
         }

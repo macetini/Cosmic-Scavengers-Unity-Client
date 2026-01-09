@@ -714,6 +714,7 @@ MonoBehaviour:
   playerEntitiesDataChannel: {fileID: 11400000, guid: ee33022407d2b674280a5070226a7050, type: 2}
   entityRegistry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
   traitRegistry: {fileID: 11400000, guid: 6c230d2a340db0944b7afed4f11600ee, type: 2}
+  entitiesServices: {fileID: 1885484042}
   traitsUpdater: {fileID: 98069127}
   entityParent: {fileID: 84648541}
 --- !u!4 &577005606
@@ -729,6 +730,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1885484041}
   - {fileID: 98069128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -808,7 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.NetworkRequestManager
   clientConnector: {fileID: 1956342392}
-  responseChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
+  inboundChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::MessageDispatcher
   clientConnector: {fileID: 1956342392}
-  networkingChannel: {fileID: 11400000, guid: 52c3c1c27495e2a458e9d284691d059e, type: 2}
+  outboundChannel: {fileID: 11400000, guid: 52c3c1c27495e2a458e9d284691d059e, type: 2}
 --- !u!1 &1715413817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,7 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8faec34a22dfb4a81239a034d0b6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::ResponseHandlers
-  responseChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
+  inboundChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
   binaryResponseRegistry: {fileID: 11400000, guid: 9ca9c9e6f4f081e448c332c8a6e25261, type: 2}
   textResponseRegistry: {fileID: 11400000, guid: 2a6dfcd6cbd95544d8f586afdc8350e9, type: 2}
   binaryHandlersContainer: {fileID: 712535648}
@@ -1193,7 +1195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d67f5b8d166d54409326f676007a57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Global.SelectionOrchestrator
-  entitySyncChannel: {fileID: 11400000, guid: 777de0ed6bd4ee641ba5ad0eb1f0054f, type: 2}
   entityLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1202,6 +1203,51 @@ MonoBehaviour:
     m_Bits: 128
   mainCamera: {fileID: 330585545}
   maxRaycastDistance: 500
+--- !u!1 &1885484040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1885484041}
+  - component: {fileID: 1885484042}
+  m_Layer: 0
+  m_Name: EntitiesServices
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1885484041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885484040}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 577005606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1885484042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885484040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a659cedde37d24fb7eb812b9bb3070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::EntitiesServices
+  requestChannel: {fileID: 11400000, guid: 4d9b9cdd415cd61469a9e03ea0b173cb, type: 2}
 --- !u!1 &1933745407
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fc9aebe5d08060439e8f17ec206981a, type: 3}
-  m_Name: NetworkingRequestChannel
+  m_Name: NetworkingOutboundChannel
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Channel.NetworkingRequestChannel

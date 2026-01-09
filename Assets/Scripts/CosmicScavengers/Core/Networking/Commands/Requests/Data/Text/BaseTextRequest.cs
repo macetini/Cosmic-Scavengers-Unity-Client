@@ -1,6 +1,6 @@
 using System.IO;
 using System.Text;
-using CosmicScavengers.Core.Networking.Commands.Channel.Request;
+using CosmicScavengers.Core.Networking.Commands.Channel.Outbound;
 using CosmicScavengers.Core.Networking.Commands.Data.Text;
 using CosmicScavengers.Core.Networking.Commands.Requests.Data;
 using UnityEngine;
@@ -108,8 +108,8 @@ namespace CosmicScavengers.Core.Networking.Commands.Request.Data.Text
             byte[] buffer = Stream.GetBuffer();
             int length = (int)Stream.Length;
 
-            RequestData data = new(buffer, length);
-            networkingChannel.Raise(Command, data);
+            OutboundData data = new(buffer, length);
+            outboundChannel.Raise(Command, data);
         }
 
         protected override void OnDestroy()
