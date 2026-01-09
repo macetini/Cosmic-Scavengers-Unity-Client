@@ -1,7 +1,7 @@
 using System;
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
+using CosmicScavengers.Core.Systems.Entity.Traits;
 
-namespace CosmicScavengers.Core.Systems.Traits.Registry.Meta
+namespace CosmicScavengers.Core.Systems.Entities.Traits.Registry.Meta
 {
     [Serializable]
     public class TraitEntry

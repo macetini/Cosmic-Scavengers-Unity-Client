@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 98069128}
   - component: {fileID: 98069127}
   m_Layer: 0
-  m_Name: TraitsUpdater
+  m_Name: TraitsProcessor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc41597f476f0b14c89258876247438d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Traits.Updater.TraitUpdater
+  traitsServices: {fileID: 276641015}
 --- !u!4 &98069128
 Transform:
   m_ObjectHideFlags: 0
@@ -305,9 +306,55 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 276641014}
   m_Father: {fileID: 577005606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &276641013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276641014}
+  - component: {fileID: 276641015}
+  m_Layer: 0
+  m_Name: TraitsService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &276641014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276641013}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 98069128}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &276641015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276641013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d518f5bf9f5e7848bb97f6b4065e57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Traits.Service.TraitsService
+  requestChannel: {fileID: 11400000, guid: 4d9b9cdd415cd61469a9e03ea0b173cb, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,8 +761,7 @@ MonoBehaviour:
   playerEntitiesDataChannel: {fileID: 11400000, guid: ee33022407d2b674280a5070226a7050, type: 2}
   entityRegistry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
   traitRegistry: {fileID: 11400000, guid: 6c230d2a340db0944b7afed4f11600ee, type: 2}
-  entitiesServices: {fileID: 1885484042}
-  traitsUpdater: {fileID: 98069127}
+  traitsProcessor: {fileID: 98069127}
   entityParent: {fileID: 84648541}
 --- !u!4 &577005606
 Transform:
@@ -730,7 +776,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1885484041}
   - {fileID: 98069128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -809,8 +854,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d51572ee56b2c14da3c7b71049e2961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.NetworkRequestManager
-  clientConnector: {fileID: 1956342392}
   inboundChannel: {fileID: 11400000, guid: 199524b9f1401e14a839c73a17d0c0bc, type: 2}
+  clientConnector: {fileID: 1956342392}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,8 +1112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f098e9df45f0d9c40b1fa6c92f2173ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::MessageDispatcher
-  clientConnector: {fileID: 1956342392}
   outboundChannel: {fileID: 11400000, guid: 52c3c1c27495e2a458e9d284691d059e, type: 2}
+  clientConnector: {fileID: 1956342392}
 --- !u!1 &1715413817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,51 +1248,6 @@ MonoBehaviour:
     m_Bits: 128
   mainCamera: {fileID: 330585545}
   maxRaycastDistance: 500
---- !u!1 &1885484040
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1885484041}
-  - component: {fileID: 1885484042}
-  m_Layer: 0
-  m_Name: EntitiesServices
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1885484041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885484040}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 577005606}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1885484042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885484040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a659cedde37d24fb7eb812b9bb3070, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: CosmicScavenger::EntitiesServices
-  requestChannel: {fileID: 11400000, guid: 4d9b9cdd415cd61469a9e03ea0b173cb, type: 2}
 --- !u!1 &1933745407
 GameObject:
   m_ObjectHideFlags: 0

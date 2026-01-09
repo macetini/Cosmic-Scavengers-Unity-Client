@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
-using CosmicScavengers.Core.Systems.Data.Entities;
+using CosmicScavengers.Core.Systems.Entities.Base;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
-using CosmicScavengers.Core.Systems.Entities.Services;
-using CosmicScavengers.Core.Systems.Traits.Data.Meta;
-using CosmicScavengers.Core.Systems.Traits.Registry;
-using CosmicScavengers.Core.Systems.Traits.Updater;
+using CosmicScavengers.Core.Systems.Entities.Traits.Registry;
+using CosmicScavengers.Core.Systems.Entity.Traits;
+using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
+using CosmicScavengers.Core.Systems.Traits.Processor;
 using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.Entities;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -35,14 +34,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private TraitRegistry traitRegistry;
 
-        [Tooltip("Services for managing entities.")]
-        [SerializeField]
-        private EntitiesServices entitiesServices;
-
         [Header("Orchestrator Configuration")]
-        [Tooltip("Traits updater responsible for trait update cycles.")]
+        [Tooltip("Traits processor responsible for trait update and synchronization cycles.")]
         [SerializeField]
-        private TraitsUpdater traitsUpdater;
+        private TraitsProcessor traitsProcessor;
 
         [Tooltip("Parent transform for spawned entities.")]
         [SerializeField]
@@ -51,7 +46,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         private readonly Dictionary<long, IEntity> activeEntities = new();
         private const string TRAITS_KEY = "traits";
 
-        void Start()
+        void Awake()
         {
             if (playerEntitiesDataChannel == null)
             {
@@ -66,6 +61,14 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             if (traitRegistry == null)
             {
                 Debug.LogError("[EntityOrchestrator] TraitRegistry reference is missing!");
+            }
+            if (traitsProcessor == null)
+            {
+                Debug.LogError("[EntityOrchestrator] TraitsProcessor reference is missing!");
+            }
+            if (entityParent == null)
+            {
+                Debug.LogError("[EntityOrchestrator] EntityParent reference is missing!");
             }
         }
 
@@ -135,7 +138,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             }
 
             BaseEntity spawnedEntity = Instantiate(entityPrefab, position, rotation, entityParent);
-            spawnedEntity.LinkOrchestrator(this);
+            spawnedEntity.LinkTraitsProcessor(traitsProcessor);
 
             spawnedEntity.Id = id;
             activeEntities.Add(id, spawnedEntity);
@@ -190,7 +193,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             }
         }
 
-        private void UpdateEntityInstance(
+        private void UpdateEntityInstance( // TODO - Finish this.
             IEntity entity,
             Vector3 position,
             Quaternion rotation,
@@ -206,13 +209,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             {
                 //entity.Traits = GetEntityTraits(stateData);
             }
-        }
-
-        public void RequestEntityTraitSync(IEntity entity, ITrait trait)
-        {
-            Debug.Log(
-                $"[EntityOrchestrator] Requesting trait sync for {trait.GetType().Name} on entity {entity.Id}"
-            );
         }
 
         /// <summary>

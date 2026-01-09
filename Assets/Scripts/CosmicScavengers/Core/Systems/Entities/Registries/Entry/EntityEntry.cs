@@ -1,7 +1,7 @@
 using System;
-using CosmicScavengers.Core.Systems.Data.Entities;
+using CosmicScavengers.Core.Systems.Entities.Base;
 
-namespace CosmicScavengers.Core.Systems.Entities.Registry.Meta
+namespace CosmicScavengers.Core.Systems.Entities.Registry.Entry
 {
     /// <summary>
     /// Represents a mapping between a unique string key and a corresponding Prefab.

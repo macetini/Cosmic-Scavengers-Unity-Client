@@ -1,9 +1,9 @@
 using CosmicScavengers.Core.Networking.Commands.Requests.Channel;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Entities.Services
+namespace CosmicScavengers.Core.Systems.Entities.Traits.Service
 {
-    public class EntitiesService : MonoBehaviour
+    public class TraitsService : MonoBehaviour
     {
         [Header("Channel Configuration")]
         [SerializeField]
@@ -13,7 +13,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Services
         {
             if (requestChannel == null)
             {
-                Debug.LogError("[EntitiesService] RequestChannel reference is missing!");
+                Debug.LogError("[TraitsService] RequestChannel reference is missing!");
             }
         }
     }

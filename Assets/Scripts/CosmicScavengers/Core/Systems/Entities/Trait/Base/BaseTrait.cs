@@ -1,10 +1,10 @@
 using System;
 using CosmicScavengers.Core.Systems.Entities.Meta;
-using CosmicScavengers.Core.Systems.Traits.Data.Meta;
+using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Base.Traits.Data
+namespace CosmicScavengers.Core.Systems.Entity.Traits
 {
     /// <summary>
     /// Abstract base class that removes boilerplate for all Entity Traits.

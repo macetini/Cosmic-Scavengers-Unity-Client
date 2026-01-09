@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Traits.Data.Meta;
+using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 
 namespace CosmicScavengers.Core.Systems.Entities.Meta
 {

@@ -1,11 +1,17 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Traits.Data.Meta;
+using CosmicScavengers.Core.Systems.Entities.Meta;
+using CosmicScavengers.Core.Systems.Entities.Traits.Service;
+using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Traits.Updater
+namespace CosmicScavengers.Core.Systems.Traits.Processor
 {
-    public class TraitsUpdater : MonoBehaviour
+    public class TraitsProcessor : MonoBehaviour
     {
+        [Tooltip("Services for managing entities.")]
+        [SerializeField]
+        private TraitsService traitsServices;
+
         private readonly List<ITrait> highPriorityTraits = new();
         private readonly List<ITrait> throttledTraits = new();
         private int frameCount;
@@ -32,6 +38,13 @@ namespace CosmicScavengers.Core.Systems.Traits.Updater
         {
             highPriorityTraits.Remove(trait);
             throttledTraits.Remove(trait);
+        }
+
+        public void RequestEntityTraitSync(IEntity entity, ITrait trait)
+        {
+            Debug.Log(
+                $"[EntityOrchestrator] Requesting trait sync for {trait.GetType().Name} on entity {entity.Id}"
+            );
         }
 
         void Update()

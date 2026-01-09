@@ -1,7 +1,7 @@
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 
-namespace CosmicScavengers.Core.Systems.Traits.Data.Meta
+namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
 {
     /// <summary>
     /// Base interface for all Entity Traits.

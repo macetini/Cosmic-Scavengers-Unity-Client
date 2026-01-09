@@ -1,4 +1,4 @@
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
+using CosmicScavengers.Core.Systems.Entity.Traits;
 using UnityEngine;
 
 namespace CosmicScavengers.GamePlay.Traits.Archetypes

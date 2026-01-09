@@ -1,17 +1,17 @@
 using System.Collections.Generic;
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
-using CosmicScavengers.Core.Systems.Traits.Registry.Meta;
+using CosmicScavengers.Core.Systems.Entities.Base;
+using CosmicScavengers.Core.Systems.Entities.Registry.Entry;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Traits.Registry
+namespace CosmicScavengers.Core.Systems.Entities.Registry
 {
-    [CreateAssetMenu(menuName = "Registry/TraitRegistry")]
-    public class TraitRegistry : ScriptableObject
+    [CreateAssetMenu(menuName = "Registry/EntityRegistry")]
+    public class EntityRegistry : ScriptableObject
     {
-        public List<TraitEntry> Entries = new();
-        private readonly Dictionary<string, BaseTrait> lookUp = new();
+        public List<EntityEntry> Entries = new();
+        private readonly Dictionary<string, BaseEntity> lookUp = new();
 
-        public BaseTrait GetPrefab(string key)
+        public BaseEntity GetPrefab(string key)
         {
             if (lookUp.Count == 0)
             {

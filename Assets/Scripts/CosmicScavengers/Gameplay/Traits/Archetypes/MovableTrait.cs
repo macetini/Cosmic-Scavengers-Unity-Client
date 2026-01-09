@@ -1,5 +1,5 @@
 using System;
-using CosmicScavengers.Core.Systems.Base.Traits.Data;
+using CosmicScavengers.Core.Systems.Entity.Traits;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;

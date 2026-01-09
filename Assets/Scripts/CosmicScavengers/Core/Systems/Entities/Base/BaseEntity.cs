@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Meta;
-using CosmicScavengers.Core.Systems.Entities.Orchestrator;
-using CosmicScavengers.Core.Systems.Traits.Data.Meta;
+using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
+using CosmicScavengers.Core.Systems.Traits.Processor;
 using UnityEngine;
 
-namespace CosmicScavengers.Core.Systems.Data.Entities
+namespace CosmicScavengers.Core.Systems.Entities.Base
 {
     /// <summary>
     /// The "Boilerplate Remover".
@@ -42,30 +42,27 @@ namespace CosmicScavengers.Core.Systems.Data.Entities
         public GameObject TraitsContainer;
         private readonly Dictionary<Type, ITrait> traitCache = new();
 
-        /// <summary>
-        /// The orchestrator managing this entity.
-        /// </summary>
-        private EntityOrchestrator orchestrator;
+        private TraitsProcessor traitsProcessor;
 
         /// <summary>
         /// Links this entity to its managing orchestrator.
         /// Called once by the EntityOrchestrator immediately after instantiation.
         /// </summary>
-        public void LinkOrchestrator(EntityOrchestrator orchestrator)
+        public void LinkTraitsProcessor(TraitsProcessor traitsProcessor)
         {
-            this.orchestrator = orchestrator;
+            this.traitsProcessor = traitsProcessor;
         }
 
         public void RequestTraitSync(ITrait trait)
         {
-            if (orchestrator == null)
+            if (traitsProcessor == null)
             {
                 Debug.LogError(
-                    $"[{gameObject.name}] Attempted to request trait sync on an entity id '{Id}' not managed by an orchestrator."
+                    $"[BaseEntity] Attempted to request trait sync on an Entity Id '{Id}' not managed by an orchestrator."
                 );
                 return;
             }
-            orchestrator.RequestEntityTraitSync(this, trait);
+            traitsProcessor.RequestEntityTraitSync(this, trait);
         }
 
         public void RebuildTraitCache()
