@@ -1,6 +1,7 @@
 using CosmicScavengers.Core.Extensions;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Networking.Request.Data.Binary;
+using CosmicScavengers.Core.Systems.Utils.Scale4f;
 using UnityEngine;
 
 namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
@@ -27,9 +28,9 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
             if (
                 parameters[0] is not long entityId
                 || parameters[1] is not Vector3 position
-                || parameters[2] is not float
-                || parameters[3] is not float
-                || parameters[4] is not float
+                || parameters[2] is not float movementSpeed
+                || parameters[3] is not float rotationSpeed
+                || parameters[4] is not float stoppingDistance
             )
             {
                 Debug.LogError(
@@ -38,15 +39,23 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
                 return false;
             }
 
+            long scaledX = DeterministicUtils.ToUnscaled(position.x);
+            long scaledY = DeterministicUtils.ToUnscaled(position.y);
+            long scaledZ = DeterministicUtils.ToUnscaled(position.z);
+
+            long scaledMovementSpeed = DeterministicUtils.ToUnscaled(movementSpeed);
+            long scaledRotationSpeed = DeterministicUtils.ToUnscaled(rotationSpeed);
+            long scaledStoppingDistance = DeterministicUtils.ToUnscaled(stoppingDistance);
+
             Writer.WriteLong(entityId);
 
-            Writer.WriteFloat(position.x);
-            Writer.WriteFloat(position.y);
-            Writer.WriteFloat(position.z);
+            Writer.WriteLong(scaledX);
+            Writer.WriteLong(scaledY);
+            Writer.WriteLong(scaledZ);
 
-            Writer.WriteFloat((float)parameters[2]); // MovementSpeed
-            Writer.WriteFloat((float)parameters[3]); // RotationSpeed
-            Writer.WriteFloat((float)parameters[4]); // StoppingDistance
+            Writer.WriteLong(scaledMovementSpeed);
+            Writer.WriteLong(scaledRotationSpeed);
+            Writer.WriteLong(scaledStoppingDistance);
 
             Debug.Log($"[Network] Packed Move Request for Entity {entityId} to {position}");
 
