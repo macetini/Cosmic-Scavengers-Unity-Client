@@ -6,7 +6,7 @@ using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace CosmicScavengers.GamePlay.Traits.Archetypes
+namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
 {
     /// <summary>
     /// A modular "Trait" that adds movement capability to a GameObject.

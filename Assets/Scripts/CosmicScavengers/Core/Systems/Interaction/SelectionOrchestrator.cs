@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Base;
-using CosmicScavengers.GamePlay.Traits.Archetypes;
+using CosmicScavengers.GamePlay.Entities.Traits.Archetypes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
