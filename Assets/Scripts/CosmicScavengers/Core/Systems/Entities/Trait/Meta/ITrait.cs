@@ -1,3 +1,4 @@
+using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 
@@ -37,6 +38,9 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// <param name="owner">Entity that owns the trait.</param>
         /// <param name="config">Trait config data to be parsed.</param>
         void Initialize(IEntity owner, JObject config);
+
+        BaseNetworkCommand GetSyncCommand();
+        object[] GetSyncPayload();
 
         /// <summary>
         /// The main simulation loop for the trait.

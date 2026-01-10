@@ -1,4 +1,6 @@
 using System;
+using CosmicScavengers.Core.Networking.Commands.Data;
+using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Systems.Entity.Traits;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -37,6 +39,22 @@ namespace CosmicScavengers.GamePlay.Traits.Archetypes
         [SerializeField]
         private Vector3 targetPosition;
 
+        public override BaseNetworkCommand GetSyncCommand()
+        {
+            return NetworkBinaryCommand.REQUEST_ENTITY_MOVE_C;
+        }
+
+        public override object[] GetSyncPayload()
+        {
+            return new object[]
+            {
+                targetPosition,
+                settings.MovementSpeed,
+                settings.RotationSpeed,
+                settings.StoppingDistance,
+            };
+        }
+
         protected override void OnInitialize()
         {
             if (
@@ -44,6 +62,8 @@ namespace CosmicScavengers.GamePlay.Traits.Archetypes
             )
             {
                 settings = dataBlock.ToObject<MovableSettings>();
+                targetPosition = Vector3.zero;
+
                 Debug.Log(
                     $"[{Name}] Initialized: Speed={settings.MovementSpeed}, StopDist={settings.StoppingDistance}"
                 );

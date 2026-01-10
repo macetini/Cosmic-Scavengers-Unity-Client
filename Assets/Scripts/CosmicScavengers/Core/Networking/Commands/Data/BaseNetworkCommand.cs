@@ -14,7 +14,7 @@ namespace CosmicScavengers.Core.Networking.Commands.Data
     {
         public NetworkBinaryCommand BinaryCommand { get; }
         public NetworkTextCommand TextCommand { get; }
-        public CommandType Type { get; }
+        public CommandType Type { get; }        
 
         public BaseNetworkCommand(NetworkBinaryCommand binaryCommand)
         {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Meta;
+using CosmicScavengers.Core.Systems.Entities.Traits.Meta;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
-using CosmicScavengers.Core.Systems.Traits.Processor;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Base
@@ -42,13 +42,13 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
         public GameObject TraitsContainer;
         private readonly Dictionary<Type, ITrait> traitCache = new();
 
-        private TraitsProcessor traitsProcessor;
+        private ITraitsProcessor traitsProcessor;
 
         /// <summary>
         /// Links this entity to its managing orchestrator.
         /// Called once by the EntityOrchestrator immediately after instantiation.
         /// </summary>
-        public void LinkTraitsProcessor(TraitsProcessor traitsProcessor)
+        public void LinkTraitsProcessor(ITraitsProcessor traitsProcessor)
         {
             this.traitsProcessor = traitsProcessor;
         }
@@ -62,7 +62,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
                 );
                 return;
             }
-            traitsProcessor.RequestEntityTraitSync(this, trait);
+            traitsProcessor.RequestSync(trait);
         }
 
         public void RebuildTraitCache()
@@ -125,7 +125,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
                     return trait;
                 }
             }
-
             return null;
         }
 

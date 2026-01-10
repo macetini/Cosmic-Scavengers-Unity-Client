@@ -176,7 +176,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                             );
                             continue;
                         }
-
                         BaseTrait traitInstance = Instantiate(
                             traitPrefab,
                             entity.TraitsContainer.transform

@@ -1,4 +1,6 @@
 using System;
+using CosmicScavengers.Core.Networking.Commands.Data;
+using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -11,8 +13,8 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
     /// </summary>
     public abstract class BaseTrait : MonoBehaviour, ITrait
     {
-        private const string PRIORITY = "priority";
-        private const string UPDATE_FREQUENCY = "update_frequency";
+        private const string PRIORITY_KEY = "priority";
+        private const string UPDATE_FREQUENCY_KEY = "update_frequency";
 
         [Header("Visual Feedback")]
         [SerializeField]
@@ -54,6 +56,16 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
             Owner.RequestTraitSync(this);
         }
 
+        public virtual BaseNetworkCommand GetSyncCommand()
+        {
+            return NetworkBinaryCommand.UNKNOWN;
+        }
+
+        public virtual object[] GetSyncPayload()
+        {
+            return null;
+        }
+
         public void Initialize(IEntity owner, JObject config)
         {
             SetOwner(owner);
@@ -80,8 +92,8 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
                 );
 
             if (
-                Config.TryGetValue(PRIORITY, out JToken priorityToken)
-                && Config.TryGetValue(UPDATE_FREQUENCY, out JToken updateFrequencyToken)
+                Config.TryGetValue(PRIORITY_KEY, out JToken priorityToken)
+                && Config.TryGetValue(UPDATE_FREQUENCY_KEY, out JToken updateFrequencyToken)
             )
             {
                 Priority = priorityToken.Value<int>();
