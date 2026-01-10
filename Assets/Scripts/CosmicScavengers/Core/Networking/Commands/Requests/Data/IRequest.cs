@@ -10,7 +10,7 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
         /// <summary>
         /// Whether the request is currently allowed to be sent.
         /// </summary>
-        bool Active { get; }
+        //bool Active { set; get; }
 
         /// <summary>
         /// Triggers the network request with the provided parameters.

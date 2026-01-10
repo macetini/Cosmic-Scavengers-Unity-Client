@@ -31,8 +31,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Traits.Service
         public void RequestTraitSync(IEntity owner, ITrait trait)
         {
             if (requestChannel == null)
+            {
                 return;
-
+            }
             object[] traitPayload = trait.GetSyncPayload() ?? Array.Empty<object>();
 
             object[] finalPayload = new object[traitPayload.Length + 1];
@@ -43,7 +44,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Traits.Service
             }
 
             var command = trait.GetSyncCommand();
-            requestChannel.Raise(command, traitPayload);
+            requestChannel.Raise(command, finalPayload);
         }
 
         /// <summary>

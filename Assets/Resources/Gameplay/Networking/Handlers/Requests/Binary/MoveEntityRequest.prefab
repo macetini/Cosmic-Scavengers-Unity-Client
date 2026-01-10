@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7692925581262883468
+--- !u!1 &7777929872675198409
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3113958136840254357}
-  - component: {fileID: 3740964968978222026}
+  - component: {fileID: 753492723587536301}
+  - component: {fileID: 4597046251186285848}
   m_Layer: 0
-  m_Name: ConnectRequest
+  m_Name: MoveEntityRequest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3113958136840254357
+--- !u!4 &753492723587536301
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7692925581262883468}
+  m_GameObject: {fileID: 7777929872675198409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,17 +32,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3740964968978222026
+--- !u!114 &4597046251186285848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7692925581262883468}
+  m_GameObject: {fileID: 7777929872675198409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd86f46591143644089c4140fa9c093e, type: 3}
+  m_Script: {fileID: 11500000, guid: e0341ad42673e8d488eba944169ebf20, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Networking.Requests.Derived.Text.ConnectRequest
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary.MoveEntityRequest
   Active: 1
   outboundChannel: {fileID: 11400000, guid: 52c3c1c27495e2a458e9d284691d059e, type: 2}

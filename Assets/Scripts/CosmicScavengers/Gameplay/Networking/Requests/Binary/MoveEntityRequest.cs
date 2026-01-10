@@ -1,3 +1,4 @@
+using CosmicScavengers.Core.Extensions;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Networking.Request.Data.Binary;
 using UnityEngine;
@@ -15,15 +16,21 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
         /// <param name="parameters">Expects [long entityId, Vector3 targetPosition].</param>
         protected override bool PackParameters(object[] parameters)
         {
-            if (parameters == null || parameters.Length < 2)
+            if (parameters == null || parameters.Length != 5)
             {
                 Debug.LogError(
-                    $"[{name}] Missing parameters. Expected (long)ID and (Vector3)Target."
+                    $"[{name}] Missing parameters. Expecting 5 parameters: [long entityId, Vector3 targetPosition, float movementSpeed, float rotationSpeed, float stoppingDistance]."
                 );
                 return false;
             }
 
-            if (parameters[0] is not long entityId || parameters[1] is not Vector3 position)
+            if (
+                parameters[0] is not long entityId
+                || parameters[1] is not Vector3 position
+                || parameters[2] is not float
+                || parameters[3] is not float
+                || parameters[4] is not float
+            )
             {
                 Debug.LogError(
                     $"[{name}] Parameter type mismatch. Check your RequestChannel.Raise call."
@@ -31,11 +38,15 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
                 return false;
             }
 
-            Writer.Write(entityId);
+            Writer.WriteLong(entityId);
 
-            Writer.Write(position.x);
-            Writer.Write(position.y);
-            Writer.Write(position.z);
+            Writer.WriteFloat(position.x);
+            Writer.WriteFloat(position.y);
+            Writer.WriteFloat(position.z);
+
+            Writer.WriteFloat((float)parameters[2]); // MovementSpeed
+            Writer.WriteFloat((float)parameters[3]); // RotationSpeed
+            Writer.WriteFloat((float)parameters[4]); // StoppingDistance
 
             Debug.Log($"[Network] Packed Move Request for Entity {entityId} to {position}");
 

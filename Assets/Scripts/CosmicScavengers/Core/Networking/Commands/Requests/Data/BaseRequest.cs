@@ -12,7 +12,7 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
     {
         [Header("Status")]
         [Tooltip("Whether this request is currently active and should be processed.")]
-        public bool Active => true;
+        public bool Active = true;
 
         [Header("Channel Configuration")]
         [Tooltip("Channel for outgoing networking messages.")]

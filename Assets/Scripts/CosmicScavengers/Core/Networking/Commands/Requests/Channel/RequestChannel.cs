@@ -29,7 +29,14 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Channel
         /// </summary>
         public void Raise(BaseNetworkCommand command, object arg)
         {
-            base.Raise(command, new object[] { arg });
+            if (arg is object[] arr)
+            {
+                base.Raise(command, arr);
+            }
+            else
+            {
+                base.Raise(command, new object[] { arg });
+            }
         }
 
         /// <summary>
