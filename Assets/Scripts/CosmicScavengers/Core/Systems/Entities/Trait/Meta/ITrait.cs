@@ -23,6 +23,8 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// </summary>
         void ClearSync();
 
+        bool Active { get; }
+
         /// <summary>
         /// Controls whether the OnUpdate logic is active.
         /// </summary>

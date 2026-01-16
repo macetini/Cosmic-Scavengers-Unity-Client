@@ -141,7 +141,10 @@ namespace CosmicScavengers.Core.Systems.Traits.Processor
                 if (frameCount % trait.UpdateFrequency == 0)
                 {
                     // Normalize delta time so logic remains consistent regardless of frequency
-                    trait.OnUpdate(deltaTime * trait.UpdateFrequency);
+                    if (trait.Active)
+                    {
+                        trait.OnUpdate(deltaTime * trait.UpdateFrequency);
+                    }
                 }
             }
         }

@@ -10,8 +10,8 @@ namespace CosmicScavengers.Core.Networking.Commands.Data.Binary
         [Description("Unknown command.")]
         UNKNOWN = 0x0000,
 
-        [Description("Request the current state of the game world.")]
-        REQUEST_WORLD_STATE_C = 0x0001,
+        [Description("Request the initial state of the game world.")]
+        REQUEST_PLAYER_INIT_STATE_C = 0x0001,
 
         [Description("Send the current state of the game world.")]
         REQUEST_WORLD_STATE_S = 0x0002,

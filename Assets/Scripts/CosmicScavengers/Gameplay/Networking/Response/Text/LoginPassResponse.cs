@@ -49,9 +49,8 @@ namespace CosmicScavengers.Gameplay.Networking.Responses.Data
 
         private void InitPlayerData(long playerId)
         {
-            Debug.Log("[LoginPassHandler] Initializing player data for Player ID: " + playerId);
-            requestChannel.Raise(NetworkBinaryCommand.REQUEST_WORLD_STATE_C, playerId);
-            requestChannel.Raise(NetworkBinaryCommand.REQUEST_PLAYER_ENTITIES_C, playerId);
+            Debug.Log("[LoginPassHandler] Initializing all data for Player ID: " + playerId);
+            requestChannel.Raise(NetworkBinaryCommand.REQUEST_PLAYER_INIT_STATE_C, playerId);
         }
     }
 }

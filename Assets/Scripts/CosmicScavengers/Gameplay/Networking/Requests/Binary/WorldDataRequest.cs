@@ -8,7 +8,7 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
     public class WorldStateRequest : BaseBinaryRequest
     {
         protected override NetworkBinaryCommand Command =>
-            NetworkBinaryCommand.REQUEST_WORLD_STATE_C;
+            NetworkBinaryCommand.REQUEST_PLAYER_INIT_STATE_C;
 
         protected override bool PackParameters(object[] parameters)
         {

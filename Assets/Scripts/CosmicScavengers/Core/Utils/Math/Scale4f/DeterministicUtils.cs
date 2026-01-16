@@ -14,7 +14,7 @@ namespace CosmicScavengers.Core.Systems.Utils.Scale4f
         /// Converts a Unity float to a deterministic unscaled long.
         /// Example: 1.23456f -> 12345L
         /// </summary>
-        public static long ToUnscaled(float value)
+        public static long ToScaled(float value)
         {
             return (long)Math.Round(value * SCALE_FACTOR);
         }
@@ -25,6 +25,11 @@ namespace CosmicScavengers.Core.Systems.Utils.Scale4f
         public static float FromUnscaled(long unscaledValue)
         {
             return (float)unscaledValue / SCALE_FACTOR;
+        }
+
+        public static float FromScaled(long scaledValue)
+        {
+            return (float)(scaledValue * SCALE_FACTOR);
         }
     }
 }

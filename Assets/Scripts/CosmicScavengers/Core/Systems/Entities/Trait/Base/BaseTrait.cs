@@ -37,6 +37,8 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
         /// </summary>
         public bool IsEnabled { get; } = true;
 
+        public bool Active { get; protected set; } = true;
+
         public IEntity Owner { get; private set; }
         protected JObject Config;
         public int Priority { get; private set; }

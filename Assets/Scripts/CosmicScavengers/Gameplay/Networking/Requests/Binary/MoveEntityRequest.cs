@@ -39,13 +39,13 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
                 return false;
             }
 
-            long scaledX = DeterministicUtils.ToUnscaled(position.x);
-            long scaledY = DeterministicUtils.ToUnscaled(position.y);
-            long scaledZ = DeterministicUtils.ToUnscaled(position.z);
+            long scaledX = DeterministicUtils.ToScaled(position.x);
+            long scaledY = DeterministicUtils.ToScaled(position.y);
+            long scaledZ = DeterministicUtils.ToScaled(position.z);
 
-            long scaledMovementSpeed = DeterministicUtils.ToUnscaled(movementSpeed);
-            long scaledRotationSpeed = DeterministicUtils.ToUnscaled(rotationSpeed);
-            long scaledStoppingDistance = DeterministicUtils.ToUnscaled(stoppingDistance);
+            long scaledMovementSpeed = DeterministicUtils.ToScaled(movementSpeed);
+            long scaledRotationSpeed = DeterministicUtils.ToScaled(rotationSpeed);
+            long scaledStoppingDistance = DeterministicUtils.ToScaled(stoppingDistance);
 
             Writer.WriteLong(entityId);
 
