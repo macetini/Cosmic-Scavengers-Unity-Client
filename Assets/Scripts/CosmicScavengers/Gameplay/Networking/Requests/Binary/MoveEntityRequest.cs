@@ -28,9 +28,9 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
             if (
                 parameters[0] is not long entityId
                 || parameters[1] is not Vector3 position
-                || parameters[2] is not float movementSpeed
-                || parameters[3] is not float rotationSpeed
-                || parameters[4] is not float stoppingDistance
+                || parameters[2] is not long movementSpeed
+                || parameters[3] is not long rotationSpeed
+                || parameters[4] is not long stoppingDistance
             )
             {
                 Debug.LogError(
@@ -43,21 +43,19 @@ namespace CosmicScavengers.Gameplay.Networking.Requests.Derived.Binary
             long scaledY = DeterministicUtils.ToScaled(position.y);
             long scaledZ = DeterministicUtils.ToScaled(position.z);
 
-            long scaledMovementSpeed = DeterministicUtils.ToScaled(movementSpeed);
-            long scaledRotationSpeed = DeterministicUtils.ToScaled(rotationSpeed);
-            long scaledStoppingDistance = DeterministicUtils.ToScaled(stoppingDistance);
-
             Writer.WriteLong(entityId);
 
             Writer.WriteLong(scaledX);
             Writer.WriteLong(scaledY);
             Writer.WriteLong(scaledZ);
 
-            Writer.WriteLong(scaledMovementSpeed);
-            Writer.WriteLong(scaledRotationSpeed);
-            Writer.WriteLong(scaledStoppingDistance);
+            Writer.WriteLong(movementSpeed);
+            Writer.WriteLong(rotationSpeed);
+            Writer.WriteLong(stoppingDistance);
 
-            Debug.Log($"[Network] Packed Move Request for Entity {entityId} to {position}");
+            Debug.Log(
+                $"[Network] Packed Move Request for Entity {entityId} to with scaled values Target: [X:{scaledX}, Y:{scaledY}, Z:{scaledZ}] - Movement Speed: [{movementSpeed}], Rotation Speed: [{rotationSpeed}], Stopping Distance: [{stoppingDistance}]"
+            );
 
             return true;
         }

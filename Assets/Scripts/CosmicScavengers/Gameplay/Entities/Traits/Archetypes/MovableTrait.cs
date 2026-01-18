@@ -31,13 +31,13 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             }
 
             [JsonProperty("movement_speed")]
-            public float MovementSpeed;
+            public long MovementSpeed;
 
             [JsonProperty("rotation_speed")]
-            public float RotationSpeed;
+            public long RotationSpeed;
 
             [JsonProperty("stopping_distance")]
-            public float StoppingDistance;
+            public long StoppingDistance;
 
             [JsonProperty("status")]
             public StatusType CurrentStatus; // "IDLE" or "MOVING"
@@ -126,7 +126,7 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
                 }
 
                 Debug.Log(
-                    $"[{Name}] Initialized: Speed={settings.MovementSpeed}, StopDist={settings.StoppingDistance}"
+                    $"[{Name}] Initialized: Speed={settings.MovementSpeed}, RotationSpeed={settings.RotationSpeed}, topDist={settings.StoppingDistance}"
                 );
             }
             else
