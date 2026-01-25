@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="CosmicScavenger.csproj" />
+  <Project Path="PlayMode.csproj" />
+</Solution>

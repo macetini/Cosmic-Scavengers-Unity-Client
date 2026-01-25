@@ -66,7 +66,7 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Cosmic-Scavengers-Unity-Client.sln",
+    "dotnet.defaultSolution": "Cosmic-Scavengers-Unity-Client.slnx",
     "cSpell.words": [
         "Behaviours",
         "Bootstrapper",
