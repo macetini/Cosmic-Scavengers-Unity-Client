@@ -111,8 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Systems.Entities.Archetypes.UnitEntity
   type: MAIN_UNIT
-  traits: []
-  TraitsContainer: {fileID: 6896014420972236174}
+  traitsContainer: {fileID: 6896014420972236174}
 --- !u!65 &3091246214711957584
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -310,6 +310,51 @@ Transform:
   - {fileID: 276641014}
   m_Father: {fileID: 577005606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &192407262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192407264}
+  - component: {fileID: 192407263}
+  m_Layer: 0
+  m_Name: TraitFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &192407263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192407262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f2cb694822dba49878e082c49412fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Entities.Trait.Factory.TraitFactory
+  traitRegistry: {fileID: 11400000, guid: 6c230d2a340db0944b7afed4f11600ee, type: 2}
+--- !u!4 &192407264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192407262}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 577005606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &276641013
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CosmicScavenger::CosmicScavengers.Core.Systems.Entities.EntityService
   playerEntitiesDataChannel: {fileID: 11400000, guid: ee33022407d2b674280a5070226a7050, type: 2}
   entityRegistry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
-  traitRegistry: {fileID: 11400000, guid: 6c230d2a340db0944b7afed4f11600ee, type: 2}
+  traitFactory: {fileID: 192407263}
   traitsProcessor: {fileID: 98069127}
   entityParent: {fileID: 84648541}
 --- !u!4 &577005606
@@ -776,6 +821,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 192407264}
   - {fileID: 98069128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,5 +1,6 @@
 using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Systems.Entities.Meta;
+using Google.Protobuf;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 
 namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
@@ -30,7 +31,16 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// </summary>
         bool IsEnabled { get; }
 
-        IEntity Owner { get; }
+        /// <summary>
+        /// The Entity that owns the trait.
+        /// </summary>
+        IEntity Owner { get; set; }
+
+        /// <summary>
+        /// The ProtoData for the trait.
+        /// </summary>
+        IMessage ProtoData { set; }
+
         int Priority { get; }
         int UpdateFrequency { get; }
 
@@ -39,9 +49,18 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// </summary>
         /// <param name="owner">Entity that owns the trait.</param>
         /// <param name="config">Trait config data to be parsed.</param>
-        void Initialize(IEntity owner, JObject config);
+        void OnSpawned();
 
+        /// <summary>
+        /// Returns the network sync command. The command can be TEXT or BINARY,
+        /// but will in most cases be Binary. Used by the TraitsService to dispatch
+        ///  the command to the network.
+        /// </summary>
         BaseNetworkCommand GetSyncCommand();
+
+        /// <summary>
+        /// Returns the sync command and payload for the trait.
+        /// </summary>
         object[] GetSyncPayload();
 
         /// <summary>

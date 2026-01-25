@@ -4,6 +4,7 @@ using CosmicScavengers.Core.Networking.Mappers;
 using CosmicScavengers.Core.Systems.Entities.Base;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
+using CosmicScavengers.Core.Systems.Entities.Trait.Factory;
 using CosmicScavengers.Core.Systems.Entities.Traits.Registry;
 using CosmicScavengers.Core.Systems.Entity.Traits;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
@@ -35,15 +36,16 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private EntityRegistry entityRegistry;
 
-        [Tooltip("Registry containing trait prefabs.")]
+        [Header("Traits Configuration")]
         [SerializeField]
-        private TraitRegistry traitRegistry;
+        [Tooltip("Trait factory responsible for instantiating traits onto entities.")]
+        private TraitFactory traitFactory;
 
-        [Header("Orchestrator Configuration")]
         [Tooltip("Traits processor responsible for trait update and synchronization cycles.")]
         [SerializeField]
         private TraitsProcessor traitsProcessor;
 
+        [Header("Orchestrator Configuration")]
         [Tooltip("Parent transform for spawned entities.")]
         [SerializeField]
         private Transform entityParent; // TODO. TRANSFER SOMEWHERE ELSE
@@ -64,9 +66,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             {
                 Debug.LogError("[EntityOrchestrator] EntityRegistry reference is missing!");
             }
-            if (traitRegistry == null)
+            if (traitFactory == null)
             {
-                Debug.LogError("[EntityOrchestrator] TraitRegistry reference is missing!");
+                Debug.LogError("[EntityOrchestrator] TraitFactory reference is missing!");
             }
             if (traitsProcessor == null)
             {
@@ -125,7 +127,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             string typeKey = entityData.BlueprintId;
             Vector3 position = new(entityData.PosX, entityData.PosY, entityData.PosZ);
             Quaternion rotation = Quaternion.Euler(0, entityData.Rotation, 0);
-            //EntityTraitsProto traits
 
             /*if (activeEntities.TryGetValue(id, out var entity))
             {
@@ -162,17 +163,28 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             spawnedEntity.OnSpawned();
         }
 
-        private void SetEntityTraits(RepeatedField<TraitInstanceProto> traits, BaseEntity entity)
+        private void SetEntityTraits(
+            RepeatedField<TraitInstanceProto> traitProtos,
+            BaseEntity entity
+        )
         {
-            if (traits == null)
+            if (traitProtos == null)
             {
                 Debug.LogWarning($"[EntityOrchestrator] Entity {entity.Id} has no traits.");
                 return;
             }
 
+            List<IMessage> traitsProtoData = traitFactory.ParseTraitProtoData(traitProtos);
+            List<ITrait> traits = traitFactory.CreateAndAttachTraits(
+                traitsProtoData,
+                entity.TraitsContainer
+            );
+            entity.Traits = traits;
+
+            /*
             List<ITrait> activeTraits = new();
 
-            /*foreach (var traitInstance in traits)
+            foreach (var traitInstance in traits)
             {
                 // 1. Dynamic Unpack using our Mapper
                 IMessage protoMessage = traitProtobufMapper.MapFromProto(
@@ -191,7 +203,8 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                         activeTraits.Add(traitLogic);
                     }
                 }
-            }*/
+            }
+            */
 
             //entity.InitializeTraits(activeTraits);
 

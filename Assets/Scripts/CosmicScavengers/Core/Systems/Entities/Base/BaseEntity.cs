@@ -39,13 +39,20 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
             }
         }
 
+        [SerializeField]
+        [Tooltip("Container for all trait game objects attached to this entity.")]
+        private GameObject traitsContainer;
+        public Transform TraitsContainer
+        {
+            get => traitsContainer.transform;
+        }
+
         public Transform Transform
         {
             get => transformCache;
         }
         private Transform transformCache;
 
-        public GameObject TraitsContainer;
         private readonly Dictionary<Type, ITrait> traitCache = new();
 
         private ITraitsProcessor traitsProcessor;
@@ -88,7 +95,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
 
             for (int i = 0; i < traits.Count; i++)
             {
-                if (traits[i] == null)
+                ITrait trait = traits[i];
+                trait.Owner = this;
+
+                if (trait == null)
                 {
                     Debug.LogWarning(
                         $"[BaseEntity] Entity {Id} has a null trait at index {i}, skipping."
@@ -96,10 +106,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
                     continue;
                 }
 
-                Type traitType = traits[i].GetType();
+                Type traitType = trait.GetType();
                 if (!traitCache.ContainsKey(traitType))
                 {
-                    traitCache.Add(traitType, traits[i]);
+                    traitCache.Add(traitType, trait);
                 }
                 else
                 {

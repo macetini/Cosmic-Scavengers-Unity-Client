@@ -15,7 +15,7 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
     /// </summary>
     public class MovableTrait : BaseTrait
     {
-        private const string DATA_KEY = "data"; // TODO - Separate to config (investigate, what is the best way to do this?)
+        //private const string DATA_KEY = "data"; // TODO - Separate to config (investigate, what is the best way to do this?)
 
         private MovableTraitProto traitData = new()
         {
@@ -45,36 +45,15 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             MoveIntentProto intent = new()
             {
                 EntityId = Owner.Id,
-                /*RequestData = new MovementDataProto
-                {
-                    TargetX = DeterministicUtils.ToScaled(targetPosition.x),
-                    TargetY = DeterministicUtils.ToScaled(targetPosition.y),
-                    TargetZ = DeterministicUtils.ToScaled(targetPosition.z),
-
-                    MovementSpeed = traitData.Data.MovementSpeed,
-                    RotationSpeed = traitData.Data.RotationSpeed,
-                    StoppingDistance = traitData.Data.StoppingDistance,
-                },*/
+                //RequestData = new MoveIntentDataProto()
             };
 
             return new object[] { intent };
         }
 
-        protected override void OnInitialize()
+        protected override void Initialize()
         {
-            if (Config.TryGetValue(DATA_KEY, out JToken dataToken))
-            {
-                var parser = new JsonParser(
-                    JsonParser.Settings.Default.WithIgnoreUnknownFields(true)
-                );
-
-                traitData = parser.Parse<MovableTraitProto>(dataToken.ToString());
-                /*targetPosition = new Vector3(
-                    DeterministicUtils.FromScaled(traitData.Data.TargetX),
-                    DeterministicUtils.FromScaled(traitData.Data.TargetY),
-                    DeterministicUtils.FromScaled(traitData.Data.TargetZ)
-                );*/
-            }
+            // Parse IMessage protoData here
         }
 
         /// <summary>
