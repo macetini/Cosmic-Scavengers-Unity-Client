@@ -19,6 +19,9 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
         [SerializeField]
         protected NetworkingOutboundChannel outboundChannel;
 
+        /// <summary>
+        /// Internal buffer for the request.
+        /// </summary>
         protected MemoryStream Stream;
 
         protected virtual void Awake()
@@ -27,7 +30,7 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
             {
                 Debug.LogError($"NetworkingOutboundChannel is not assigned in BaseRequest.");
             }
-            Stream = new MemoryStream(4096); // TODO - Capacity should ideally come from a config
+            Stream = new MemoryStream(4096); // TODO - Capacity should ideally come from an external config
         }
 
         /// <summary>
@@ -42,7 +45,8 @@ namespace CosmicScavengers.Core.Networking.Commands.Requests.Data
         protected abstract bool PackParameters(T[] parameters);
 
         /// <summary>
-        /// Finalizes the internal buffer and broadcasts it via the NetworkingChannel.
+        /// Finalizes the internal buffer and broadcasts it via Event Channel.
+        /// Channel can be Networking or otherwise.
         /// </summary>
         protected abstract void Raise();
 

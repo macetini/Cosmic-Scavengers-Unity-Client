@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CosmicScavengers.Core.Networking.Mappers;
 using CosmicScavengers.Core.Systems.Entities.Base;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
@@ -7,8 +8,12 @@ using CosmicScavengers.Core.Systems.Entities.Traits.Registry;
 using CosmicScavengers.Core.Systems.Entity.Traits;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 using CosmicScavengers.Core.Systems.Traits.Processor;
+using CosmicScavengers.Core.Systems.Utils.Scale4f;
 using CosmicScavengers.Gameplay.Networking.Event.Channels.Data;
 using CosmicScavengers.Networking.Protobuf.Entities;
+using CosmicScavengers.Networking.Protobuf.Traits;
+using Google.Protobuf;
+using Google.Protobuf.Collections;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -43,8 +48,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private Transform entityParent; // TODO. TRANSFER SOMEWHERE ELSE
 
-        private readonly Dictionary<long, IEntity> activeEntities = new();
         private const string TRAITS_KEY = "traits";
+        private readonly Dictionary<long, IEntity> activeEntities = new();
+        private readonly TraitProtobufMapper traitProtobufMapper = new();
 
         void Awake()
         {
@@ -90,12 +96,21 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
             foreach (PlayerEntityProto entityData in syncResponse.Entities)
             {
-                SyncEntity( // TODO - Less arguments
+                Vector3 worldPos = new(
+                    DeterministicUtils.FromScaled(entityData.PosX),
+                    DeterministicUtils.FromScaled(entityData.PosY),
+                    DeterministicUtils.FromScaled(entityData.PosZ)
+                );
+
+                SyncEntity(
+                    /*
                     entityData.Id,
                     entityData.BlueprintId,
                     new Vector3(entityData.PosX, entityData.PosY, entityData.PosZ),
-                    Quaternion.Euler(0, entityData.Rotation, 0),
-                    entityData.StateData
+                    Quaternion.Euler(0, entityData.Rotation, 0) //,
+                    entityData.Traits
+                    */
+                    entityData
                 );
             }
         }
@@ -104,22 +119,22 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         /// Synchronizes an entity based on network data.
         /// Spawns the entity if it doesn't exist, otherwise updates it.
         /// </summary>
-        public void SyncEntity( // TODO - Less arguments
-            long id,
-            string typeKey,
-            Vector3 position,
-            Quaternion rotation,
-            string stateData
-        )
+        public void SyncEntity(PlayerEntityProto entityData)
         {
-            if (activeEntities.TryGetValue(id, out var entity))
+            long id = entityData.Id;
+            string typeKey = entityData.BlueprintId;
+            Vector3 position = new(entityData.PosX, entityData.PosY, entityData.PosZ);
+            Quaternion rotation = Quaternion.Euler(0, entityData.Rotation, 0);
+            //EntityTraitsProto traits
+
+            /*if (activeEntities.TryGetValue(id, out var entity))
             {
-                UpdateEntityInstance(entity, position, rotation, stateData);
+                UpdateEntityInstance(entity, position, rotation, traits);
             }
             else
-            {
-                SpawnEntityInstance(id, typeKey, position, rotation, stateData);
-            }
+            {*/
+            SpawnEntityInstance(id, typeKey, position, rotation, entityData.Traits);
+            //}
         }
 
         private void SpawnEntityInstance(
@@ -127,7 +142,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             string typeKey,
             Vector3 position,
             Quaternion rotation,
-            string stateData
+            RepeatedField<TraitInstanceProto> traits
         )
         {
             BaseEntity entityPrefab = entityRegistry.GetPrefab(typeKey);
@@ -143,15 +158,44 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             spawnedEntity.Id = id;
             activeEntities.Add(id, spawnedEntity);
 
-            if (!string.IsNullOrEmpty(stateData))
-            {
-                SetEntityTraits(stateData, spawnedEntity);
-            }
+            SetEntityTraits(traits, spawnedEntity);
             spawnedEntity.OnSpawned();
         }
 
-        private void SetEntityTraits(string stateData, BaseEntity entity)
+        private void SetEntityTraits(RepeatedField<TraitInstanceProto> traits, BaseEntity entity)
         {
+            if (traits == null)
+            {
+                Debug.LogWarning($"[EntityOrchestrator] Entity {entity.Id} has no traits.");
+                return;
+            }
+
+            List<ITrait> activeTraits = new();
+
+            /*foreach (var traitInstance in traits)
+            {
+                // 1. Dynamic Unpack using our Mapper
+                IMessage protoMessage = traitProtobufMapper.MapFromProto(
+                    traitInstance.TraitId,
+                    traitInstance.Data
+                );
+
+                if (protoMessage != null)
+                {
+                    // 2. Map the Proto Message to a Unity Logic Class (ITrait)
+                    // This is where you'd call a Factory or use further reflection
+                    ITrait traitLogic = TraitFactory.Create(traitInstance.TraitId, protoMessage);
+
+                    if (traitLogic != null)
+                    {
+                        activeTraits.Add(traitLogic);
+                    }
+                }
+            }*/
+
+            //entity.InitializeTraits(activeTraits);
+
+            /*
             try
             {
                 JObject json = JObject.Parse(stateData);
@@ -190,13 +234,14 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
             {
                 Debug.LogError($"[EntityOrchestrator] Failed to parse StateData: {ex.Message}");
             }
+            */
         }
 
         private void UpdateEntityInstance( // TODO - Finish this.
             IEntity entity,
             Vector3 position,
             Quaternion rotation,
-            string stateData
+            EntityTraitsProto traits
         )
         {
             if (entity is MonoBehaviour mb)
@@ -204,10 +249,10 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                 mb.transform.SetPositionAndRotation(position, rotation);
             }
 
-            if (!string.IsNullOrEmpty(stateData))
-            {
-                //entity.Traits = GetEntityTraits(stateData);
-            }
+            //if (!string.IsNullOrEmpty(stateData))
+            //{
+            //entity.Traits = GetEntityTraits(stateData);
+            //}
         }
 
         /// <summary>

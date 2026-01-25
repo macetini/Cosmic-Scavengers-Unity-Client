@@ -24,37 +24,41 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
     static EntitiesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5lbnRpdGllcy5wcm90bxofZ29vZ2xlL3Byb3RvYnVmL3RpbWVzdGFtcC5w",
-            "cm90byIkChZCbHVlcHJpbnRDYXRlZ29yeVByb3RvEgoKAmlkGAEgASgJIjQK",
-            "EUVudGl0eVN0YXR1c1Byb3RvEgoKAmlkGAEgASgJEhMKC2lzX3BoeXNpY2Fs",
-            "GAIgASgIIoEBChRFbnRpdHlCbHVlcHJpbnRQcm90bxIKCgJpZBgBIAEoCRIT",
-            "CgtjYXRlZ29yeV9pZBgCIAEoCRITCgtiYXNlX2hlYWx0aBgDIAEoBRIZChFp",
-            "c19zdGF0aWNfZGVmYXVsdBgEIAEoCBIYChBiZWhhdmlvcl9jb25maWdzGAUg",
-            "ASgJIpUDChFQbGF5ZXJFbnRpdHlQcm90bxIKCgJpZBgBIAEoAxIRCglwbGF5",
-            "ZXJfaWQYAiABKAMSEAoId29ybGRfaWQYAyABKAMSEQoJc2VjdG9yX2lkGAQg",
-            "ASgDEhQKDGJsdWVwcmludF9pZBgFIAEoCRIRCglzdGF0dXNfaWQYBiABKAkS",
-            "EwoLZW50aXR5X25hbWUYByABKAkSEQoJaXNfc3RhdGljGAggASgIEg0KBXBv",
-            "c194GAkgASgCEg0KBXBvc195GAogASgCEg0KBXBvc196GAsgASgCEhAKCHJv",
-            "dGF0aW9uGAwgASgCEg8KB2NodW5rX3gYDSABKAUSDwoHY2h1bmtfeRgOIAEo",
-            "BRIWCg5jdXJyZW50X2hlYWx0aBgPIAEoBRISCgpzdGF0ZV9kYXRhGBAgASgJ",
-            "Ei4KCmNyZWF0ZWRfYXQYESABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0",
-            "YW1wEi4KCnVwZGF0ZWRfYXQYEiABKAsyGi5nb29nbGUucHJvdG9idWYuVGlt",
-            "ZXN0YW1wIpYBChZFbnRpdHlNYW5pZmVzdFJlc3BvbnNlEisKCmNhdGVnb3Jp",
-            "ZXMYASADKAsyFy5CbHVlcHJpbnRDYXRlZ29yeVByb3RvEiQKCHN0YXR1c2Vz",
-            "GAIgAygLMhIuRW50aXR5U3RhdHVzUHJvdG8SKQoKYmx1ZXByaW50cxgDIAMo",
-            "CzIVLkVudGl0eUJsdWVwcmludFByb3RvIl8KEkVudGl0eVN5bmNSZXNwb25z",
-            "ZRIQCgh3b3JsZF9pZBgBIAEoAxIRCglzZWN0b3JfaWQYAiABKAMSJAoIZW50",
-            "aXRpZXMYAyADKAsyEi5QbGF5ZXJFbnRpdHlQcm90b0JlCjFjb20uY29zbWlj",
-            "c2NhdmVuZ2Vycy5uZXR3b3JraW5nLnByb3RvYnVmLmVudGl0aWVzUAGqAi1D",
-            "b3NtaWNTY2F2ZW5nZXJzLk5ldHdvcmtpbmcuUHJvdG9idWYuRW50aXRpZXNi",
-            "BnByb3RvMw=="));
+            "Cg5lbnRpdGllcy5wcm90bxIaY29zbWljX3NjYXZlbmdlcnMuZW50aXRpZXMa",
+            "H2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAucHJvdG8aDHRyYWl0cy5wcm90",
+            "byIkChZCbHVlcHJpbnRDYXRlZ29yeVByb3RvEgoKAmlkGAEgASgJIjQKEUVu",
+            "dGl0eVN0YXR1c1Byb3RvEgoKAmlkGAEgASgJEhMKC2lzX3BoeXNpY2FsGAIg",
+            "ASgIIoEBChRFbnRpdHlCbHVlcHJpbnRQcm90bxIKCgJpZBgBIAEoCRITCgtj",
+            "YXRlZ29yeV9pZBgCIAEoCRITCgtiYXNlX2hlYWx0aBgDIAEoBRIZChFpc19z",
+            "dGF0aWNfZGVmYXVsdBgEIAEoCBIYChBiZWhhdmlvcl9jb25maWdzGAUgASgJ",
+            "Ir8DChFQbGF5ZXJFbnRpdHlQcm90bxIKCgJpZBgBIAEoAxIRCglwbGF5ZXJf",
+            "aWQYAiABKAMSEAoId29ybGRfaWQYAyABKAMSEQoJc2VjdG9yX2lkGAQgASgD",
+            "EhQKDGJsdWVwcmludF9pZBgFIAEoCRIRCglzdGF0dXNfaWQYBiABKAkSEwoL",
+            "ZW50aXR5X25hbWUYByABKAkSEQoJaXNfc3RhdGljGAggASgIEg0KBXBvc194",
+            "GAkgASgQEg0KBXBvc195GAogASgQEg0KBXBvc196GAsgASgQEhAKCHJvdGF0",
+            "aW9uGAwgASgCEg8KB2NodW5rX3gYDSABKAUSDwoHY2h1bmtfeRgOIAEoBRIW",
+            "Cg5jdXJyZW50X2hlYWx0aBgPIAEoBRI8CgZ0cmFpdHMYECADKAsyLC5jb3Nt",
+            "aWNfc2NhdmVuZ2Vycy50cmFpdHMuVHJhaXRJbnN0YW5jZVByb3RvEi4KCmNy",
+            "ZWF0ZWRfYXQYESABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4K",
+            "CnVwZGF0ZWRfYXQYEiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
+            "IucBChZFbnRpdHlNYW5pZmVzdFJlc3BvbnNlEkYKCmNhdGVnb3JpZXMYASAD",
+            "KAsyMi5jb3NtaWNfc2NhdmVuZ2Vycy5lbnRpdGllcy5CbHVlcHJpbnRDYXRl",
+            "Z29yeVByb3RvEj8KCHN0YXR1c2VzGAIgAygLMi0uY29zbWljX3NjYXZlbmdl",
+            "cnMuZW50aXRpZXMuRW50aXR5U3RhdHVzUHJvdG8SRAoKYmx1ZXByaW50cxgD",
+            "IAMoCzIwLmNvc21pY19zY2F2ZW5nZXJzLmVudGl0aWVzLkVudGl0eUJsdWVw",
+            "cmludFByb3RvInoKEkVudGl0eVN5bmNSZXNwb25zZRIQCgh3b3JsZF9pZBgB",
+            "IAEoAxIRCglzZWN0b3JfaWQYAiABKAMSPwoIZW50aXRpZXMYAyADKAsyLS5j",
+            "b3NtaWNfc2NhdmVuZ2Vycy5lbnRpdGllcy5QbGF5ZXJFbnRpdHlQcm90b0Jl",
+            "CjFjb20uY29zbWljc2NhdmVuZ2Vycy5uZXR3b3JraW5nLnByb3RvYnVmLmVu",
+            "dGl0aWVzUAGqAi1Db3NtaWNTY2F2ZW5nZXJzLk5ldHdvcmtpbmcuUHJvdG9i",
+            "dWYuRW50aXRpZXNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::CosmicScavengers.Networking.Protobuf.Traits.TraitsReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.BlueprintCategoryProto), global::CosmicScavengers.Networking.Protobuf.Entities.BlueprintCategoryProto.Parser, new[]{ "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.EntityStatusProto), global::CosmicScavengers.Networking.Protobuf.Entities.EntityStatusProto.Parser, new[]{ "Id", "IsPhysical" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.EntityBlueprintProto), global::CosmicScavengers.Networking.Protobuf.Entities.EntityBlueprintProto.Parser, new[]{ "Id", "CategoryId", "BaseHealth", "IsStaticDefault", "BehaviorConfigs" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.PlayerEntityProto), global::CosmicScavengers.Networking.Protobuf.Entities.PlayerEntityProto.Parser, new[]{ "Id", "PlayerId", "WorldId", "SectorId", "BlueprintId", "StatusId", "EntityName", "IsStatic", "PosX", "PosY", "PosZ", "Rotation", "ChunkX", "ChunkY", "CurrentHealth", "StateData", "CreatedAt", "UpdatedAt" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.PlayerEntityProto), global::CosmicScavengers.Networking.Protobuf.Entities.PlayerEntityProto.Parser, new[]{ "Id", "PlayerId", "WorldId", "SectorId", "BlueprintId", "StatusId", "EntityName", "IsStatic", "PosX", "PosY", "PosZ", "Rotation", "ChunkX", "ChunkY", "CurrentHealth", "Traits", "CreatedAt", "UpdatedAt" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.EntityManifestResponse), global::CosmicScavengers.Networking.Protobuf.Entities.EntityManifestResponse.Parser, new[]{ "Categories", "Statuses", "Blueprints" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Entities.EntitySyncResponse), global::CosmicScavengers.Networking.Protobuf.Entities.EntitySyncResponse.Parser, new[]{ "WorldId", "SectorId", "Entities" }, null, null, null, null)
           }));
@@ -63,9 +67,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
   }
   #region Messages
-  /// <summary>
-  /// Maps to blueprint_categories table
-  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class BlueprintCategoryProto : pb::IMessage<BlueprintCategoryProto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -114,9 +115,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
     private string id_ = "";
-    /// <summary>
-    /// 'BUILDING', 'UNIT', etc.
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Id {
@@ -267,9 +265,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
   }
 
-  /// <summary>
-  /// Maps to entity_statuses table (Lifecycle)
-  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class EntityStatusProto : pb::IMessage<EntityStatusProto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -319,9 +314,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
     private string id_ = "";
-    /// <summary>
-    /// 'ACTIVE', 'STORED', 'SOLD', 'DESTROYED'
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Id {
@@ -334,9 +326,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
     /// <summary>Field number for the "is_physical" field.</summary>
     public const int IsPhysicalFieldNumber = 2;
     private bool isPhysical_;
-    /// <summary>
-    /// True if it should exist in the 3D world
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool IsPhysical {
@@ -511,9 +500,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
   }
 
-  /// <summary>
-  /// Maps to entity_blueprints table
-  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class EntityBlueprintProto : pb::IMessage<EntityBlueprintProto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -615,7 +601,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
     public const int BehaviorConfigsFieldNumber = 5;
     private string behaviorConfigs_ = "";
     /// <summary>
-    /// Serialized behavior_configs JSON
+    /// We store the raw JSON from YAML here for the client to parse static data
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -863,9 +849,6 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
   }
 
-  /// <summary>
-  /// Maps to player_entities table
-  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class PlayerEntityProto : pb::IMessage<PlayerEntityProto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -916,7 +899,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       chunkX_ = other.chunkX_;
       chunkY_ = other.chunkY_;
       currentHealth_ = other.currentHealth_;
-      stateData_ = other.stateData_;
+      traits_ = other.traits_.Clone();
       createdAt_ = other.createdAt_ != null ? other.createdAt_.Clone() : null;
       updatedAt_ = other.updatedAt_ != null ? other.updatedAt_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -1032,13 +1015,13 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
     /// <summary>Field number for the "pos_x" field.</summary>
     public const int PosXFieldNumber = 9;
-    private float posX_;
+    private long posX_;
     /// <summary>
-    /// SPATIAL DATA
+    /// SPATIAL DATA (Deterministic scaled longs)
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public float PosX {
+    public long PosX {
       get { return posX_; }
       set {
         posX_ = value;
@@ -1047,10 +1030,10 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
     /// <summary>Field number for the "pos_y" field.</summary>
     public const int PosYFieldNumber = 10;
-    private float posY_;
+    private long posY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public float PosY {
+    public long PosY {
       get { return posY_; }
       set {
         posY_ = value;
@@ -1059,10 +1042,10 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
 
     /// <summary>Field number for the "pos_z" field.</summary>
     public const int PosZFieldNumber = 11;
-    private float posZ_;
+    private long posZ_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public float PosZ {
+    public long PosZ {
       get { return posZ_; }
       set {
         posZ_ = value;
@@ -1123,19 +1106,19 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       }
     }
 
-    /// <summary>Field number for the "state_data" field.</summary>
-    public const int StateDataFieldNumber = 16;
-    private string stateData_ = "";
+    /// <summary>Field number for the "traits" field.</summary>
+    public const int TraitsFieldNumber = 16;
+    private static readonly pb::FieldCodec<global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto> _repeated_traits_codec
+        = pb::FieldCodec.ForMessage(130, global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto.Parser);
+    private readonly pbc::RepeatedField<global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto> traits_ = new pbc::RepeatedField<global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto>();
     /// <summary>
-    /// DYNAMIC STATE PAYLOAD
+    /// STRUCTURED TRAITS DATA
+    /// We use the types defined in traits.proto here
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string StateData {
-      get { return stateData_; }
-      set {
-        stateData_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public pbc::RepeatedField<global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto> Traits {
+      get { return traits_; }
     }
 
     /// <summary>Field number for the "created_at" field.</summary>
@@ -1188,14 +1171,14 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       if (StatusId != other.StatusId) return false;
       if (EntityName != other.EntityName) return false;
       if (IsStatic != other.IsStatic) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosX, other.PosX)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosY, other.PosY)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosZ, other.PosZ)) return false;
+      if (PosX != other.PosX) return false;
+      if (PosY != other.PosY) return false;
+      if (PosZ != other.PosZ) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
       if (ChunkX != other.ChunkX) return false;
       if (ChunkY != other.ChunkY) return false;
       if (CurrentHealth != other.CurrentHealth) return false;
-      if (StateData != other.StateData) return false;
+      if(!traits_.Equals(other.traits_)) return false;
       if (!object.Equals(CreatedAt, other.CreatedAt)) return false;
       if (!object.Equals(UpdatedAt, other.UpdatedAt)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -1213,14 +1196,14 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       if (StatusId.Length != 0) hash ^= StatusId.GetHashCode();
       if (EntityName.Length != 0) hash ^= EntityName.GetHashCode();
       if (IsStatic != false) hash ^= IsStatic.GetHashCode();
-      if (PosX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosX);
-      if (PosY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosY);
-      if (PosZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosZ);
+      if (PosX != 0L) hash ^= PosX.GetHashCode();
+      if (PosY != 0L) hash ^= PosY.GetHashCode();
+      if (PosZ != 0L) hash ^= PosZ.GetHashCode();
       if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
       if (ChunkX != 0) hash ^= ChunkX.GetHashCode();
       if (ChunkY != 0) hash ^= ChunkY.GetHashCode();
       if (CurrentHealth != 0) hash ^= CurrentHealth.GetHashCode();
-      if (StateData.Length != 0) hash ^= StateData.GetHashCode();
+      hash ^= traits_.GetHashCode();
       if (createdAt_ != null) hash ^= CreatedAt.GetHashCode();
       if (updatedAt_ != null) hash ^= UpdatedAt.GetHashCode();
       if (_unknownFields != null) {
@@ -1273,17 +1256,17 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
         output.WriteRawTag(64);
         output.WriteBool(IsStatic);
       }
-      if (PosX != 0F) {
-        output.WriteRawTag(77);
-        output.WriteFloat(PosX);
+      if (PosX != 0L) {
+        output.WriteRawTag(73);
+        output.WriteSFixed64(PosX);
       }
-      if (PosY != 0F) {
-        output.WriteRawTag(85);
-        output.WriteFloat(PosY);
+      if (PosY != 0L) {
+        output.WriteRawTag(81);
+        output.WriteSFixed64(PosY);
       }
-      if (PosZ != 0F) {
-        output.WriteRawTag(93);
-        output.WriteFloat(PosZ);
+      if (PosZ != 0L) {
+        output.WriteRawTag(89);
+        output.WriteSFixed64(PosZ);
       }
       if (Rotation != 0F) {
         output.WriteRawTag(101);
@@ -1301,10 +1284,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
         output.WriteRawTag(120);
         output.WriteInt32(CurrentHealth);
       }
-      if (StateData.Length != 0) {
-        output.WriteRawTag(130, 1);
-        output.WriteString(StateData);
-      }
+      traits_.WriteTo(output, _repeated_traits_codec);
       if (createdAt_ != null) {
         output.WriteRawTag(138, 1);
         output.WriteMessage(CreatedAt);
@@ -1355,17 +1335,17 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
         output.WriteRawTag(64);
         output.WriteBool(IsStatic);
       }
-      if (PosX != 0F) {
-        output.WriteRawTag(77);
-        output.WriteFloat(PosX);
+      if (PosX != 0L) {
+        output.WriteRawTag(73);
+        output.WriteSFixed64(PosX);
       }
-      if (PosY != 0F) {
-        output.WriteRawTag(85);
-        output.WriteFloat(PosY);
+      if (PosY != 0L) {
+        output.WriteRawTag(81);
+        output.WriteSFixed64(PosY);
       }
-      if (PosZ != 0F) {
-        output.WriteRawTag(93);
-        output.WriteFloat(PosZ);
+      if (PosZ != 0L) {
+        output.WriteRawTag(89);
+        output.WriteSFixed64(PosZ);
       }
       if (Rotation != 0F) {
         output.WriteRawTag(101);
@@ -1383,10 +1363,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
         output.WriteRawTag(120);
         output.WriteInt32(CurrentHealth);
       }
-      if (StateData.Length != 0) {
-        output.WriteRawTag(130, 1);
-        output.WriteString(StateData);
-      }
+      traits_.WriteTo(ref output, _repeated_traits_codec);
       if (createdAt_ != null) {
         output.WriteRawTag(138, 1);
         output.WriteMessage(CreatedAt);
@@ -1429,14 +1406,14 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       if (IsStatic != false) {
         size += 1 + 1;
       }
-      if (PosX != 0F) {
-        size += 1 + 4;
+      if (PosX != 0L) {
+        size += 1 + 8;
       }
-      if (PosY != 0F) {
-        size += 1 + 4;
+      if (PosY != 0L) {
+        size += 1 + 8;
       }
-      if (PosZ != 0F) {
-        size += 1 + 4;
+      if (PosZ != 0L) {
+        size += 1 + 8;
       }
       if (Rotation != 0F) {
         size += 1 + 4;
@@ -1450,9 +1427,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       if (CurrentHealth != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurrentHealth);
       }
-      if (StateData.Length != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeStringSize(StateData);
-      }
+      size += traits_.CalculateSize(_repeated_traits_codec);
       if (createdAt_ != null) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(CreatedAt);
       }
@@ -1495,13 +1470,13 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       if (other.IsStatic != false) {
         IsStatic = other.IsStatic;
       }
-      if (other.PosX != 0F) {
+      if (other.PosX != 0L) {
         PosX = other.PosX;
       }
-      if (other.PosY != 0F) {
+      if (other.PosY != 0L) {
         PosY = other.PosY;
       }
-      if (other.PosZ != 0F) {
+      if (other.PosZ != 0L) {
         PosZ = other.PosZ;
       }
       if (other.Rotation != 0F) {
@@ -1516,9 +1491,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
       if (other.CurrentHealth != 0) {
         CurrentHealth = other.CurrentHealth;
       }
-      if (other.StateData.Length != 0) {
-        StateData = other.StateData;
-      }
+      traits_.Add(other.traits_);
       if (other.createdAt_ != null) {
         if (createdAt_ == null) {
           CreatedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
@@ -1582,16 +1555,16 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
             IsStatic = input.ReadBool();
             break;
           }
-          case 77: {
-            PosX = input.ReadFloat();
+          case 73: {
+            PosX = input.ReadSFixed64();
             break;
           }
-          case 85: {
-            PosY = input.ReadFloat();
+          case 81: {
+            PosY = input.ReadSFixed64();
             break;
           }
-          case 93: {
-            PosZ = input.ReadFloat();
+          case 89: {
+            PosZ = input.ReadSFixed64();
             break;
           }
           case 101: {
@@ -1611,7 +1584,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
             break;
           }
           case 130: {
-            StateData = input.ReadString();
+            traits_.AddEntriesFrom(input, _repeated_traits_codec);
             break;
           }
           case 138: {
@@ -1679,16 +1652,16 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
             IsStatic = input.ReadBool();
             break;
           }
-          case 77: {
-            PosX = input.ReadFloat();
+          case 73: {
+            PosX = input.ReadSFixed64();
             break;
           }
-          case 85: {
-            PosY = input.ReadFloat();
+          case 81: {
+            PosY = input.ReadSFixed64();
             break;
           }
-          case 93: {
-            PosZ = input.ReadFloat();
+          case 89: {
+            PosZ = input.ReadSFixed64();
             break;
           }
           case 101: {
@@ -1708,7 +1681,7 @@ namespace CosmicScavengers.Networking.Protobuf.Entities {
             break;
           }
           case 130: {
-            StateData = input.ReadString();
+            traits_.AddEntriesFrom(ref input, _repeated_traits_codec);
             break;
           }
           case 138: {

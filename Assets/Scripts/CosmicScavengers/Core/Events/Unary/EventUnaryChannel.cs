@@ -9,7 +9,6 @@ namespace CosmicScavengers.Core.Events.Unary
     /// This allows for highly decoupled communication between different parts of the game.
     /// T is the type of the payload to be sent with the event.
     /// </summary>
-    ///
     /// <typeparam name="T">The type of the data to be passed with the event.</typeparam>
     public abstract class EventChannel<T> : EventChannelBase
     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
+using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Meta
 {
@@ -9,6 +10,8 @@ namespace CosmicScavengers.Core.Systems.Entities.Meta
         bool IsStatic { get; set; }
         string Type { get; set; }
         List<ITrait> Traits { get; set; }
+
+        Transform Transform { get; }
 
         /// <summary>
         /// The standardized doorway for Traits to signal they need a network sync.

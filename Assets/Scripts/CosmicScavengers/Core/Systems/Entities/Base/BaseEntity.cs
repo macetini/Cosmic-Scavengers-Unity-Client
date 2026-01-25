@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Base
 {
+    [RequireComponent(typeof(Transform))]
     /// <summary>
     /// The "Boilerplate Remover".
     /// Most of your game entities should inherit from this.
@@ -14,7 +15,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
     public abstract class BaseEntity : MonoBehaviour, IEntity
     {
         public long Id { get; set; }
-
         public bool IsStatic { get; set; }
 
         [SerializeField]
@@ -39,10 +39,21 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
             }
         }
 
+        public Transform Transform
+        {
+            get => transformCache;
+        }
+        private Transform transformCache;
+
         public GameObject TraitsContainer;
         private readonly Dictionary<Type, ITrait> traitCache = new();
 
         private ITraitsProcessor traitsProcessor;
+
+        void Awake()
+        {
+            transformCache = GetComponent<Transform>();
+        }
 
         /// <summary>
         /// Links this entity to its managing orchestrator.
@@ -128,7 +139,12 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
             return null;
         }
 
-        public virtual void OnSpawned() { }
+        public virtual void OnSpawned()
+        {
+            Debug.Log(
+                $"[Entity] {Id} ({Type}) successfully initialized at Position {transform.position}"
+            );
+        }
 
         public virtual void OnRemoved()
         {

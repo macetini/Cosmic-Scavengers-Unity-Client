@@ -13,10 +13,25 @@ namespace CosmicScavengers.Core.Networking.Commands.Request.Data.Text
     /// </summary>
     public abstract class BaseTextRequest : BaseRequest<object>
     {
+        /// <summary>
+        /// The command name to be sent to the server.
+        /// </summary>
         protected virtual NetworkTextCommand Command { get; }
+
+        /// <summary>
+        /// The text writer used to write to the stream.
+        /// </summary>
         protected StreamWriter TextWriter;
+
+        /// <summary>
+        /// The byte length of the header.
+        /// </summary>
         protected int headerByteLength;
-        private const string COMMAND_SEPARATOR = "|";
+
+        /// <summary>
+        /// The separator between arguments.
+        /// </summary>
+        private const string COMMAND_SEPARATOR = "|"; // TODO - Put this in external config.
 
         protected override void Awake()
         {

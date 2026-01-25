@@ -15,9 +15,8 @@ namespace CosmicScavengers.Gameplay.Entities.Archetypes
         /// </summary>
         public override void OnSpawned()
         {
-            Debug.Log(
-                $"[UnitEntity] {Id} ({Type}) successfully initialized with {Traits.Count} traits."
-            );
+            base.OnSpawned();
+            //Debug.Log($"[UnitEntity] {Id} ({Type}) successfully initialized with {Traits.Count} traits.");
         }
     }
 }

@@ -4,6 +4,12 @@ using UnityEngine.Events;
 
 namespace CosmicScavengers.Core.Events.Binary
 {
+    /// <summary>
+    /// A generic, reusable event channel that uses a ScriptableObject as the event bus.
+    /// This allows for highly decoupled communication between different parts of the game.
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
     public abstract class EventChannel<T1, T2> : EventChannelBase
     {
         [Tooltip("The action to perform when this event is raised.")]
@@ -14,6 +20,11 @@ namespace CosmicScavengers.Core.Events.Binary
         private readonly Dictionary<UnityAction<object>, UnityAction<T1, T2>> wrappedListeners =
             new();
 
+        /// <summary>
+        /// Raises the event with two arguments.
+        /// </summary>
+        /// <param name="val1"></param>
+        /// <param name="val2"></param>
         public void Raise(T1 val1, T2 val2)
         {
             onEventRaised?.Invoke(val1, val2);
@@ -37,6 +48,10 @@ namespace CosmicScavengers.Core.Events.Binary
             }
         }
 
+        /// <summary>
+        /// Implementation of the base typeless listener.
+        /// </summary>
+        /// <param name="listener"></param>
         public void RemoveListener(UnityAction<T1, T2> listener) => onEventRaised -= listener;
 
         public override void RemoveListener(UnityAction<object> listener)

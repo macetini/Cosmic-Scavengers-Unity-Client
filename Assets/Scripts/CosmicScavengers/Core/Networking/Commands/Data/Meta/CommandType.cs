@@ -8,7 +8,7 @@ namespace CosmicScavengers.Core.Networking.Commands.Data.Meta
     public enum CommandType : byte
     {
         [Description("Unknown command.")]
-        UNKNOWN = 0x00,
+        UNKNOWN = 0x00, // Used for unknown commands
 
         [Description("Text command.")]
         TEXT = 0x01, // Used for Auth, Chat, Lobby Commands

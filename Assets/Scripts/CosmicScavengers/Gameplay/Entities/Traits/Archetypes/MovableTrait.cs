@@ -1,9 +1,9 @@
-using System;
 using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Systems.Entity.Traits;
 using CosmicScavengers.Core.Systems.Utils.Scale4f;
-using Unity.Plastic.Newtonsoft.Json;
+using CosmicScavengers.Networking.Protobuf.Traits;
+using Google.Protobuf;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -15,59 +15,13 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
     /// </summary>
     public class MovableTrait : BaseTrait
     {
-        private const string DATA_KEY = "data";
+        private const string DATA_KEY = "data"; // TODO - Separate to config (investigate, what is the best way to do this?)
 
-        /// <summary>
-        /// Local data structure matching the server's JSON format.
-        /// Includes the 'status' and 'target' fields for authoritative state.
-        /// </summary>
-        [Serializable]
-        private struct MovableSettings
+        private MovableTraitProto traitData = new()
         {
-            public enum StatusType
-            {
-                IDLE,
-                MOVING,
-            }
-
-            [JsonProperty("movement_speed")]
-            public long MovementSpeed;
-
-            [JsonProperty("rotation_speed")]
-            public long RotationSpeed;
-
-            [JsonProperty("stopping_distance")]
-            public long StoppingDistance;
-
-            [JsonProperty("status")]
-            public StatusType CurrentStatus; // "IDLE" or "MOVING"
-
-            // Target coordinates stored as scaled longs in JSON for precision
-            [JsonProperty("target_x")]
-            public long TargetX;
-
-            [JsonProperty("target_y")]
-            public long TargetY;
-
-            [JsonProperty("target_z")]
-            public long TargetZ;
-
-            /// <summary>
-            /// Returns a settings object with sensible default values.
-            /// </summary>
-            public static MovableSettings Default() =>
-                new()
-                {
-                    CurrentStatus = StatusType.IDLE,
-                    TargetX = -1,
-                    TargetY = -1,
-                    TargetZ = -1,
-                };
-        }
-
-        [Header("Runtime Configuration")]
-        [SerializeField]
-        private MovableSettings settings = MovableSettings.Default();
+            Status = MovableTraitProto.Types.Status.Idle,
+            //Data = new MovementDataProto(),
+        };
 
         [Header("Interpolation")]
         [Tooltip("How fast the visual transform snaps to the target rotation.")]
@@ -86,54 +40,40 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             return NetworkBinaryCommand.REQUEST_ENTITY_MOVE_C;
         }
 
-        /// <summary>
-        /// Prepares the payload for the MoveEntityRequest.
-        /// Pre-pends the Owner.Id via the TraitsService.
-        /// </summary>
         public override object[] GetSyncPayload()
         {
-            return new object[]
+            MoveIntentProto intent = new()
             {
-                targetPosition,
-                settings.MovementSpeed,
-                settings.RotationSpeed,
-                settings.StoppingDistance,
+                EntityId = Owner.Id,
+                /*RequestData = new MovementDataProto
+                {
+                    TargetX = DeterministicUtils.ToScaled(targetPosition.x),
+                    TargetY = DeterministicUtils.ToScaled(targetPosition.y),
+                    TargetZ = DeterministicUtils.ToScaled(targetPosition.z),
+
+                    MovementSpeed = traitData.Data.MovementSpeed,
+                    RotationSpeed = traitData.Data.RotationSpeed,
+                    StoppingDistance = traitData.Data.StoppingDistance,
+                },*/
             };
+
+            return new object[] { intent };
         }
 
-        /// <summary>
-        /// Called when the entity is spawned or when state_data is updated from the server.
-        /// </summary>
         protected override void OnInitialize()
         {
-            if (
-                Config.TryGetValue(DATA_KEY, out JToken dataToken) && dataToken is JObject dataBlock
-            )
+            if (Config.TryGetValue(DATA_KEY, out JToken dataToken))
             {
-                settings = dataBlock.ToObject<MovableSettings>();
-
-                // Convert authoritative scaled coordinates to Unity World Space
-                targetPosition = new Vector3(
-                    DeterministicUtils.FromScaled(settings.TargetX),
-                    DeterministicUtils.FromScaled(settings.TargetY),
-                    DeterministicUtils.FromScaled(settings.TargetZ)
+                var parser = new JsonParser(
+                    JsonParser.Settings.Default.WithIgnoreUnknownFields(true)
                 );
 
-                // If the server says we are moving, ensure the trait is active for OnUpdate
-                if (settings.CurrentStatus == MovableSettings.StatusType.MOVING)
-                {
-                    Active = true;
-                }
-
-                Debug.Log(
-                    $"[{Name}] Initialized: Speed={settings.MovementSpeed}, RotationSpeed={settings.RotationSpeed}, topDist={settings.StoppingDistance}"
-                );
-            }
-            else
-            {
-                Debug.LogWarning(
-                    $"[{Name}] No '{DATA_KEY}' block found in configuration for Entity {Owner?.Id}. Using defaults."
-                );
+                traitData = parser.Parse<MovableTraitProto>(dataToken.ToString());
+                /*targetPosition = new Vector3(
+                    DeterministicUtils.FromScaled(traitData.Data.TargetX),
+                    DeterministicUtils.FromScaled(traitData.Data.TargetY),
+                    DeterministicUtils.FromScaled(traitData.Data.TargetZ)
+                );*/
             }
         }
 
@@ -146,6 +86,8 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
         {
             Debug.Log($"[MovableTrait] IssueMoveOrder to {destination}");
             targetPosition = destination;
+
+            Active = true;
 
             RequestSync();
         }
@@ -162,38 +104,39 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
                 return;
             }
 
-            if (settings.CurrentStatus != MovableSettings.StatusType.MOVING)
-            {
-                return;
-            }
+            traitData.Status = MovableTraitProto.Types.Status.Moving;
+
+            // Use DeterministicUtils to turn the "Big Ints" into "Unity Floats"
+            /*
+            float visualSpeed = DeterministicUtils.FromScaled(traitData.Data.MovementSpeed);
 
             // 1. Visual Position Update
-            transform.position = Vector3.MoveTowards(
-                transform.position,
+            Owner.Transform.position = Vector3.MoveTowards(
+                Owner.Transform.position,
                 targetPosition,
-                settings.MovementSpeed * deltaTime
+                visualSpeed * deltaTime
             );
 
             // 2. Update Visual Rotation
-            Vector3 diff = targetPosition - transform.position;
-
+            Vector3 diff = targetPosition - Owner.Transform.position;
             if (diff.sqrMagnitude > 0.001f)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(diff.normalized);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
+                Owner.Transform.rotation = Quaternion.Slerp(
+                    Owner.Transform.rotation,
                     lookRotation,
                     deltaTime * rotationLerpModifier
                 );
             }
 
-            // 3. Client-side Prediction of Arrival
-            // We use stopping distance to stop the visual loop.
-            // The server will eventually send a state update where Status == IDLE.
-            if (Vector3.Distance(transform.position, targetPosition) <= settings.StoppingDistance)
+            float visualStopDist = DeterministicUtils.FromScaled(traitData.Data.StoppingDistance);
+            bool arrived =
+                Vector3.Distance(Owner.Transform.position, targetPosition) <= visualStopDist;
+            if (arrived)
             {
-                settings.CurrentStatus = MovableSettings.StatusType.IDLE;
-            }
+                traitData.Status = MovableTraitProto.Types.Status.Idle;
+                Active = false;
+            }*/
         }
     }
 }
