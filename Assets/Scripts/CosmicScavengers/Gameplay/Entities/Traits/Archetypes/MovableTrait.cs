@@ -1,10 +1,7 @@
 using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
 using CosmicScavengers.Core.Systems.Entity.Traits;
-using CosmicScavengers.Core.Systems.Utils.Scale4f;
 using CosmicScavengers.Networking.Protobuf.Traits;
-using Google.Protobuf;
-using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
@@ -15,22 +12,16 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
     /// </summary>
     public class MovableTrait : BaseTrait
     {
-        //private const string DATA_KEY = "data"; // TODO - Separate to config (investigate, what is the best way to do this?)
-
-        private MovableTraitProto traitData = new()
-        {
-            Status = MovableTraitProto.Types.Status.Idle,
-            //Data = new MovementDataProto(),
-        };
-
         [Header("Interpolation")]
         [Tooltip("How fast the visual transform snaps to the target rotation.")]
         [SerializeField]
-        private float rotationLerpModifier = 5f;
+        private readonly float rotationLerpModifier = 5f;
 
         [Header("Movement State")]
         [SerializeField]
         private Vector3 targetPosition;
+
+        private MovableTraitProto data;
 
         /// <summary>
         /// The binary command used to request a move on the server.
@@ -47,13 +38,19 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
                 EntityId = Owner.Id,
                 //RequestData = new MoveIntentDataProto()
             };
-
             return new object[] { intent };
         }
 
         protected override void Initialize()
         {
-            // Parse IMessage protoData here
+            data = protoData as MovableTraitProto;
+            if (data == null)
+            {
+                Debug.LogError(
+                    $"[MovableTrait] Failed to cast ProtoData for entity {Owner?.Id}. Expected MovableTraitProto."
+                );
+                return;
+            }
         }
 
         /// <summary>
@@ -82,8 +79,6 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
                 Debug.LogError("[MovableTrait] Attempted to update an inactive trait.");
                 return;
             }
-
-            traitData.Status = MovableTraitProto.Types.Status.Moving;
 
             // Use DeterministicUtils to turn the "Big Ints" into "Unity Floats"
             /*

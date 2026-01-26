@@ -1,4 +1,5 @@
 using CosmicScavengers.Core.Systems.Entity.Traits;
+using CosmicScavengers.Networking.Protobuf.Traits;
 using UnityEngine;
 
 namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
@@ -15,12 +16,25 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
         private GameObject selectionIndicator;
         public bool IsSelected { get; private set; }
 
+        private SelectableTraitProto data;
+
         private void Start()
         {
-            if (selectionIndicator != null)
+            selectionIndicator?.SetActive(false);
+        }
+
+        protected override void Initialize()
+        {
+            data = protoData as SelectableTraitProto;
+            if (data == null)
             {
-                selectionIndicator.SetActive(false);
+                Debug.LogError(
+                    $"[SelectableTrait] Failed to cast ProtoData for entity {Owner?.Id}. Expected SelectableTraitProto."
+                );
+                return;
             }
+
+            //Debug.Log($"[SelectableTrait] ShowHealthBar: [{data.SelectionRadius}].");
         }
 
         public void ToggleSelection(bool state)

@@ -27,29 +27,31 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
             "Cgx0cmFpdHMucHJvdG8SGGNvc21pY19zY2F2ZW5nZXJzLnRyYWl0cxoZZ29v",
             "Z2xlL3Byb3RvYnVmL2FueS5wcm90byJHCg9Nb3ZlVGFyZ2V0UHJvdG8SEAoI",
             "dGFyZ2V0X3gYASABKBASEAoIdGFyZ2V0X3kYAiABKBASEAoIdGFyZ2V0X3oY",
-            "AyABKBAiWwoUU2VsZWN0YWJsZVRyYWl0UHJvdG8SEAoIcHJpb3JpdHkYASAB",
-            "KAUSGAoQc2VsZWN0aW9uX3JhZGl1cxgCIAEoEBIXCg9zaG93X2hlYWx0aF9i",
-            "YXIYAyABKAgiigIKEU1vdmFibGVUcmFpdFByb3RvEhAKCHByaW9yaXR5GAEg",
-            "ASgFEkIKBnN0YXR1cxgCIAEoDjIyLmNvc21pY19zY2F2ZW5nZXJzLnRyYWl0",
-            "cy5Nb3ZhYmxlVHJhaXRQcm90by5TdGF0dXMSEAoIdGFyZ2V0X3gYAyABKBAS",
-            "EAoIdGFyZ2V0X3kYBCABKBASEAoIdGFyZ2V0X3oYBSABKBASFgoObW92ZW1l",
-            "bnRfc3BlZWQYBiABKBASFgoOcm90YXRpb25fc3BlZWQYByABKBASGQoRc3Rv",
-            "cHBpbmdfZGlzdGFuY2UYCCABKBAiHgoGU3RhdHVzEggKBElETEUQABIKCgZN",
-            "T1ZJTkcQASJKChJUcmFpdEluc3RhbmNlUHJvdG8SEAoIdHJhaXRfaWQYASAB",
-            "KAkSIgoEZGF0YRgCIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5BbnkiawoRRW50",
-            "aXR5VHJhaXRzUHJvdG8SEQoJZW50aXR5X2lkGAEgASgDEkMKDWFjdGl2ZV90",
-            "cmFpdHMYAiADKAsyLC5jb3NtaWNfc2NhdmVuZ2Vycy50cmFpdHMuVHJhaXRJ",
-            "bnN0YW5jZVByb3RvImUKD01vdmVJbnRlbnRQcm90bxIRCgllbnRpdHlfaWQY",
-            "ASABKAMSPwoMcmVxdWVzdF9kYXRhGAIgASgLMikuY29zbWljX3NjYXZlbmdl",
-            "cnMudHJhaXRzLk1vdmVUYXJnZXRQcm90b0JfCi1jb20uY29zbWljLnNjYXZl",
-            "bmdlcnMubmV0d29ya2luZy5wcm90by50cmFpdHNQAaoCK0Nvc21pY1NjYXZl",
-            "bmdlcnMuTmV0d29ya2luZy5Qcm90b2J1Zi5UcmFpdHNiBnByb3RvMw=="));
+            "AyABKBAidQoUU2VsZWN0YWJsZVRyYWl0UHJvdG8SEAoIcHJpb3JpdHkYASAB",
+            "KAUSGAoQdXBkYXRlX2ZyZXF1ZW5jeRgCIAEoBRIYChBzZWxlY3Rpb25fcmFk",
+            "aXVzGAMgASgQEhcKD3Nob3dfaGVhbHRoX2JhchgEIAEoCCKkAgoRTW92YWJs",
+            "ZVRyYWl0UHJvdG8SEAoIcHJpb3JpdHkYASABKAUSGAoQdXBkYXRlX2ZyZXF1",
+            "ZW5jeRgCIAEoBRJCCgZzdGF0dXMYAyABKA4yMi5jb3NtaWNfc2NhdmVuZ2Vy",
+            "cy50cmFpdHMuTW92YWJsZVRyYWl0UHJvdG8uU3RhdHVzEhAKCHRhcmdldF94",
+            "GAQgASgQEhAKCHRhcmdldF95GAUgASgQEhAKCHRhcmdldF96GAYgASgQEhYK",
+            "Dm1vdmVtZW50X3NwZWVkGAcgASgQEhYKDnJvdGF0aW9uX3NwZWVkGAggASgQ",
+            "EhkKEXN0b3BwaW5nX2Rpc3RhbmNlGAkgASgQIh4KBlN0YXR1cxIICgRJRExF",
+            "EAASCgoGTU9WSU5HEAEiSgoSVHJhaXRJbnN0YW5jZVByb3RvEhAKCHRyYWl0",
+            "X2lkGAEgASgJEiIKBGRhdGEYAiABKAsyFC5nb29nbGUucHJvdG9idWYuQW55",
+            "ImsKEUVudGl0eVRyYWl0c1Byb3RvEhEKCWVudGl0eV9pZBgBIAEoAxJDCg1h",
+            "Y3RpdmVfdHJhaXRzGAIgAygLMiwuY29zbWljX3NjYXZlbmdlcnMudHJhaXRz",
+            "LlRyYWl0SW5zdGFuY2VQcm90byJlCg9Nb3ZlSW50ZW50UHJvdG8SEQoJZW50",
+            "aXR5X2lkGAEgASgDEj8KDHJlcXVlc3RfZGF0YRgCIAEoCzIpLmNvc21pY19z",
+            "Y2F2ZW5nZXJzLnRyYWl0cy5Nb3ZlVGFyZ2V0UHJvdG9CXwotY29tLmNvc21p",
+            "Yy5zY2F2ZW5nZXJzLm5ldHdvcmtpbmcucHJvdG8udHJhaXRzUAGqAitDb3Nt",
+            "aWNTY2F2ZW5nZXJzLk5ldHdvcmtpbmcuUHJvdG9idWYuVHJhaXRzYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.MoveTargetProto), global::CosmicScavengers.Networking.Protobuf.Traits.MoveTargetProto.Parser, new[]{ "TargetX", "TargetY", "TargetZ" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.SelectableTraitProto), global::CosmicScavengers.Networking.Protobuf.Traits.SelectableTraitProto.Parser, new[]{ "Priority", "SelectionRadius", "ShowHealthBar" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto), global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Parser, new[]{ "Priority", "Status", "TargetX", "TargetY", "TargetZ", "MovementSpeed", "RotationSpeed", "StoppingDistance" }, null, new[]{ typeof(global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.SelectableTraitProto), global::CosmicScavengers.Networking.Protobuf.Traits.SelectableTraitProto.Parser, new[]{ "Priority", "UpdateFrequency", "SelectionRadius", "ShowHealthBar" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto), global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Parser, new[]{ "Priority", "UpdateFrequency", "Status", "TargetX", "TargetY", "TargetZ", "MovementSpeed", "RotationSpeed", "StoppingDistance" }, null, new[]{ typeof(global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto), global::CosmicScavengers.Networking.Protobuf.Traits.TraitInstanceProto.Parser, new[]{ "TraitId", "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.EntityTraitsProto), global::CosmicScavengers.Networking.Protobuf.Traits.EntityTraitsProto.Parser, new[]{ "EntityId", "ActiveTraits" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CosmicScavengers.Networking.Protobuf.Traits.MoveIntentProto), global::CosmicScavengers.Networking.Protobuf.Traits.MoveIntentProto.Parser, new[]{ "EntityId", "RequestData" }, null, null, null, null)
@@ -374,6 +376,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public SelectableTraitProto(SelectableTraitProto other) : this() {
       priority_ = other.priority_;
+      updateFrequency_ = other.updateFrequency_;
       selectionRadius_ = other.selectionRadius_;
       showHealthBar_ = other.showHealthBar_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -397,8 +400,20 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
       }
     }
 
+    /// <summary>Field number for the "update_frequency" field.</summary>
+    public const int UpdateFrequencyFieldNumber = 2;
+    private int updateFrequency_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UpdateFrequency {
+      get { return updateFrequency_; }
+      set {
+        updateFrequency_ = value;
+      }
+    }
+
     /// <summary>Field number for the "selection_radius" field.</summary>
-    public const int SelectionRadiusFieldNumber = 2;
+    public const int SelectionRadiusFieldNumber = 3;
     private long selectionRadius_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -410,7 +425,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "show_health_bar" field.</summary>
-    public const int ShowHealthBarFieldNumber = 3;
+    public const int ShowHealthBarFieldNumber = 4;
     private bool showHealthBar_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -437,6 +452,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
         return true;
       }
       if (Priority != other.Priority) return false;
+      if (UpdateFrequency != other.UpdateFrequency) return false;
       if (SelectionRadius != other.SelectionRadius) return false;
       if (ShowHealthBar != other.ShowHealthBar) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -447,6 +463,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     public override int GetHashCode() {
       int hash = 1;
       if (Priority != 0) hash ^= Priority.GetHashCode();
+      if (UpdateFrequency != 0) hash ^= UpdateFrequency.GetHashCode();
       if (SelectionRadius != 0L) hash ^= SelectionRadius.GetHashCode();
       if (ShowHealthBar != false) hash ^= ShowHealthBar.GetHashCode();
       if (_unknownFields != null) {
@@ -471,12 +488,16 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
         output.WriteRawTag(8);
         output.WriteInt32(Priority);
       }
+      if (UpdateFrequency != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UpdateFrequency);
+      }
       if (SelectionRadius != 0L) {
-        output.WriteRawTag(17);
+        output.WriteRawTag(25);
         output.WriteSFixed64(SelectionRadius);
       }
       if (ShowHealthBar != false) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteBool(ShowHealthBar);
       }
       if (_unknownFields != null) {
@@ -493,12 +514,16 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
         output.WriteRawTag(8);
         output.WriteInt32(Priority);
       }
+      if (UpdateFrequency != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UpdateFrequency);
+      }
       if (SelectionRadius != 0L) {
-        output.WriteRawTag(17);
+        output.WriteRawTag(25);
         output.WriteSFixed64(SelectionRadius);
       }
       if (ShowHealthBar != false) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteBool(ShowHealthBar);
       }
       if (_unknownFields != null) {
@@ -513,6 +538,9 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
       int size = 0;
       if (Priority != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Priority);
+      }
+      if (UpdateFrequency != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UpdateFrequency);
       }
       if (SelectionRadius != 0L) {
         size += 1 + 8;
@@ -534,6 +562,9 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
       }
       if (other.Priority != 0) {
         Priority = other.Priority;
+      }
+      if (other.UpdateFrequency != 0) {
+        UpdateFrequency = other.UpdateFrequency;
       }
       if (other.SelectionRadius != 0L) {
         SelectionRadius = other.SelectionRadius;
@@ -564,11 +595,15 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
             Priority = input.ReadInt32();
             break;
           }
-          case 17: {
+          case 16: {
+            UpdateFrequency = input.ReadInt32();
+            break;
+          }
+          case 25: {
             SelectionRadius = input.ReadSFixed64();
             break;
           }
-          case 24: {
+          case 32: {
             ShowHealthBar = input.ReadBool();
             break;
           }
@@ -595,11 +630,15 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
             Priority = input.ReadInt32();
             break;
           }
-          case 17: {
+          case 16: {
+            UpdateFrequency = input.ReadInt32();
+            break;
+          }
+          case 25: {
             SelectionRadius = input.ReadSFixed64();
             break;
           }
-          case 24: {
+          case 32: {
             ShowHealthBar = input.ReadBool();
             break;
           }
@@ -649,6 +688,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public MovableTraitProto(MovableTraitProto other) : this() {
       priority_ = other.priority_;
+      updateFrequency_ = other.updateFrequency_;
       status_ = other.status_;
       targetX_ = other.targetX_;
       targetY_ = other.targetY_;
@@ -677,8 +717,20 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
       }
     }
 
+    /// <summary>Field number for the "update_frequency" field.</summary>
+    public const int UpdateFrequencyFieldNumber = 2;
+    private int updateFrequency_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UpdateFrequency {
+      get { return updateFrequency_; }
+      set {
+        updateFrequency_ = value;
+      }
+    }
+
     /// <summary>Field number for the "status" field.</summary>
-    public const int StatusFieldNumber = 2;
+    public const int StatusFieldNumber = 3;
     private global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status status_ = global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -690,7 +742,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "target_x" field.</summary>
-    public const int TargetXFieldNumber = 3;
+    public const int TargetXFieldNumber = 4;
     private long targetX_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -702,7 +754,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "target_y" field.</summary>
-    public const int TargetYFieldNumber = 4;
+    public const int TargetYFieldNumber = 5;
     private long targetY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -714,7 +766,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "target_z" field.</summary>
-    public const int TargetZFieldNumber = 5;
+    public const int TargetZFieldNumber = 6;
     private long targetZ_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -726,7 +778,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "movement_speed" field.</summary>
-    public const int MovementSpeedFieldNumber = 6;
+    public const int MovementSpeedFieldNumber = 7;
     private long movementSpeed_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -738,7 +790,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "rotation_speed" field.</summary>
-    public const int RotationSpeedFieldNumber = 7;
+    public const int RotationSpeedFieldNumber = 8;
     private long rotationSpeed_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -750,7 +802,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     }
 
     /// <summary>Field number for the "stopping_distance" field.</summary>
-    public const int StoppingDistanceFieldNumber = 8;
+    public const int StoppingDistanceFieldNumber = 9;
     private long stoppingDistance_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -777,6 +829,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
         return true;
       }
       if (Priority != other.Priority) return false;
+      if (UpdateFrequency != other.UpdateFrequency) return false;
       if (Status != other.Status) return false;
       if (TargetX != other.TargetX) return false;
       if (TargetY != other.TargetY) return false;
@@ -792,6 +845,7 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
     public override int GetHashCode() {
       int hash = 1;
       if (Priority != 0) hash ^= Priority.GetHashCode();
+      if (UpdateFrequency != 0) hash ^= UpdateFrequency.GetHashCode();
       if (Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) hash ^= Status.GetHashCode();
       if (TargetX != 0L) hash ^= TargetX.GetHashCode();
       if (TargetY != 0L) hash ^= TargetY.GetHashCode();
@@ -821,32 +875,36 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
         output.WriteRawTag(8);
         output.WriteInt32(Priority);
       }
-      if (Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) {
+      if (UpdateFrequency != 0) {
         output.WriteRawTag(16);
+        output.WriteInt32(UpdateFrequency);
+      }
+      if (Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) {
+        output.WriteRawTag(24);
         output.WriteEnum((int) Status);
       }
       if (TargetX != 0L) {
-        output.WriteRawTag(25);
+        output.WriteRawTag(33);
         output.WriteSFixed64(TargetX);
       }
       if (TargetY != 0L) {
-        output.WriteRawTag(33);
+        output.WriteRawTag(41);
         output.WriteSFixed64(TargetY);
       }
       if (TargetZ != 0L) {
-        output.WriteRawTag(41);
+        output.WriteRawTag(49);
         output.WriteSFixed64(TargetZ);
       }
       if (MovementSpeed != 0L) {
-        output.WriteRawTag(49);
+        output.WriteRawTag(57);
         output.WriteSFixed64(MovementSpeed);
       }
       if (RotationSpeed != 0L) {
-        output.WriteRawTag(57);
+        output.WriteRawTag(65);
         output.WriteSFixed64(RotationSpeed);
       }
       if (StoppingDistance != 0L) {
-        output.WriteRawTag(65);
+        output.WriteRawTag(73);
         output.WriteSFixed64(StoppingDistance);
       }
       if (_unknownFields != null) {
@@ -863,32 +921,36 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
         output.WriteRawTag(8);
         output.WriteInt32(Priority);
       }
-      if (Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) {
+      if (UpdateFrequency != 0) {
         output.WriteRawTag(16);
+        output.WriteInt32(UpdateFrequency);
+      }
+      if (Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) {
+        output.WriteRawTag(24);
         output.WriteEnum((int) Status);
       }
       if (TargetX != 0L) {
-        output.WriteRawTag(25);
+        output.WriteRawTag(33);
         output.WriteSFixed64(TargetX);
       }
       if (TargetY != 0L) {
-        output.WriteRawTag(33);
+        output.WriteRawTag(41);
         output.WriteSFixed64(TargetY);
       }
       if (TargetZ != 0L) {
-        output.WriteRawTag(41);
+        output.WriteRawTag(49);
         output.WriteSFixed64(TargetZ);
       }
       if (MovementSpeed != 0L) {
-        output.WriteRawTag(49);
+        output.WriteRawTag(57);
         output.WriteSFixed64(MovementSpeed);
       }
       if (RotationSpeed != 0L) {
-        output.WriteRawTag(57);
+        output.WriteRawTag(65);
         output.WriteSFixed64(RotationSpeed);
       }
       if (StoppingDistance != 0L) {
-        output.WriteRawTag(65);
+        output.WriteRawTag(73);
         output.WriteSFixed64(StoppingDistance);
       }
       if (_unknownFields != null) {
@@ -903,6 +965,9 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
       int size = 0;
       if (Priority != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Priority);
+      }
+      if (UpdateFrequency != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UpdateFrequency);
       }
       if (Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Status);
@@ -939,6 +1004,9 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
       }
       if (other.Priority != 0) {
         Priority = other.Priority;
+      }
+      if (other.UpdateFrequency != 0) {
+        UpdateFrequency = other.UpdateFrequency;
       }
       if (other.Status != global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status.Idle) {
         Status = other.Status;
@@ -985,30 +1053,34 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
             break;
           }
           case 16: {
+            UpdateFrequency = input.ReadInt32();
+            break;
+          }
+          case 24: {
             Status = (global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status) input.ReadEnum();
             break;
           }
-          case 25: {
+          case 33: {
             TargetX = input.ReadSFixed64();
             break;
           }
-          case 33: {
+          case 41: {
             TargetY = input.ReadSFixed64();
             break;
           }
-          case 41: {
+          case 49: {
             TargetZ = input.ReadSFixed64();
             break;
           }
-          case 49: {
+          case 57: {
             MovementSpeed = input.ReadSFixed64();
             break;
           }
-          case 57: {
+          case 65: {
             RotationSpeed = input.ReadSFixed64();
             break;
           }
-          case 65: {
+          case 73: {
             StoppingDistance = input.ReadSFixed64();
             break;
           }
@@ -1036,30 +1108,34 @@ namespace CosmicScavengers.Networking.Protobuf.Traits {
             break;
           }
           case 16: {
+            UpdateFrequency = input.ReadInt32();
+            break;
+          }
+          case 24: {
             Status = (global::CosmicScavengers.Networking.Protobuf.Traits.MovableTraitProto.Types.Status) input.ReadEnum();
             break;
           }
-          case 25: {
+          case 33: {
             TargetX = input.ReadSFixed64();
             break;
           }
-          case 33: {
+          case 41: {
             TargetY = input.ReadSFixed64();
             break;
           }
-          case 41: {
+          case 49: {
             TargetZ = input.ReadSFixed64();
             break;
           }
-          case 49: {
+          case 57: {
             MovementSpeed = input.ReadSFixed64();
             break;
           }
-          case 57: {
+          case 65: {
             RotationSpeed = input.ReadSFixed64();
             break;
           }
-          case 65: {
+          case 73: {
             StoppingDistance = input.ReadSFixed64();
             break;
           }
