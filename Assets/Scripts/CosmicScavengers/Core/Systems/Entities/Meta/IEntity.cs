@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
-using Google.Protobuf;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Meta
@@ -12,14 +11,8 @@ namespace CosmicScavengers.Core.Systems.Entities.Meta
         string Type { get; set; }
         List<ITrait> Traits { get; set; }
         Transform TraitsContainer { get; }
-
         Transform Transform { get; }
 
-        /// <summary>
-        /// The standardized doorway for Traits to signal they need a network sync.
-        /// The implementation (BaseEntity) handles the routing.
-        /// </summary>
-        void RequestTraitSync(ITrait trait);
         void OnSpawned();
         void OnRemoved();
     }

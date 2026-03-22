@@ -1,7 +1,6 @@
 using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using Google.Protobuf;
-using Unity.Plastic.Newtonsoft.Json.Linq;
 
 namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
 {
@@ -11,25 +10,14 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
     /// </summary>
     public interface ITrait
     {
+        // --------------------------------
+        // --- Identity & Lifecycle -------
+        // --------------------------------
+
+        /// <summary>
+        /// The name of the trait.
+        /// </summary>
         string Name { get; set; }
-
-        /// <summary>
-        /// Flag indicating a request is waiting to be sent to the server.
-        /// </summary>
-        bool IsPendingSync { get; }
-
-        /// <summary>
-        /// Resets the IsPendingSync flag.
-        /// Called by systems after the sync request has been handled.
-        /// </summary>
-        void ClearSync();
-
-        bool Active { get; }
-
-        /// <summary>
-        /// Controls whether the OnUpdate logic is active.
-        /// </summary>
-        bool IsEnabled { get; }
 
         /// <summary>
         /// The Entity that owns the trait.
@@ -41,14 +29,49 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// </summary>
         IMessage ProtoData { set; }
 
-        int Priority { get; }
-        int UpdateFrequency { get; }
+        /// <summary>
+        /// Controls whether the OnUpdate logic is active.
+        /// </summary>
+        bool IsEnabled { get; }
+
+        // --------------------------------
+        // --- The 1:1 System Handshake ---
+        // --------------------------------
+
+        System.Type GetSystemType();
+
+        // ----------------------------------
+        // --- Networking State (Minimal) ---
+        // ----------------------------------
 
         /// <summary>
         /// Initializes the trait with its owner entity and configuration data.
         /// </summary>
         /// <param name="owner">Entity that owns the trait.</param>
         /// <param name="config">Trait config data to be parsed.</param>
+        /// <summary>
+        /// Flag indicating a request is waiting to be sent to the server.
+        /// </summary>
+        bool IsPendingSync { get; }
+
+        /// <summary>
+        /// Resets the IsPendingSync flag.
+        /// Called by systems after the sync request has been handled.
+        /// </summary>
+        void ClearSync();
+
+        // REFACTOR
+
+        int Priority { get; }
+        int UpdateFrequency { get; }
+        bool PendingUpdate { get; set; }
+
+        void OnRegister();
+        bool Active { get; }
+
+        /// <summary>
+        /// Called by the EntityOrchestrator when the trait is spawned.
+        /// </summary>
         void OnSpawned();
 
         /// <summary>
@@ -66,6 +89,6 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// <summary>
         /// The main simulation loop for the trait.
         /// </summary>
-        void OnUpdate(float deltaTime);
+        //void OnUpdate(float deltaTime);
     }
 }

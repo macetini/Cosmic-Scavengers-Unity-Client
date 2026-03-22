@@ -35,7 +35,6 @@ namespace CosmicScavengers.Core.Systems.Entities.Traits.Service
                 return;
             }
             object[] traitPayload = trait.GetSyncPayload() ?? Array.Empty<object>();
-
             object[] finalPayload = new object[traitPayload.Length + 1];
             finalPayload[0] = owner.Id;
             if (traitPayload != null && traitPayload.Length > 0)

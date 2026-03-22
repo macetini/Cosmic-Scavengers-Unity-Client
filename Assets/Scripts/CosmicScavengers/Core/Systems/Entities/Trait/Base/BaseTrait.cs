@@ -24,6 +24,16 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
             set => traitName = value;
         }
 
+        public virtual Type GetSystemType()
+        {
+            return null; //  TODO: Replace with type UNKNOWN or NONE
+        }
+
+        public virtual BaseNetworkCommand GetSyncCommand()
+        {
+            return NetworkBinaryCommand.UNKNOWN;
+        }
+
         /// <summary>
         /// Indicates if the trait has a pending request (Movement, Attack, etc.)
         /// that needs to be synchronized with the server via a Service.
@@ -46,6 +56,7 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
 
         public int Priority { get; private set; }
         public int UpdateFrequency { get; private set; }
+        public bool PendingUpdate { get; set; }
 
         public IMessage ProtoData
         {
@@ -64,12 +75,6 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
         public void RequestSync()
         {
             IsPendingSync = true;
-            Owner.RequestTraitSync(this);
-        }
-
-        public virtual BaseNetworkCommand GetSyncCommand()
-        {
-            return NetworkBinaryCommand.UNKNOWN;
         }
 
         public virtual object[] GetSyncPayload()
@@ -82,8 +87,15 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
             this.protoData =
                 protoData ?? throw new ArgumentNullException("ProtoData cannot be null.");
 
-            Initialize();
+            InitializeData();
         }
+
+        /// <summary>
+        /// Optional override for subclasses to perform their own setup logic.
+        /// </summary>
+        protected abstract void InitializeData();
+
+        public abstract void OnRegister();
 
         private void SetOwner(IEntity owner)
         {
@@ -101,11 +113,6 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
                 );
         }
 
-        /// <summary>
-        /// Optional override for subclasses to perform their own setup logic.
-        /// </summary>
-        protected virtual void Initialize() { }
-
         public void OnSpawned() { }
 
         public bool OwnedBySameEntity(BaseTrait otherTrait)
@@ -116,9 +123,14 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
                 && Owner.Id == otherTrait.Owner.Id;
         }
 
-        /// <summary>
-        /// The update loop managed by BaseEntity.
-        /// </summary>
-        public abstract void OnUpdate(float deltaTime);
+        public void LinkSystem(object system)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnlinkSystem(object system)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

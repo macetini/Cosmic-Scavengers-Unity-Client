@@ -1,3 +1,5 @@
+using System;
+using CosmicScavengers.Core.Systems.Entities.Movement;
 using CosmicScavengers.Core.Systems.Entity.Traits;
 using CosmicScavengers.Networking.Protobuf.Traits;
 using UnityEngine;
@@ -20,10 +22,23 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
 
         private void Start()
         {
-            selectionIndicator?.SetActive(false);
+            if (selectionIndicator != null)
+            {
+                selectionIndicator.SetActive(false);
+            }
         }
 
-        protected override void Initialize()
+        public override Type GetSystemType()
+        {
+            return typeof(SelectionSystem);
+        }
+
+        public override void OnRegister()
+        {
+            //throw new System.NotImplementedException();
+        }
+
+        protected override void InitializeData()
         {
             data = protoData as SelectableTraitProto;
             if (data == null)
@@ -79,11 +94,6 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             }
 
             Debug.Log($"[SelectableTrait] Entity {Owner.Id} deselected.");
-        }
-
-        public override void OnUpdate(float deltaTime)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

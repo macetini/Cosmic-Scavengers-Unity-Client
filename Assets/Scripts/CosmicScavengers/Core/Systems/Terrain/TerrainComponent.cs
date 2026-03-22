@@ -125,7 +125,6 @@ namespace CosmicScavengers.Systems.Terrain
                     float elevation = terrainData.GetElevation(worldX, worldZ);
 
                     //Debug.Log("Elevation at (" + worldX + ", " + worldZ + ") is " + elevation);
-
                     // Set Vertex Position
                     vertices[vertIndex] = new Vector3(
                         worldX - offsetX,

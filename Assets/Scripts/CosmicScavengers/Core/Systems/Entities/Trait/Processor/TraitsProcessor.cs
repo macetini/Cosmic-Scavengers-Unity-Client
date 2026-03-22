@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using CosmicScavengers.Core.Systems.Base;
 using CosmicScavengers.Core.Systems.Entities.Traits.Meta;
 using CosmicScavengers.Core.Systems.Entities.Traits.Service;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
@@ -8,12 +10,18 @@ namespace CosmicScavengers.Core.Systems.Traits.Processor
 {
     public class TraitsProcessor : MonoBehaviour, ITraitsProcessor
     {
+        private const int TRAIT_COUNT = 512;
+        private const int PENDING_TRAIT_COUNT = 128;
+
+        [Header("Configuration")]
         [Tooltip("Services for managing entities.")]
         [SerializeField]
         private TraitsService traitsServices;
 
-        private const int TRAIT_COUNT = 512;
-        private const int PENDING_TRAIT_COUNT = 128;
+        [SerializeField]
+        private List<GameObject> gameSystems;
+        private readonly Dictionary<Type, IGameSystem> systemLookUp = new();
+
         private readonly List<ITrait> highPriorityTraits = new(TRAIT_COUNT);
         private readonly List<ITrait> throttledTraits = new(TRAIT_COUNT);
         private readonly List<ITrait> pendingSyncTraits = new(PENDING_TRAIT_COUNT);
@@ -25,6 +33,51 @@ namespace CosmicScavengers.Core.Systems.Traits.Processor
             if (traitsServices == null)
             {
                 Debug.LogError("[TraitsProcessor] TraitsService reference is missing!");
+            }
+
+            if (gameSystems == null)
+            {
+                Debug.LogError("[TraitsProcessor] GameSystems reference is missing!");
+                return;
+            }
+            SetUpSystems();
+        }
+
+        private void SetUpSystems()
+        {
+            if (gameSystems.Count == 0)
+            {
+                Debug.LogWarning("[TraitsProcessor] GameSystems list is empty.");
+                return;
+            }
+
+            foreach (var gameSystem in gameSystems)
+            {
+                if (!gameSystem.TryGetComponent<IGameSystem>(out var system))
+                {
+                    Debug.LogError(
+                        $"[TraitsProcessor] GameSystem '{gameSystem.name}' does not implement IGameSystem."
+                    );
+                    continue;
+                }
+                systemLookUp.Add(system.GetType(), system);
+            }
+        }
+
+        /// <summary>
+        /// Registers a collection of traits into the appropriate update bucket.
+        /// </summary>
+        public void Register(IEnumerable<ITrait> traits)
+        {
+            if (traits == null)
+            {
+                Debug.LogError("[TraitsProcessor] Attempted to register null traits.");
+                return;
+            }
+
+            foreach (var trait in traits)
+            {
+                Register(trait);
             }
         }
 
@@ -60,6 +113,20 @@ namespace CosmicScavengers.Core.Systems.Traits.Processor
                 }
                 throttledTraits.Add(trait);
             }
+
+            Type systemType = trait.GetSystemType();
+            if (systemLookUp.TryGetValue(systemType, out var system))
+            {
+                system.Register(trait);
+            }
+            else
+            {
+                Debug.LogError(
+                    $"[TraitProcessor] Trait '{trait.Name}' did not found a matching IGameSystem Type '{systemType.Name}'."
+                );
+            }
+
+            trait.OnRegister();
         }
 
         /// <summary>
@@ -95,14 +162,9 @@ namespace CosmicScavengers.Core.Systems.Traits.Processor
             }
         }
 
-        public void Register(IEnumerable<ITrait> traits)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void Unregister(IEnumerable<ITrait> traits)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void RequestSync(IEnumerable<ITrait> traits)
@@ -124,28 +186,33 @@ namespace CosmicScavengers.Core.Systems.Traits.Processor
         void Update()
         {
             float deltaTime = Time.deltaTime;
+            frameCount++;
 
-            // Process High-Priority (Every Frame)
-            int highCount = highPriorityTraits.Count;
-            for (int i = 0; i < highCount; i++)
+            // High-Priority (Every Frame)
+            foreach (var trait in highPriorityTraits)
             {
-                highPriorityTraits[i].OnUpdate(deltaTime);
+                trait.PendingUpdate = true;
+                if (trait.IsPendingSync)
+                {
+                    pendingSyncTraits.Add(trait);
+                }
             }
 
-            // Process Throttled (Every Nth Frame)
-            frameCount++;
-            int throttledCount = throttledTraits.Count;
-            for (int i = 0; i < throttledCount; i++)
+            // Throttled (Only if it's their turn)
+            foreach (var trait in throttledTraits)
             {
-                var trait = throttledTraits[i];
-                if (frameCount % trait.UpdateFrequency == 0)
+                trait.PendingUpdate = frameCount % trait.UpdateFrequency == 0;
+                if (trait.IsPendingSync)
                 {
-                    // Normalize delta time so logic remains consistent regardless of frequency
-                    if (trait.Active)
-                    {
-                        trait.OnUpdate(deltaTime * trait.UpdateFrequency);
-                    }
+                    pendingSyncTraits.Add(trait);
                 }
+            }
+
+            // Low-Priority (Every Frame)
+
+            foreach (var system in systemLookUp.Values)
+            {
+                system.OnTick(deltaTime);
             }
         }
 

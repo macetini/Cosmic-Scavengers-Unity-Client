@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
-using CosmicScavengers.Core.Networking.Mappers;
 using CosmicScavengers.Core.Systems.Entities.Base;
 using CosmicScavengers.Core.Systems.Entities.Meta;
 using CosmicScavengers.Core.Systems.Entities.Registry;
 using CosmicScavengers.Core.Systems.Entities.Trait.Factory;
-using CosmicScavengers.Core.Systems.Entities.Traits.Registry;
-using CosmicScavengers.Core.Systems.Entity.Traits;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 using CosmicScavengers.Core.Systems.Traits.Processor;
 using CosmicScavengers.Core.Systems.Utils.Scale4f;
@@ -15,7 +11,6 @@ using CosmicScavengers.Networking.Protobuf.Entities;
 using CosmicScavengers.Networking.Protobuf.Traits;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
-using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
@@ -50,9 +45,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         [SerializeField]
         private Transform entityParent; // TODO. TRANSFER SOMEWHERE ELSE
 
-        private const string TRAITS_KEY = "traits";
         private readonly Dictionary<long, IEntity> activeEntities = new();
-        private readonly TraitProtobufMapper traitProtobufMapper = new();
 
         void Awake()
         {
@@ -98,22 +91,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
 
             foreach (PlayerEntityProto entityData in syncResponse.Entities)
             {
-                Vector3 worldPos = new(
-                    DeterministicUtils.FromScaled(entityData.PosX),
-                    DeterministicUtils.FromScaled(entityData.PosY),
-                    DeterministicUtils.FromScaled(entityData.PosZ)
-                );
-
-                SyncEntity(
-                    /*
-                    entityData.Id,
-                    entityData.BlueprintId,
-                    new Vector3(entityData.PosX, entityData.PosY, entityData.PosZ),
-                    Quaternion.Euler(0, entityData.Rotation, 0) //,
-                    entityData.Traits
-                    */
-                    entityData
-                );
+                SyncEntity(entityData);
             }
         }
 
@@ -123,52 +101,67 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
         /// </summary>
         public void SyncEntity(PlayerEntityProto entityData)
         {
-            long id = entityData.Id;
-            string typeKey = entityData.BlueprintId;
-            Vector3 position = new(entityData.PosX, entityData.PosY, entityData.PosZ);
+            Vector3 worldPos = new(
+                DeterministicUtils.FromScaled(entityData.PosX),
+                DeterministicUtils.FromScaled(entityData.PosY),
+                DeterministicUtils.FromScaled(entityData.PosZ)
+            );
             Quaternion rotation = Quaternion.Euler(0, entityData.Rotation, 0);
 
-            /*if (activeEntities.TryGetValue(id, out var entity))
+            if (activeEntities.TryGetValue(entityData.Id, out var entity))
             {
-                UpdateEntityInstance(entity, position, rotation, traits);
+                UpdateEntityInstance(entity, worldPos, rotation, entityData.Traits);
             }
             else
-            {*/
-            SpawnEntityInstance(id, typeKey, position, rotation, entityData.Traits);
-            //}
+            {
+                SpawnEntityInstance(entityData, worldPos, rotation);
+            }
         }
 
         private void SpawnEntityInstance(
-            long id,
-            string typeKey,
+            PlayerEntityProto entityData,
             Vector3 position,
-            Quaternion rotation,
-            RepeatedField<TraitInstanceProto> traits
+            Quaternion rotation
         )
         {
-            BaseEntity entityPrefab = entityRegistry.GetPrefab(typeKey);
+            //TODO - Switch to IEntity from BaseEntity
+            BaseEntity entityPrefab = entityRegistry.GetPrefab(entityData.BlueprintId);
             if (entityPrefab == null)
             {
-                Debug.LogError($"[EntityOrchestrator] Registry lookup failed for key: {typeKey}");
+                Debug.LogError(
+                    $"[EntityOrchestrator] Registry lookup failed for key: {entityData.BlueprintId}"
+                );
                 return;
             }
-
+            //TODO - Switch to IEntity from BaseEntity
             BaseEntity spawnedEntity = Instantiate(entityPrefab, position, rotation, entityParent);
-            spawnedEntity.LinkTraitsProcessor(traitsProcessor);
 
-            spawnedEntity.Id = id;
-            activeEntities.Add(id, spawnedEntity);
+            spawnedEntity.Id = entityData.Id;
+            activeEntities.Add(spawnedEntity.Id, spawnedEntity);
 
-            SetEntityTraits(traits, spawnedEntity);
+            ProcessEntityTraits(entityData.Traits, spawnedEntity);
             spawnedEntity.OnSpawned();
         }
 
-        private void SetEntityTraits(
-            RepeatedField<TraitInstanceProto> traitProtos,
-            BaseEntity entity
+        private void UpdateEntityInstance( // TODO - Finish this.
+            IEntity entity,
+            Vector3 position,
+            Quaternion rotation,
+            RepeatedField<TraitInstanceProto> traitProtos
         )
         {
-            if (traitProtos == null)
+            if (entity is MonoBehaviour mb)
+            {
+                mb.transform.SetPositionAndRotation(position, rotation);
+            }
+        }
+
+        private void ProcessEntityTraits(
+            RepeatedField<TraitInstanceProto> traitProtos,
+            IEntity entity
+        )
+        {
+            if (traitProtos == null || traitProtos.Count == 0)
             {
                 Debug.LogWarning($"[EntityOrchestrator] Entity {entity.Id} has no traits.");
                 return;
@@ -180,92 +173,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Orchestrator
                 entity.TraitsContainer
             );
             entity.Traits = traits;
-
-            /*
-            List<ITrait> activeTraits = new();
-
-            foreach (var traitInstance in traits)
-            {
-                // 1. Dynamic Unpack using our Mapper
-                IMessage protoMessage = traitProtobufMapper.MapFromProto(
-                    traitInstance.TraitId,
-                    traitInstance.Data
-                );
-
-                if (protoMessage != null)
-                {
-                    // 2. Map the Proto Message to a Unity Logic Class (ITrait)
-                    // This is where you'd call a Factory or use further reflection
-                    ITrait traitLogic = TraitFactory.Create(traitInstance.TraitId, protoMessage);
-
-                    if (traitLogic != null)
-                    {
-                        activeTraits.Add(traitLogic);
-                    }
-                }
-            }
-            */
-
-            //entity.InitializeTraits(activeTraits);
-
-            /*
-            try
-            {
-                JObject json = JObject.Parse(stateData);
-                if (json[TRAITS_KEY] is JObject traitsMap)
-                {
-                    List<ITrait> traits = new();
-                    foreach (var property in traitsMap.Properties())
-                    {
-                        if (property.Value is not JObject traitConfig)
-                        {
-                            Debug.LogWarning(
-                                $"[EntityOrchestrator] Trait config for '{property.Name}' is not a JObject. Skipping."
-                            );
-                            continue;
-                        }
-                        string traitKey = property.Name;
-                        BaseTrait traitPrefab = traitRegistry.GetPrefab(traitKey);
-                        if (traitPrefab == null)
-                        {
-                            Debug.LogWarning(
-                                $"[EntityOrchestrator] Trait prefab not found: {traitKey}"
-                            );
-                            continue;
-                        }
-                        BaseTrait traitInstance = Instantiate(
-                            traitPrefab,
-                            entity.TraitsContainer.transform
-                        );
-                        traitInstance.Initialize(entity, traitConfig);
-                        traits.Add(traitInstance);
-                    }
-                    entity.Traits = traits;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[EntityOrchestrator] Failed to parse StateData: {ex.Message}");
-            }
-            */
-        }
-
-        private void UpdateEntityInstance( // TODO - Finish this.
-            IEntity entity,
-            Vector3 position,
-            Quaternion rotation,
-            EntityTraitsProto traits
-        )
-        {
-            if (entity is MonoBehaviour mb)
-            {
-                mb.transform.SetPositionAndRotation(position, rotation);
-            }
-
-            //if (!string.IsNullOrEmpty(stateData))
-            //{
-            //entity.Traits = GetEntityTraits(stateData);
-            //}
+            traitsProcessor.Register(traits);
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CosmicScavengers.Core.Systems.Entities.Meta;
-using CosmicScavengers.Core.Systems.Entities.Traits.Meta;
 using CosmicScavengers.Core.Systems.Entity.Traits.Meta;
 using UnityEngine;
 
@@ -55,32 +54,16 @@ namespace CosmicScavengers.Core.Systems.Entities.Base
 
         private readonly Dictionary<Type, ITrait> traitCache = new();
 
-        private ITraitsProcessor traitsProcessor;
-
         void Awake()
         {
             transformCache = GetComponent<Transform>();
-        }
 
-        /// <summary>
-        /// Links this entity to its managing orchestrator.
-        /// Called once by the EntityOrchestrator immediately after instantiation.
-        /// </summary>
-        public void LinkTraitsProcessor(ITraitsProcessor traitsProcessor)
-        {
-            this.traitsProcessor = traitsProcessor;
-        }
-
-        public void RequestTraitSync(ITrait trait)
-        {
-            if (traitsProcessor == null)
+            if (traitsContainer == null)
             {
-                Debug.LogError(
-                    $"[BaseEntity] Attempted to request trait sync on an Entity Id '{Id}' not managed by an orchestrator."
-                );
-                return;
+                Debug.Log($"[BaseEntity] TraitsContainer not found. Creating one for entity {Id}.");
+                traitsContainer = new GameObject("TraitsContainer");
+                transformCache.parent = traitsContainer.transform;
             }
-            traitsProcessor.RequestSync(trait);
         }
 
         public void RebuildTraitCache()

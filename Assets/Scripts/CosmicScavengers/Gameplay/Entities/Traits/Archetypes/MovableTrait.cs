@@ -1,6 +1,10 @@
+using System;
+using System.ComponentModel;
 using CosmicScavengers.Core.Networking.Commands.Data;
 using CosmicScavengers.Core.Networking.Commands.Data.Binary;
+using CosmicScavengers.Core.Systems.Entities.Movement;
 using CosmicScavengers.Core.Systems.Entity.Traits;
+using CosmicScavengers.Core.Systems.Utils.Scale4f;
 using CosmicScavengers.Networking.Protobuf.Traits;
 using UnityEngine;
 
@@ -12,16 +16,22 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
     /// </summary>
     public class MovableTrait : BaseTrait
     {
-        [Header("Interpolation")]
-        [Tooltip("How fast the visual transform snaps to the target rotation.")]
-        [SerializeField]
-        private readonly float rotationLerpModifier = 5f;
-
         [Header("Movement State")]
-        [SerializeField]
+        [Tooltip("The target position to move to.")]
+        [SerializeField, ReadOnly(true)]
         private Vector3 targetPosition;
+        public Vector3 TargetPosition
+        {
+            get => targetPosition;
+            private set => targetPosition = value;
+        }
 
         private MovableTraitProto data;
+
+        public override Type GetSystemType()
+        {
+            return typeof(MovementSystem);
+        }
 
         /// <summary>
         /// The binary command used to request a move on the server.
@@ -36,12 +46,17 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             MoveIntentProto intent = new()
             {
                 EntityId = Owner.Id,
-                //RequestData = new MoveIntentDataProto()
+                RequestData = new MoveTargetProto()
+                {
+                    TargetX = DeterministicUtils.ToScaled(TargetPosition.x),
+                    TargetY = DeterministicUtils.ToScaled(TargetPosition.y),
+                    TargetZ = DeterministicUtils.ToScaled(TargetPosition.z),
+                },
             };
             return new object[] { intent };
         }
 
-        protected override void Initialize()
+        protected override void InitializeData()
         {
             data = protoData as MovableTraitProto;
             if (data == null)
@@ -53,6 +68,11 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             }
         }
 
+        public override void OnRegister()
+        {
+            //throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Issues a new move instruction.
         /// This marks the trait as 'PendingSync', which the EntityOrchestrator
@@ -61,56 +81,9 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
         public void IssueMoveOrder(Vector3 destination)
         {
             Debug.Log($"[MovableTrait] IssueMoveOrder to {destination}");
-            targetPosition = destination;
-
+            TargetPosition = destination;
             Active = true;
-
             RequestSync();
-        }
-
-        /// <summary>
-        /// Performed by the TraitProcessor.
-        /// Handles the visual movement of the entity toward the authoritative target.
-        /// </summary>
-        public override void OnUpdate(float deltaTime)
-        {
-            if (!Active)
-            {
-                Debug.LogError("[MovableTrait] Attempted to update an inactive trait.");
-                return;
-            }
-
-            // Use DeterministicUtils to turn the "Big Ints" into "Unity Floats"
-            /*
-            float visualSpeed = DeterministicUtils.FromScaled(traitData.Data.MovementSpeed);
-
-            // 1. Visual Position Update
-            Owner.Transform.position = Vector3.MoveTowards(
-                Owner.Transform.position,
-                targetPosition,
-                visualSpeed * deltaTime
-            );
-
-            // 2. Update Visual Rotation
-            Vector3 diff = targetPosition - Owner.Transform.position;
-            if (diff.sqrMagnitude > 0.001f)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(diff.normalized);
-                Owner.Transform.rotation = Quaternion.Slerp(
-                    Owner.Transform.rotation,
-                    lookRotation,
-                    deltaTime * rotationLerpModifier
-                );
-            }
-
-            float visualStopDist = DeterministicUtils.FromScaled(traitData.Data.StoppingDistance);
-            bool arrived =
-                Vector3.Distance(Owner.Transform.position, targetPosition) <= visualStopDist;
-            if (arrived)
-            {
-                traitData.Status = MovableTraitProto.Types.Status.Idle;
-                Active = false;
-            }*/
         }
     }
 }
