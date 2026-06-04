@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.macetini.terrain": {
+      "version": "https://github.com/macetini/Procedural-Terrain-Unity3D.git?path=/Assets/Scripts#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a01962fab2bf209723ced4aaec1dfc874dc38c7e"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.9",
       "depth": 0,
@@ -55,7 +62,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.26",
+      "version": "2.0.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {

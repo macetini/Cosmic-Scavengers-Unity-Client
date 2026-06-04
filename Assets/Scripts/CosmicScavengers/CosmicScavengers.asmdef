@@ -1,3 +1,6 @@
 {
-	"name": "CosmicScavenger"
+    "name": "CosmicScavenger",
+    "references": [
+        "Macetini.Terrain"
+    ]
 }
