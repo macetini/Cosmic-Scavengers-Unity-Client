@@ -21,8 +21,18 @@ namespace CosmicScavengers.Gameplay.Entities.Archetypes
 
         private void UpdateStatusLights(bool isActive)
         {
+            if (statusLights == null || statusLights.Length == 0)
+            {
+                return;
+            }
+
             foreach (var light in statusLights)
             {
+                if (light == null)
+                {
+                    continue;
+                }
+
                 light.material.color = isActive ? activeColor : inactiveColor;
             }
         }

@@ -483,14 +483,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -535,7 +535,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -600,7 +600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &577005605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
   entityRegistry: {fileID: 11400000, guid: 1482f9929de08714ea7312d9e5506e7e, type: 2}
   traitFactory: {fileID: 192407263}
   traitsProcessor: {fileID: 98069127}
-  entityParent: {fileID: 0}
+  entityParent: {fileID: 1527173474}
 --- !u!4 &577005606
 Transform:
   m_ObjectHideFlags: 0
@@ -827,7 +827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1357999020
 Transform:
   m_ObjectHideFlags: 0
@@ -862,7 +862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1527173473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,14 +890,14 @@ MonoBehaviour:
   cameraConfig:
     reference: {fileID: 330585545}
     frustumPadding: 4
-    viewDistanceChunks: 5
+    viewDistanceChunks: 6
   lod:
     lod1Distance: 3
     lod2Distance: 4
     visibilityBatchSize: 10
     lod0Step: 1
-    lod1Step: 1
-    lod2Step: 1
+    lod1Step: 2
+    lod2Step: 3
   debug:
     cleanupLogs: 0
     showLodRanges: 0
@@ -1063,7 +1063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1864966310
 Transform:
   m_ObjectHideFlags: 0

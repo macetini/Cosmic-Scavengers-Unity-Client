@@ -18,7 +18,8 @@ namespace CosmicScavengers.Core.Networking.Connector
     {
         // --- Server Connection Details --- // TODO - Move to config file
         private const string HOST = "127.0.0.1";
-        private const int PORT = 8080;
+        private const int PORT = 9005;
+
         private const int LENGTH_FIELD_SIZE = 4; // 4 bytes for length prefix
         private const int MAX_MESSAGE_SIZE = 1024 * 1024; // 1 MB
 
@@ -51,8 +52,6 @@ namespace CosmicScavengers.Core.Networking.Connector
         {
             clientThread = new Thread(ConnectToServer) { IsBackground = true };
             clientThread.Start();
-
-            OnConnected?.Invoke(); // TODO - Find a better way to dispatch connection event.
         }
 
         /// <summary>
@@ -70,6 +69,7 @@ namespace CosmicScavengers.Core.Networking.Connector
                     return;
                 }
                 Debug.Log("[Connector] Successfully connected to the multiplexed server!");
+                OnConnected?.Invoke();
 
                 while (client.Connected)
                 {

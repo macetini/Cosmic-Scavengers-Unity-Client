@@ -93,6 +93,13 @@ namespace CosmicScavengers.Core.Networking.Connector.Router
 
         private void HandleTextResponseMessage(string rawMessage)
         {
+            if (string.IsNullOrEmpty(rawMessage))
+            {
+                Debug.LogWarning("[ResponseRouter] Received empty text message.");
+                return;
+            }
+
+            rawMessage = rawMessage.Trim('\0', ' ', '\t', '\r', '\n');
             string[] parts = rawMessage.Split('|');
             if (parts.Length < 1)
             {

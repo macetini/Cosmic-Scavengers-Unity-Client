@@ -89,6 +89,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1564674845196112416
 MonoBehaviour:
@@ -103,5 +104,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Macetini.Terrain::Assets.Scripts.Terrain.TerrainChunk
   terrainMaterial: {fileID: 2100000, guid: 3faf4a4bed1c929438cd81df13e7f608, type: 2}
-  DebugNormals: 0
+  DebugNormals: 1
   fadeEffect: {fileID: 0}
