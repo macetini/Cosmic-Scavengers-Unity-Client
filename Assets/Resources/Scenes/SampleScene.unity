@@ -345,8 +345,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 21, z: 0}
+  m_LocalRotation: {x: -0.13052046, y: -0.8376272, z: 0.22836338, w: -0.47874346}
+  m_LocalPosition: {x: -17.779196, y: 3.642334, z: -14.82744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -856,13 +856,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1527173474}
   - component: {fileID: 1527173473}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1527173473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,10 +877,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Macetini.Terrain::Assets.Scripts.Terrain.ProceduralTerrain
   terrain:
     chunkSize: 32
-    tileSize: 8
-    elevationStepHeight: 8
-    maxElevationStepsCount: 8
-    skirtDepth: 16
+    tileSize: 1
+    elevationStepHeight: 1
+    maxElevationStepsCount: 2
+    skirtDepth: 4
   noise:
     seed: 1337
     scale: 0.05
@@ -892,8 +892,8 @@ MonoBehaviour:
     frustumPadding: 4
     viewDistanceChunks: 6
   lod:
-    lod1Distance: 3
-    lod2Distance: 4
+    lod1Distance: 5
+    lod2Distance: 8
     visibilityBatchSize: 10
     lod0Step: 1
     lod1Step: 2

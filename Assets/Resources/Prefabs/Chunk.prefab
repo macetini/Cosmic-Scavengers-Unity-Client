@@ -104,5 +104,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Macetini.Terrain::Assets.Scripts.Terrain.TerrainChunk
   terrainMaterial: {fileID: 2100000, guid: 3faf4a4bed1c929438cd81df13e7f608, type: 2}
-  DebugNormals: 1
+  DebugNormals: 0
   fadeEffect: {fileID: 0}

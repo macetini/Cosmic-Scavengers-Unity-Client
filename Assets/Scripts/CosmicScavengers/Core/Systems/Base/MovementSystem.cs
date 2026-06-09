@@ -32,8 +32,9 @@ namespace CosmicScavengers.Core.Systems.Entities.Movement
             for (int i = 0; i < movableTraits.Count; i++)
             {
                 var trait = movableTraits[i];
-                if (!trait.PendingUpdate || !trait.IsEnabled)
+                if (!trait.PendingUpdate || !trait.IsEnabled || !trait.Active)
                 {
+                    trait.PendingUpdate = false;
                     continue;
                 }
 

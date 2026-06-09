@@ -20,6 +20,7 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
         [Tooltip("The target position to move to.")]
         [SerializeField, ReadOnly(true)]
         private Vector3 targetPosition;
+
         public Vector3 TargetPosition
         {
             get => targetPosition;
@@ -61,16 +62,21 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             data = protoData as MovableTraitProto;
             if (data == null)
             {
+                Active = false;
                 Debug.LogError(
                     $"[MovableTrait] Failed to cast ProtoData for entity {Owner?.Id}. Expected MovableTraitProto."
                 );
                 return;
             }
+
+            // Movement should only run after an explicit order is issued.
+            Active = false;
         }
 
         public override void OnRegister()
         {
-            //throw new System.NotImplementedException();
+            // Keep movement dormant until the first player/server move intent.
+            Active = false;
         }
 
         /// <summary>
@@ -84,6 +90,11 @@ namespace CosmicScavengers.GamePlay.Entities.Traits.Archetypes
             TargetPosition = destination;
             Active = true;
             RequestSync();
+        }
+
+        public void CompleteMoveOrder()
+        {
+            Active = false;
         }
     }
 }

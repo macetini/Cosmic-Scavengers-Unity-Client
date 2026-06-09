@@ -52,6 +52,7 @@ namespace CosmicScavengers.Core.Networking.Connector
         {
             clientThread = new Thread(ConnectToServer) { IsBackground = true };
             clientThread.Start();
+            OnConnected?.Invoke();
         }
 
         /// <summary>
@@ -69,7 +70,6 @@ namespace CosmicScavengers.Core.Networking.Connector
                     return;
                 }
                 Debug.Log("[Connector] Successfully connected to the multiplexed server!");
-                OnConnected?.Invoke();
 
                 while (client.Connected)
                 {

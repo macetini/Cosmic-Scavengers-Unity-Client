@@ -85,7 +85,7 @@ namespace CosmicScavengers.Core.Dev.Utility
 
             // Horizontal (WASD)
             moveDirection.x = Input.GetAxis("Horizontal"); // A/D keys
-            moveDirection.z = Input.GetAxis("Vertical");   // W/S keys
+            moveDirection.z = Input.GetAxis("Vertical"); // W/S keys
 
             // Vertical (QE)
             if (Input.GetKey(KeyCode.Q))
