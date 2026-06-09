@@ -30,7 +30,7 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         IMessage ProtoData { set; }
 
         /// <summary>
-        /// Controls whether the OnUpdate logic is active.
+        /// Controls whether this trait is allowed to run during system ticks.
         /// </summary>
         bool IsEnabled { get; }
 
@@ -45,11 +45,6 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         // ----------------------------------
 
         /// <summary>
-        /// Initializes the trait with its owner entity and configuration data.
-        /// </summary>
-        /// <param name="owner">Entity that owns the trait.</param>
-        /// <param name="config">Trait config data to be parsed.</param>
-        /// <summary>
         /// Flag indicating a request is waiting to be sent to the server.
         /// </summary>
         bool IsPendingSync { get; }
@@ -60,13 +55,31 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// </summary>
         void ClearSync();
 
-        // REFACTOR
-
+        /// <summary>
+        /// Priority used by processors to order trait execution.
+        /// </summary>
         int Priority { get; }
+
+        /// <summary>
+        /// Number of frames between updates for throttled processing.
+        /// </summary>
         int UpdateFrequency { get; }
+
+        /// <summary>
+        /// Set when this trait is scheduled to run on the current tick.
+        /// </summary>
         bool PendingUpdate { get; set; }
 
+        /// <summary>
+        /// True when this trait should run on the current tick.
+        /// </summary>
+        bool ShouldTickNow { get; }
+
         void OnRegister();
+
+        /// <summary>
+        /// Optional runtime state used to pause or resume trait behavior.
+        /// </summary>
         bool Active { get; }
 
         /// <summary>
@@ -86,9 +99,6 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits.Meta
         /// </summary>
         object[] GetSyncPayload();
 
-        /// <summary>
-        /// The main simulation loop for the trait.
-        /// </summary>
-        //void OnUpdate(float deltaTime);
+        // Trait simulation runs through IGameSystem.OnTick.
     }
 }

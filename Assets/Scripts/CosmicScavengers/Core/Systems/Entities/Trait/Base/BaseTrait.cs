@@ -41,11 +41,27 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
         public bool IsPendingSync { get; protected set; } = false;
 
         /// <summary>
-        /// Controls whether the OnUpdate logic should run.
+        /// Controls whether this trait is allowed to run during system ticks.
         /// </summary>
         public bool IsEnabled { get; } = true;
 
+        /// <summary>
+        /// Optional runtime state used to pause or resume trait behavior without unregistering it.
+        /// </summary>
         public bool Active { get; protected set; } = true;
+
+        /// <summary>
+        /// Set when this trait is scheduled to run on the current tick.
+        /// </summary>
+        public bool PendingUpdate { get; set; }
+
+        /// <summary>
+        /// True when this trait should run on the current tick.
+        /// </summary>
+        public bool ShouldTickNow => PendingUpdate && IsEnabled && Active;
+
+        public int Priority { get; private set; }
+        public int UpdateFrequency { get; private set; }
 
         public IEntity Owner
         {
@@ -54,10 +70,6 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
         }
         private IEntity owner = null;
 
-        public int Priority { get; private set; }
-        public int UpdateFrequency { get; private set; }
-        public bool PendingUpdate { get; set; }
-
         public IMessage ProtoData
         {
             set => SetProtoData(value);
@@ -65,7 +77,7 @@ namespace CosmicScavengers.Core.Systems.Entity.Traits
         protected IMessage protoData = null;
 
         /// <summary>
-        /// Called by the TraitsUpdater/Service once the sync request has been dispatched.
+        /// Called after the sync request has been dispatched.
         /// </summary>
         public void ClearSync()
         {
