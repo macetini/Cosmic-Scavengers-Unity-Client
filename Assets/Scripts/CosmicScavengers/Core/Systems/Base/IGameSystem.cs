@@ -29,7 +29,7 @@ namespace CosmicScavengers.Core.Systems.Base
         void Register(ITrait trait);
 
         /// <summary>
-        /// General unregistration for cleanup.
+        /// General un-registration for cleanup.
         /// </summary>
         void Unregister(ITrait trait);
     }

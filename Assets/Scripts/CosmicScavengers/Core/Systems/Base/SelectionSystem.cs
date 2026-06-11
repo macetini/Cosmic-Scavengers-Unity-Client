@@ -31,7 +31,7 @@ namespace CosmicScavengers.Core.Systems.Entities.Movement
         {
             foreach (var trait in selectionTraits)
             {
-                if (!trait.PendingUpdate) // || !mover.IsEnabled)
+                if (!trait.PendingUpdate)
                     continue;
 
                 trait.PendingUpdate = false;
