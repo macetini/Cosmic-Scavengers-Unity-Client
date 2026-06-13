@@ -49,22 +49,49 @@ namespace CosmicScavengers.Core.Systems.Interaction
             {
                 if (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject())
                 {
-                    HandleSelectionClick();
+                    HandleSelection();
                 }
             }
         }
 
-        private void HandleSelectionClick()
+        private void HandleSelection()
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            int combinedMask = entityLayer | terrainLayer;
+            bool hitSomething = DidRayHitSomething(
+                mainCamera.ScreenPointToRay(Input.mousePosition),
+                out RaycastHit hit
+            );
 
-            if (!Physics.Raycast(ray, out RaycastHit hit, maxRaycastDistance, combinedMask))
+            if (!hitSomething)
             {
                 DeselectAll();
                 return;
             }
 
+            HandleRaycastHit(hit);
+        }
+
+        private bool DidRayHitSomething(Ray ray, out RaycastHit hit)
+        {
+            Debug.Log(
+                $"[SelectionOrchestrator] Performing raycast from camera: {mainCamera.name} at screen position: {Input.mousePosition}."
+            );
+            int combinedMask = entityLayer | terrainLayer;
+            bool hitResult = Physics.Raycast(ray, out hit, maxRaycastDistance, combinedMask);
+
+            Debug.Log(
+                hitResult
+                    ? $"[SelectionOrchestrator] Raycast hit: {hit.collider.gameObject.name} at position: {hit.point}."
+                    : "[SelectionOrchestrator] Raycast did not hit any valid targets."
+            );
+
+            return hitResult;
+        }
+
+        private void HandleRaycastHit(RaycastHit hit)
+        {
+            Debug.Log(
+                $"[SelectionOrchestrator] Raycast hit: {hit.collider.gameObject.name} at position: {hit.point}."
+            );
             int hitLayer = 1 << hit.collider.gameObject.layer;
 
             if ((hitLayer & entityLayer) != 0)
@@ -79,6 +106,10 @@ namespace CosmicScavengers.Core.Systems.Interaction
 
         private void HandleEntitySelection(Collider hitCollider)
         {
+            Debug.Log(
+                $"[SelectionOrchestrator] Raycast hit entity collider: {hitCollider.gameObject.name} at position: {hitCollider.transform.position}."
+            );
+
             if (hitCollider.TryGetComponent<BaseEntity>(out var entity))
             {
                 var selectable = entity.GetTrait<SelectableTrait>();
@@ -96,11 +127,15 @@ namespace CosmicScavengers.Core.Systems.Interaction
 
         private void HandleTerrainClick(Vector3 targetPoint)
         {
+            Debug.Log($"[SelectionOrchestrator] Raycast hit terrain at position: {targetPoint}.");
             if (currentSelection.Count == 0)
             {
                 return;
             }
 
+            Debug.Log(
+                $"[SelectionOrchestrator] Issuing move command to {currentSelection.Count} selected entities."
+            );
             foreach (var selectable in currentSelection)
             {
                 BaseEntity entity = selectable.Owner as BaseEntity;
@@ -113,10 +148,19 @@ namespace CosmicScavengers.Core.Systems.Interaction
                 }
 
                 Debug.Log(
-                    $"[SelectionOrchestrator] Moving entity {entity.Id} from: {entity.transform.position} to: {targetPoint}."
+                    $"[SelectionOrchestrator] Initiating Move for entity {entity.Id} from: {entity.transform.position} to: {targetPoint}."
                 );
 
-                entity.GetTrait<MovableTrait>().IssueMoveOrder(targetPoint);
+                var movable = entity.GetTrait<MovableTrait>();
+                if (movable == null)
+                {
+                    Debug.LogWarning(
+                        $"[SelectionOrchestrator] Selected entity {entity.Id} has no MovableTrait. Terrain click ignored for this entity."
+                    );
+                    continue;
+                }
+
+                movable.IssueMoveOrder(targetPoint);
             }
         }
 
@@ -162,6 +206,8 @@ namespace CosmicScavengers.Core.Systems.Interaction
             {
                 return;
             }
+
+            Debug.Log("[SelectionOrchestrator] Deselecting all entities.");
             for (int i = 0; i < currentSelection.Count; i++)
             {
                 if (currentSelection[i] != null)
